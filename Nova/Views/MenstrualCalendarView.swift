@@ -36,6 +36,7 @@ struct MenstrualCalendarView: View {
             .onAppear {
                 if self.viewModel.store.authorizationRequired {
                     self.viewModel.store.authorize()
+                    self.viewModel.store.setUpBackgroundDelivery()
                 }
             }
             .navigationBarTitle("Cycle Overview", displayMode: .large)

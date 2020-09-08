@@ -8,14 +8,24 @@
 
 import UIKit
 import CoreData
+import HealthKit
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
-
+    var applicationViewModel: MenstrualCalendarViewModel!
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
+        
+        let healthStore = HKHealthStore()
+        let store = MenstrualStore(healthStore: healthStore)
+        applicationViewModel = MenstrualCalendarViewModel(store: store)
+        
+        if store.authorizationRequired {
+            store.authorize()
+        }
+        store.setUpBackgroundDelivery()
+        
         return true
     }
 

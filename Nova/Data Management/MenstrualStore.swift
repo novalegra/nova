@@ -42,7 +42,13 @@ class MenstrualStore {
     }
     
     func authorize() {
-        healthStore.requestAuthorization(toShare: [sampleType], read: [sampleType]) { _, _ in }
+        healthStore.requestAuthorization(toShare: [sampleType], read: [sampleType]) { success, error in
+            if error != nil {
+                print(error)
+            } else if success {
+                self.setUpBackgroundDelivery()
+            }
+        }
     }
 
     func setUpBackgroundDelivery() {

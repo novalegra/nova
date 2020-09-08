@@ -21,7 +21,6 @@ class MenstrualCalendarViewModel: ObservableObject {
                 self?.menstrualEvents = updatedEvents
             }
         }
-        store.setUpBackgroundDelivery()
     }
     
     // MARK: Data Management
