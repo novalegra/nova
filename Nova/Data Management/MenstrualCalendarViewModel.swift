@@ -1,5 +1,5 @@
 //
-//  MensturalStore.swift
+//  MenstrualCalendarViewModel.swift
 //  Nova
 //
 //  Created by Anna Quinlan on 9/7/20.
