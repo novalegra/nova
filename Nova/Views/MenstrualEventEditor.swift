@@ -18,8 +18,7 @@ struct MenstrualEventEditor: View {
     @ObservedObject var viewModel: MenstrualCalendarViewModel
     let sample: MenstrualSample?
     @State var selection: SelectionState = .none
-    
-    let flowPickerOptions = (0...45).map { String($0) }
+
     @State var selectedIndex = 0 // TODO: update this if needed
     
     init(viewModel: MenstrualCalendarViewModel, sample: MenstrualSample?) {
@@ -38,10 +37,8 @@ struct MenstrualEventEditor: View {
         .listStyle(GroupedListStyle())
         .environment(\.horizontalSizeClass, .regular)
         .onAppear {
-            if let sample = self.sample {
+            if self.sample != nil {
                 self.selection = .hadFlow
-                // TODO: could this be prettier?
-                self.selectedIndex = self.flowPickerOptions.firstIndex(of: String(sample.volume ?? 0)) ?? 0
             }
         }
         .navigationBarTitle(sample != nil ? "Edit Flow" : "Track Flow", displayMode: .inline)
@@ -52,7 +49,7 @@ struct MenstrualEventEditor: View {
         Button("Save") {
             // TODO
             if let sample = self.sample {
-                sample.volume = Int(self.flowPickerOptions[self.selectedIndex])
+                sample.volume = Int(self.viewModel.flowPickerOptions[self.selectedIndex])
                 self.viewModel.store.saveSample(sample)
             }
         }
@@ -86,13 +83,13 @@ struct MenstrualEventEditor: View {
     
     var flowPickerRow: some View {
         ExpandablePicker(
-            with: flowPickerOptions,
+            with: viewModel.flowPickerOptions,
             onUpdate: { index in
                 self.selectedIndex = index
             },
             label: NSLocalizedString("Menstrual Flow", comment: "Menstrual flow picker label"),
             unit: NSLocalizedString("mL", comment: "Milliliter unit label"),
-            initialPickerIndex: 0 // TODO: make this be based on the sample
+            initialPickerIndex: self.viewModel.flowPickerOptions.firstIndex(of: String(sample?.volume ?? 0)) ?? 0
         )
     }
 }

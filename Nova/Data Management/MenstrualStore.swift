@@ -167,6 +167,7 @@ class MenstrualStore {
         healthStore.execute(query)
     }
     
+    // Make compound predicate to only read from current app if that's necessary
     func makeCompoundPredicateIfNeeded(for predicate: NSPredicate) -> NSPredicate {
         guard onlyObserveSamplesFromCurrentApp else {
             return predicate

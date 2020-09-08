@@ -45,4 +45,7 @@ class MenstrualCalendarViewModel: ObservableObject {
         }
         return nil
     }
+    
+    // MARK: Volume Selection
+    let flowPickerOptions = (0...45).map { String($0) }
 }
