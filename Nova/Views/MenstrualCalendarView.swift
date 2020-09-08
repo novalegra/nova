@@ -17,17 +17,20 @@ struct MenstrualCalendarView: View {
     var body: some View {
         NavigationView {
             CalendarView(interval: calendarDuraton) { date in
-                // Add navigation
-                Text("00") // Placeholder so it works
-                    .hidden()
-                    .padding(8)
-                    .background(self.viewModel.hasMenstrualFlow(at: date) ? Color("DarkPink") : Color("LightBrown"))
-                    .clipShape(Circle())
-                    .padding(.vertical, 4)
-                    .overlay(
-                        Text(String(self.calendar.component(.day, from: date)))
-                        .foregroundColor(Color.white)
-                    )
+                NavigationLink(destination:
+                    MenstrualEventEditor(sample: self.viewModel.menstrualEventIfPresent(for: date))
+                ) {
+                    Text("00") // Placeholder so it works
+                        .hidden()
+                        .padding(8)
+                        .background(self.viewModel.hasMenstrualFlow(at: date) ? Color("DarkPink") : Color("LightBrown"))
+                        .clipShape(Circle())
+                        .padding(.vertical, 4)
+                        .overlay(
+                            Text(String(self.calendar.component(.day, from: date)))
+                            .foregroundColor(Color("CalendarDate"))
+                        )
+                }
             }
             .onAppear {
                 if self.viewModel.store.authorizationRequired {
