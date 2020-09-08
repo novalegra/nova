@@ -54,7 +54,10 @@ struct MenstrualEventEditor: View {
         .onAppear {
             if let sample = self.sample {
                 self.viewModel.selection = sample.flowLevel == .none ? .noFlow : .hadFlow
+            } else {
+                self.viewModel.selection = .none
             }
+            print("selection", self.viewModel.selection)
         }
         .navigationBarTitle(sample != nil ? "Edit Flow" : "Track Flow", displayMode: .inline)
         .navigationBarItems(trailing: saveButton)
