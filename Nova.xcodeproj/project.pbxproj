@@ -26,7 +26,6 @@
 		E995A52925073282009D52CF /* MenstrualEventEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = E995A52825073282009D52CF /* MenstrualEventEditor.swift */; };
 		E995A52B250732CB009D52CF /* ExpandablePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = E995A52A250732CB009D52CF /* ExpandablePicker.swift */; };
 		E995A52D250750C8009D52CF /* HKCategorySample+MenstrualSample.swift in Sources */ = {isa = PBXBuildFile; fileRef = E995A52C250750C7009D52CF /* HKCategorySample+MenstrualSample.swift */; };
-		E995A52F2507C645009D52CF /* HalfModalSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = E995A52E2507C644009D52CF /* HalfModalSheet.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -52,7 +51,6 @@
 		E995A52825073282009D52CF /* MenstrualEventEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenstrualEventEditor.swift; sourceTree = "<group>"; };
 		E995A52A250732CB009D52CF /* ExpandablePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpandablePicker.swift; sourceTree = "<group>"; };
 		E995A52C250750C7009D52CF /* HKCategorySample+MenstrualSample.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HKCategorySample+MenstrualSample.swift"; sourceTree = "<group>"; };
-		E995A52E2507C644009D52CF /* HalfModalSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HalfModalSheet.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -129,7 +127,6 @@
 				E995A51C25071BD0009D52CF /* WeekView.swift */,
 				E995A52825073282009D52CF /* MenstrualEventEditor.swift */,
 				E995A52A250732CB009D52CF /* ExpandablePicker.swift */,
-				E995A52E2507C644009D52CF /* HalfModalSheet.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -224,7 +221,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				E995A5252507237D009D52CF /* MenstrualCalendarViewModel.swift in Sources */,
-				E995A52F2507C645009D52CF /* HalfModalSheet.swift in Sources */,
 				E995A51525071B01009D52CF /* DateFormatter.swift in Sources */,
 				E995A51925071B9F009D52CF /* CalendarView.swift in Sources */,
 				E995A4FB2507145E009D52CF /* AppDelegate.swift in Sources */,

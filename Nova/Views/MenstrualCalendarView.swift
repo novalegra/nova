@@ -18,33 +18,40 @@ struct MenstrualCalendarView: View {
 
     var body: some View {
         NavigationView {
-            CalendarView(interval: calendarDuraton) { date in
-                Text("00") // Placeholder so it works
-                        .hidden()
-                        .padding(8)
-                        .background(self.buttonColor(for: date))
-                        .clipShape(Circle())
-                        .padding(.vertical, 4)
-                        .overlay(
-                            Text(String(self.calendar.component(.day, from: date)))
-                                .foregroundColor(Color.black)
-                        )
-                        .onTapGesture {
-                            self.datePresented = date
-                            self.isSheetPresented.toggle()
+            VStack(spacing: 0) {
+                CalendarView(interval: calendarDuraton) { date in
+                    Text("00") // Placeholder so it works
+                            .hidden()
+                            .padding(8)
+                            .background(self.buttonColor(for: date))
+                            .clipShape(Circle())
+                            .padding(.vertical, 4)
+                            .overlay(
+                                Text(String(self.calendar.component(.day, from: date)))
+                                    .foregroundColor(Color.black)
+                            )
+                            .onTapGesture {
+                                self.datePresented = date
+                                self.isSheetPresented.toggle()
+                            }
+                            .disabled(date > Date())
+                    }
+                    .onAppear {
+                        if self.viewModel.store.authorizationRequired {
+                            self.viewModel.store.authorize()
                         }
-                        .disabled(date > Date())
+                    }
+                VStack {
+                    Group {
+                        if isSheetPresented {
+                            MenstrualEventEditor(viewModel: self.viewModel, sample: self.viewModel.menstrualEventIfPresent(for: self.datePresented))
+                        }
+                    }
                 }
-            }
-            .onAppear {
-                if self.viewModel.store.authorizationRequired {
-                    self.viewModel.store.authorize()
-                }
-            }
-            .customBottomSheet(isPresented: self.$isSheetPresented) {
-                MenstrualEventEditor(viewModel: self.viewModel, sample: self.viewModel.menstrualEventIfPresent(for: self.datePresented))
+                .background(Color(UIColor.systemBackground).shadow(radius: 5))
             }
             .navigationBarTitle("Cycle Overview", displayMode: .large)
+        }
     }
     
     private func buttonColor(for date: Date) -> Color {
