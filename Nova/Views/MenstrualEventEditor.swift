@@ -21,7 +21,7 @@ enum SelectionState {
         case .noFlow:
             return .none
         case .none:
-            fatalError("Calling hkFlowLevel when entry should be deleted")
+            fatalError("Calling hkFlowLevel when entry is .none")
         }
     }
 }
@@ -63,7 +63,7 @@ struct MenstrualEventEditor: View {
     
     var saveButton: some View {
         Button(sample != nil ? "Update" : "Save") {
-            let volume = Int(self.viewModel.flowPickerOptions[self.selectedIndex])
+            let volume = self.selection == .hadFlow ? Int(self.viewModel.flowPickerOptions[self.selectedIndex]): 0
             
             if let sample = self.sample {
                 if self.selection == .none {
@@ -73,7 +73,7 @@ struct MenstrualEventEditor: View {
                     sample.flowLevel = self.selection.hkFlowLevel
                     self.viewModel.updateSample(sample)
                 }
-            } else {
+            } else if self.selection != .none {
                 let sample = MenstrualSample(startDate: self.date, endDate: self.date, flowLevel: self.selection.hkFlowLevel, volume: volume)
                 self.viewModel.saveSample(sample)
             }
