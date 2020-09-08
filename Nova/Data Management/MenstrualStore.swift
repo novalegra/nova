@@ -181,14 +181,49 @@ class MenstrualStore {
     }
     
     // MARK: Data Storage
-    func saveSample(_ entry: MenstrualSample) {
+    func saveSample(_ entry: MenstrualSample, _ completion: ((MenstrualStoreResult<Bool>) -> ())? = nil) {
+        dispatchPrecondition(condition: .onQueue(dataFetch))
+        
         let persistedSample = HKCategorySample(entry: entry)
         healthStore.save(persistedSample) { success, error in
-            if (error != nil) {
+            if let error = error {
                 print("Error: \(String(describing: error))")
+                completion?(.failure(.queryError(error.localizedDescription)))
             }
             if success {
                 print("Saved: \(success)")
+                completion?(.success(true))
+            }
+        }
+    }
+    
+    func replaceSample(_ entry: MenstrualSample, _ completion: ((MenstrualStoreResult<Bool>) -> ())? = nil) {
+        dispatchPrecondition(condition: .onQueue(dataFetch))
+
+        self.deleteSample(entry) { result in
+            switch result {
+            case .success:
+                self.dataFetch.async {
+                    self.saveSample(entry)
+                }
+            default:
+                break
+            }
+        }
+    }
+    
+    func deleteSample(_ entry: MenstrualSample, _ completion: ((MenstrualStoreResult<Bool>) -> ())? = nil) {
+        dispatchPrecondition(condition: .onQueue(dataFetch))
+        
+        let predicate = HKQuery.predicateForObject(with: entry.uuid)
+        healthStore.deleteObjects(of: sampleType, predicate: predicate) { success, count, error in
+            if let error = error {
+                print("Error: \(String(describing: error))")
+                completion?(.failure(.queryError(error.localizedDescription)))
+            }
+            if success {
+                print("Deleted \(count) samples: \(success)")
+                completion?(.success(true))
             }
         }
     }

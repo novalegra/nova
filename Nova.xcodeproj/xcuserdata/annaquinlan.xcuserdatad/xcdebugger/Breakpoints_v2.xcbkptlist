@@ -72,7 +72,7 @@
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "7B31FB5D-556E-463C-B7D4-CC3074A828DE"
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Nova/Data Management/MenstrualStore.swift"
@@ -410,6 +410,54 @@
             endingLineNumber = "172"
             landmarkName = "makeCompoundPredicateIfNeeded(for:)"
             landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "1DC32EBF-0CC2-4452-A0E2-46CDABF6888F"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Nova/Data Management/MenstrualStore.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "203"
+            endingLineNumber = "203"
+            landmarkName = "replaceSample(_:_:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "1DC32EBF-0CC2-4452-A0E2-46CDABF6888F - abc855c4ebfe85f4"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Nova.MenstrualStore.replaceSample(Nova.MenstrualSample, Swift.Optional&lt;(Nova.MenstrualStoreResult&lt;Swift.Bool&gt;) -&gt; ()&gt;) -&gt; ()"
+                  moduleName = "Nova"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/annaquinlan/Desktop/Nova/Nova/Data%20Management/MenstrualStore.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "203"
+                  endingLineNumber = "203"
+                  offsetFromSymbolStart = "362">
+               </Location>
+               <Location
+                  uuid = "1DC32EBF-0CC2-4452-A0E2-46CDABF6888F - 7b4fb3e16bbc621c"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Nova.MenstrualStoreResult&lt;Swift.Bool&gt;) -&gt; () in Nova.MenstrualStore.replaceSample(Nova.MenstrualSample, Swift.Optional&lt;(Nova.MenstrualStoreResult&lt;Swift.Bool&gt;) -&gt; ()&gt;) -&gt; ()"
+                  moduleName = "Nova"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/annaquinlan/Desktop/Nova/Nova/Data%20Management/MenstrualStore.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "206"
+                  endingLineNumber = "206"
+                  offsetFromSymbolStart = "161">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

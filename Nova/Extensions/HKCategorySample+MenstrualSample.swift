@@ -9,6 +9,7 @@
 import HealthKit
 
 let MetadataKeyMenstrualVolume = "com.nova.HKMetadataKey.MenstrualVolume"
+let MetadataKeyUUID = "com.nova.HKMetadataKey.UUID"
 
 extension HKCategorySample {
     convenience init(entry: MenstrualSample) {

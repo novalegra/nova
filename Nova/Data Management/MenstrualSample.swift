@@ -13,15 +13,17 @@ class MenstrualSample {
     let endDate: Date
     let flowLevel: HKCategoryValueMenstrualFlow
     var volume: Int? // in mL
+    let uuid: UUID
     
-    init(startDate: Date, endDate: Date, flowLevel: HKCategoryValueMenstrualFlow, volume: Int? = nil) {
+    init(startDate: Date, endDate: Date, flowLevel: HKCategoryValueMenstrualFlow, volume: Int? = nil, uuid: UUID = UUID()) {
         self.startDate = startDate
         self.endDate = endDate
         self.flowLevel = flowLevel
         self.volume = volume
+        self.uuid = uuid
     }
     
     convenience init(sample: HKCategorySample, flowLevel: HKCategoryValueMenstrualFlow) {
-        self.init(startDate: sample.startDate, endDate: sample.endDate, flowLevel: flowLevel, volume: sample.volume)
+        self.init(startDate: sample.startDate, endDate: sample.endDate, flowLevel: flowLevel, volume: sample.volume, uuid: sample.uuid)
     }
 }

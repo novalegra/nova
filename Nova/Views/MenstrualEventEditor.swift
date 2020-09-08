@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import HealthKit
 
 enum SelectionState {
     case hadFlow
@@ -17,13 +18,15 @@ enum SelectionState {
 struct MenstrualEventEditor: View {
     @ObservedObject var viewModel: MenstrualCalendarViewModel
     let sample: MenstrualSample?
+    let date: Date
     @State var selection: SelectionState = .none
 
-    @State var selectedIndex = 0 // TODO: update this if needed
+    @State var selectedIndex = 0
     
-    init(viewModel: MenstrualCalendarViewModel, sample: MenstrualSample?) {
+    init(viewModel: MenstrualCalendarViewModel, sample: MenstrualSample?, date: Date) {
         self.sample = sample
         self.viewModel = viewModel
+        self.date = date
     }
     
     var body: some View {
@@ -47,10 +50,14 @@ struct MenstrualEventEditor: View {
     
     var saveButton: some View {
         Button("Save") {
-            // TODO
+            let volume = Int(self.viewModel.flowPickerOptions[self.selectedIndex])
             if let sample = self.sample {
-                sample.volume = Int(self.viewModel.flowPickerOptions[self.selectedIndex])
-                self.viewModel.store.saveSample(sample)
+                sample.volume = volume
+                self.viewModel.updateSample(sample)
+            } else {
+                let flowLevel = HKCategoryValueMenstrualFlow.unspecified
+                let sample = MenstrualSample(startDate: self.date, endDate: self.date, flowLevel: flowLevel, volume: volume)
+                self.viewModel.saveSample(sample)
             }
         }
     }

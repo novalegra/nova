@@ -23,9 +23,18 @@ class MenstrualCalendarViewModel: ObservableObject {
         store.setUpBackgroundDelivery()
     }
     
-    // MARK: Data Refresh
-    var timer: DispatchSourceTimer?
-    let refreshInterval = 12 /* hours */ * 60 /* minutes */ * 60 /* seconds */
+    // MARK: Data Management
+    func saveSample(_ entry: MenstrualSample) {
+        store.dataFetch.async {
+            self.store.saveSample(entry)
+        }
+    }
+    
+    func updateSample(_ entry: MenstrualSample) {
+        store.dataFetch.async {
+            self.store.replaceSample(entry)
+        }
+    }
     
     // MARK: Helper Functions
     func hasMenstrualFlow(at date: Date) -> Bool {
