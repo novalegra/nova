@@ -13,9 +13,22 @@ enum SelectionState {
     case hadFlow
     case noFlow
     case none
+    
+    var hkFlowLevel: HKCategoryValueMenstrualFlow {
+        switch self {
+        case .hadFlow:
+            return .unspecified
+        case .noFlow:
+            return .none
+        case .none:
+            fatalError("Calling hkFlowLevel when entry should be deleted")
+        }
+    }
 }
 
 struct MenstrualEventEditor: View {
+    @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
+    
     @ObservedObject var viewModel: MenstrualCalendarViewModel
     let sample: MenstrualSample?
     let date: Date
@@ -49,16 +62,22 @@ struct MenstrualEventEditor: View {
     }
     
     var saveButton: some View {
-        Button("Save") {
+        Button(sample != nil ? "Update" : "Save") {
             let volume = Int(self.viewModel.flowPickerOptions[self.selectedIndex])
+            
             if let sample = self.sample {
-                sample.volume = volume
-                self.viewModel.updateSample(sample)
+                if self.selection == .none {
+                    self.viewModel.deleteSample(sample)
+                } else {
+                    sample.volume = volume
+                    sample.flowLevel = self.selection.hkFlowLevel
+                    self.viewModel.updateSample(sample)
+                }
             } else {
-                let flowLevel = HKCategoryValueMenstrualFlow.unspecified
-                let sample = MenstrualSample(startDate: self.date, endDate: self.date, flowLevel: flowLevel, volume: volume)
+                let sample = MenstrualSample(startDate: self.date, endDate: self.date, flowLevel: self.selection.hkFlowLevel, volume: volume)
                 self.viewModel.saveSample(sample)
             }
+            self.presentationMode.wrappedValue.dismiss()
         }
     }
     

@@ -11,7 +11,7 @@ import HealthKit
 class MenstrualSample {
     let startDate: Date
     let endDate: Date
-    let flowLevel: HKCategoryValueMenstrualFlow
+    var flowLevel: HKCategoryValueMenstrualFlow
     var volume: Int? // in mL
     let uuid: UUID
     

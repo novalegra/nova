@@ -24,15 +24,21 @@ class MenstrualCalendarViewModel: ObservableObject {
     }
     
     // MARK: Data Management
-    func saveSample(_ entry: MenstrualSample) {
+    func saveSample(_ sample: MenstrualSample) {
         store.dataFetch.async {
-            self.store.saveSample(entry)
+            self.store.saveSample(sample)
         }
     }
     
-    func updateSample(_ entry: MenstrualSample) {
+    func deleteSample(_ sample: MenstrualSample) {
         store.dataFetch.async {
-            self.store.replaceSample(entry)
+            self.store.deleteSample(sample)
+        }
+    }
+    
+    func updateSample(_ sample: MenstrualSample) {
+        store.dataFetch.async {
+            self.store.replaceSample(sample)
         }
     }
     
