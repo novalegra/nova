@@ -11,16 +11,15 @@ import SwiftUI
 struct MenstrualCalendarView: View {
     @Environment(\.calendar) var calendar
     @ObservedObject var viewModel: MenstrualCalendarViewModel
+    @State var isSheetPresented: Bool = false
+    @State var datePresented: Date = Date()
 
     private var calendarDuraton: DateInterval { calendar.dateInterval(of: .quarter, for: Date())! }
 
     var body: some View {
         NavigationView {
             CalendarView(interval: calendarDuraton) { date in
-                NavigationLink(
-                    destination: MenstrualEventEditor(viewModel: self.viewModel, sample: self.viewModel.menstrualEventIfPresent(for: date))
-                ) {
-                    Text("00") // Placeholder so it works
+                Text("00") // Placeholder so it works
                         .hidden()
                         .padding(8)
                         .background(self.buttonColor(for: date))
@@ -30,16 +29,22 @@ struct MenstrualCalendarView: View {
                             Text(String(self.calendar.component(.day, from: date)))
                                 .foregroundColor(Color.black)
                         )
+                        .onTapGesture {
+                            self.datePresented = date
+                            self.isSheetPresented.toggle()
+                        }
+                        .disabled(date > Date())
                 }
-                .disabled(date > Date())
             }
             .onAppear {
                 if self.viewModel.store.authorizationRequired {
                     self.viewModel.store.authorize()
                 }
             }
+            .customBottomSheet(isPresented: self.$isSheetPresented) {
+                MenstrualEventEditor(viewModel: self.viewModel, sample: self.viewModel.menstrualEventIfPresent(for: self.datePresented))
+            }
             .navigationBarTitle("Cycle Overview", displayMode: .large)
-        }
     }
     
     private func buttonColor(for date: Date) -> Color {

@@ -44,8 +44,8 @@ struct MenstrualEventEditor: View {
                 self.selectedIndex = self.flowPickerOptions.firstIndex(of: String(sample.volume ?? 0)) ?? 0
             }
         }
-        .navigationBarTitle(sample != nil ? "Edit Flow" : "Track Flow", displayMode: .inline)
-        .navigationBarItems(trailing: saveButton)
+        //.navigationBarTitle(sample != nil ? "Edit Flow" : "Track Flow", displayMode: .inline)
+        //.navigationBarItems(trailing: saveButton)
     }
     
     var saveButton: some View {
