@@ -25,6 +25,7 @@
 		E995A5272507289B009D52CF /* MenstrualSample.swift in Sources */ = {isa = PBXBuildFile; fileRef = E995A5262507289B009D52CF /* MenstrualSample.swift */; };
 		E995A52925073282009D52CF /* MenstrualEventEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = E995A52825073282009D52CF /* MenstrualEventEditor.swift */; };
 		E995A52B250732CB009D52CF /* ExpandablePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = E995A52A250732CB009D52CF /* ExpandablePicker.swift */; };
+		E995A52D250750C8009D52CF /* HKCategorySample+MenstrualSample.swift in Sources */ = {isa = PBXBuildFile; fileRef = E995A52C250750C7009D52CF /* HKCategorySample+MenstrualSample.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -49,6 +50,7 @@
 		E995A5262507289B009D52CF /* MenstrualSample.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenstrualSample.swift; sourceTree = "<group>"; };
 		E995A52825073282009D52CF /* MenstrualEventEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenstrualEventEditor.swift; sourceTree = "<group>"; };
 		E995A52A250732CB009D52CF /* ExpandablePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpandablePicker.swift; sourceTree = "<group>"; };
+		E995A52C250750C7009D52CF /* HKCategorySample+MenstrualSample.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HKCategorySample+MenstrualSample.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -111,6 +113,7 @@
 			children = (
 				E995A51125071ACB009D52CF /* Calendar.swift */,
 				E995A51425071B01009D52CF /* DateFormatter.swift */,
+				E995A52C250750C7009D52CF /* HKCategorySample+MenstrualSample.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -227,6 +230,7 @@
 				E995A51F25071DC2009D52CF /* MenstrualStore.swift in Sources */,
 				E995A5022507145E009D52CF /* MenstrualCalendarView.swift in Sources */,
 				E995A51D25071BD0009D52CF /* WeekView.swift in Sources */,
+				E995A52D250750C8009D52CF /* HKCategorySample+MenstrualSample.swift in Sources */,
 				E995A5272507289B009D52CF /* MenstrualSample.swift in Sources */,
 				E995A52B250732CB009D52CF /* ExpandablePicker.swift in Sources */,
 				E995A4FD2507145E009D52CF /* SceneDelegate.swift in Sources */,

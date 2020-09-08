@@ -24,12 +24,12 @@ class MenstrualStore {
         self.healthStore = healthStore
     }
     
-    var menstrualEvents: [HKCategorySample] = []
+    var menstrualEvents: [MenstrualSample] = []
     
     // MARK: HealthKit
     let healthStore: HKHealthStore
     
-    var healthStoreUpdateCompletionHandler: (([HKCategorySample]) -> Void)?
+    var healthStoreUpdateCompletionHandler: (([MenstrualSample]) -> Void)?
     
     var sampleType: HKSampleType {
         return HKObjectType.categoryType(forIdentifier: .menstrualFlow)!
@@ -81,11 +81,11 @@ class MenstrualStore {
         value: HKCategoryValueMenstrualFlow.heavy.rawValue
     )
     
-    func getRecentMenstrualSamples(days: Int = 90, _ completion: @escaping (_ result: [HKCategorySample]) -> Void) {
+    func getRecentMenstrualSamples(days: Int = 90, _ completion: @escaping (_ result: [MenstrualSample]) -> Void) {
         dispatchPrecondition(condition: .onQueue(dataFetch))
         // Go 'days' back
         let start = Calendar.current.date(byAdding: .day, value: -days, to: Date())!
-        var newMenstrualEvents: [HKCategorySample] = []
+        var newMenstrualEvents: [MenstrualSample] = []
         
         let updateGroup = DispatchGroup()
         updateGroup.enter()
@@ -93,7 +93,7 @@ class MenstrualStore {
             (result) in
             switch result {
             case .success(let samples):
-                newMenstrualEvents = newMenstrualEvents + samples
+                newMenstrualEvents = newMenstrualEvents + samples.map { MenstrualSample(sample: $0, flowLevel: HKCategoryValueMenstrualFlow.unspecified) }
             default:
                 break
             }
@@ -105,7 +105,7 @@ class MenstrualStore {
             (result) in
             switch result {
             case .success(let samples):
-                newMenstrualEvents = newMenstrualEvents + samples
+                newMenstrualEvents = newMenstrualEvents + samples.map { MenstrualSample(sample: $0, flowLevel: HKCategoryValueMenstrualFlow.light) }
             default:
                 break
             }
@@ -117,7 +117,7 @@ class MenstrualStore {
             (result) in
             switch result {
             case .success(let samples):
-                newMenstrualEvents = newMenstrualEvents + samples
+                newMenstrualEvents = newMenstrualEvents + samples.map { MenstrualSample(sample: $0, flowLevel: HKCategoryValueMenstrualFlow.medium) }
             default:
                 break
             }
@@ -129,7 +129,7 @@ class MenstrualStore {
             (result) in
             switch result {
             case .success(let samples):
-                newMenstrualEvents = newMenstrualEvents + samples
+                newMenstrualEvents = newMenstrualEvents + samples.map { MenstrualSample(sample: $0, flowLevel: HKCategoryValueMenstrualFlow.heavy) }
             default:
                 break
             }
@@ -156,6 +156,7 @@ class MenstrualStore {
                     completion(.failure(MenstrualStoreError.noDataAvailable))
                     return
                 }
+                
                 completion(.success(samples))
             } else {
                 completion(.failure(MenstrualStoreError.unknownReturnConfiguration))

@@ -17,7 +17,7 @@ class MenstrualCalendarViewModel: ObservableObject {
         self.store = store
         store.healthStoreUpdateCompletionHandler = { [weak self] updatedEvents in
             DispatchQueue.main.async {
-                self?.menstrualEvents = updatedEvents.map { MenstrualSample(sample: $0) }
+                self?.menstrualEvents = updatedEvents
             }
         }
         store.setUpBackgroundDelivery()

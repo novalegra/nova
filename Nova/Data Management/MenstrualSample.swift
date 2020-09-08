@@ -8,19 +8,20 @@
 
 import HealthKit
 
-struct MenstrualSample {
+class MenstrualSample {
     let startDate: Date
     let endDate: Date
-    // TODO: flow type
+    let flowLevel: HKCategoryValueMenstrualFlow
     let volume: Int? // in mL
     
-    init(startDate: Date, endDate: Date, volume: Int? = nil) {
+    init(startDate: Date, endDate: Date, flowLevel: HKCategoryValueMenstrualFlow, volume: Int? = nil) {
         self.startDate = startDate
         self.endDate = endDate
+        self.flowLevel = flowLevel
         self.volume = volume
     }
     
-    init(sample: HKCategorySample) {
-        self.init(startDate: sample.startDate, endDate: sample.endDate)
+    convenience init(sample: HKCategorySample, flowLevel: HKCategoryValueMenstrualFlow) {
+        self.init(startDate: sample.startDate, endDate: sample.endDate, flowLevel: flowLevel, volume: sample.volume)
     }
 }
