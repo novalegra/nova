@@ -63,6 +63,11 @@ class MenstrualStore {
     // MARK: Data Retrieval
     let dataFetch = DispatchQueue(label: "com.nova.MenstrualStoreQueue", qos: .utility)
     
+    let noFlowPredicate = HKQuery.predicateForCategorySamples(
+        with: .equalTo,
+        value: HKCategoryValueMenstrualFlow.none.rawValue
+    )
+    
     let hadFlowPredicate = HKQuery.predicateForCategorySamples(
         with: .equalTo,
         value: HKCategoryValueMenstrualFlow.unspecified.rawValue
@@ -90,6 +95,18 @@ class MenstrualStore {
         var newMenstrualEvents: [MenstrualSample] = []
         
         let updateGroup = DispatchGroup()
+        updateGroup.enter()
+        getRecentMenstrualSamples(start: start, matching: makeCompoundPredicateIfNeeded(for: noFlowPredicate), sampleLimit: days) {
+            (result) in
+            switch result {
+            case .success(let samples):
+                newMenstrualEvents = newMenstrualEvents + samples.map { MenstrualSample(sample: $0, flowLevel: HKCategoryValueMenstrualFlow.none) }
+            default:
+                break
+            }
+            updateGroup.leave()
+        }
+
         updateGroup.enter()
         getRecentMenstrualSamples(start: start, matching: makeCompoundPredicateIfNeeded(for: hadFlowPredicate), sampleLimit: days) {
             (result) in

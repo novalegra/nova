@@ -12,6 +12,7 @@ import HealthKit
 class MenstrualCalendarViewModel: ObservableObject {
     let store: MenstrualStore
     @Published var menstrualEvents: [MenstrualSample] = []
+    @Published var selection: SelectionState = .none
     
     init(store: MenstrualStore) {
         self.store = store
@@ -45,7 +46,7 @@ class MenstrualCalendarViewModel: ObservableObject {
     // MARK: Helper Functions
     func hasMenstrualFlow(at date: Date) -> Bool {
         for event in menstrualEvents {
-            if (event.startDate <= date && event.endDate >= date) || Calendar.current.isDate(event.startDate, inSameDayAs: date) || Calendar.current.isDate(event.endDate, inSameDayAs: date) {
+            if eventWithinDate(date, event) && event.flowLevel != .none {
                 return true
             }
         }
@@ -54,11 +55,15 @@ class MenstrualCalendarViewModel: ObservableObject {
     
     func menstrualEventIfPresent(for date: Date) -> MenstrualSample? {
         for event in menstrualEvents {
-            if (event.startDate <= date && event.endDate >= date) || Calendar.current.isDate(event.startDate, inSameDayAs: date) || Calendar.current.isDate(event.endDate, inSameDayAs: date) {
+            if eventWithinDate(date, event) {
                 return event
             }
         }
         return nil
+    }
+    
+    func eventWithinDate(_ date: Date, _ event: MenstrualSample) -> Bool {
+        return (event.startDate <= date && event.endDate >= date) || Calendar.current.isDate(event.startDate, inSameDayAs: date) || Calendar.current.isDate(event.endDate, inSameDayAs: date)
     }
     
     // MARK: Volume Selection

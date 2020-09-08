@@ -32,7 +32,6 @@ struct MenstrualEventEditor: View {
     @ObservedObject var viewModel: MenstrualCalendarViewModel
     let sample: MenstrualSample?
     let date: Date
-    @State var selection: SelectionState = .none
 
     @State var selectedIndex = 0
     
@@ -53,8 +52,8 @@ struct MenstrualEventEditor: View {
         .listStyle(GroupedListStyle())
         .environment(\.horizontalSizeClass, .regular)
         .onAppear {
-            if self.sample != nil {
-                self.selection = .hadFlow
+            if let sample = self.sample {
+                self.viewModel.selection = sample.flowLevel == .none ? .noFlow : .hadFlow
             }
         }
         .navigationBarTitle(sample != nil ? "Edit Flow" : "Track Flow", displayMode: .inline)
@@ -63,18 +62,18 @@ struct MenstrualEventEditor: View {
     
     var saveButton: some View {
         Button(sample != nil ? "Update" : "Save") {
-            let volume = self.selection == .hadFlow ? Int(self.viewModel.flowPickerOptions[self.selectedIndex]): 0
+            let volume = self.viewModel.selection == .hadFlow ? Int(self.viewModel.flowPickerOptions[self.selectedIndex]): 0
             
             if let sample = self.sample {
-                if self.selection == .none {
+                if self.viewModel.selection == .none {
                     self.viewModel.deleteSample(sample)
                 } else {
                     sample.volume = volume
-                    sample.flowLevel = self.selection.hkFlowLevel
+                    sample.flowLevel = self.viewModel.selection.hkFlowLevel
                     self.viewModel.updateSample(sample)
                 }
-            } else if self.selection != .none {
-                let sample = MenstrualSample(startDate: self.date, endDate: self.date, flowLevel: self.selection.hkFlowLevel, volume: volume)
+            } else if self.viewModel.selection != .none {
+                let sample = MenstrualSample(startDate: self.date, endDate: self.date, flowLevel: self.viewModel.selection.hkFlowLevel, volume: volume)
                 self.viewModel.saveSample(sample)
             }
             self.presentationMode.wrappedValue.dismiss()
@@ -85,11 +84,11 @@ struct MenstrualEventEditor: View {
         HStack {
             Text("Had Flow", comment: "Label for had flow selector")
             Spacer()
-            Image(systemName: self.selection == .hadFlow ? "checkmark.square" : "square")
+            Image(systemName: self.viewModel.selection == .hadFlow ? "checkmark.square" : "square")
             .resizable()
             .frame(width: 20.0, height: 20.0)
             .onTapGesture {
-                self.selection = self.selection == .hadFlow ? .none : .hadFlow
+                self.viewModel.selection = self.viewModel.selection == .hadFlow ? .none : .hadFlow
             }
         }
     }
@@ -98,17 +97,18 @@ struct MenstrualEventEditor: View {
         HStack {
             Text("No Flow", comment: "Label for no flow selector")
             Spacer()
-            Image(systemName: self.selection == .noFlow ? "checkmark.square" : "square")
+            Image(systemName: self.viewModel.selection == .noFlow ? "checkmark.square" : "square")
             .resizable()
             .frame(width: 20.0, height: 20.0)
             .onTapGesture {
-                self.selection = self.selection == .noFlow ? .none : .noFlow
+                self.viewModel.selection = self.viewModel.selection == .noFlow ? .none : .noFlow
             }
         }
     }
     
     var flowPickerRow: some View {
-        ExpandablePicker(
+        FlowPicker(
+            viewModel: viewModel,
             with: viewModel.flowPickerOptions,
             onUpdate: { index in
                 self.selectedIndex = index
