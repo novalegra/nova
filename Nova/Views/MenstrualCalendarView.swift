@@ -17,20 +17,21 @@ struct MenstrualCalendarView: View {
     var body: some View {
         NavigationView {
             CalendarView(interval: calendarDuraton) { date in
-                NavigationLink(destination:
-                    MenstrualEventEditor(sample: self.viewModel.menstrualEventIfPresent(for: date))
+                NavigationLink(
+                    destination: MenstrualEventEditor(sample: self.viewModel.menstrualEventIfPresent(for: date))
                 ) {
                     Text("00") // Placeholder so it works
                         .hidden()
                         .padding(8)
-                        .background(self.viewModel.hasMenstrualFlow(at: date) ? Color("DarkPink") : Color("LightBrown"))
+                        .background(self.buttonColor(for: date))
                         .clipShape(Circle())
                         .padding(.vertical, 4)
                         .overlay(
                             Text(String(self.calendar.component(.day, from: date)))
-                            .foregroundColor(Color("CalendarDate"))
+                                .foregroundColor(Color.black)
                         )
                 }
+                .disabled(date > Date())
             }
             .onAppear {
                 if self.viewModel.store.authorizationRequired {
@@ -39,5 +40,15 @@ struct MenstrualCalendarView: View {
             }
             .navigationBarTitle("Cycle Overview", displayMode: .large)
         }
+    }
+    
+    private func buttonColor(for date: Date) -> Color {
+        if date > Date() {
+            return Color(UIColor.gray.withAlphaComponent(0.14))
+        }
+        if self.viewModel.hasMenstrualFlow(at: date) {
+            return Color("DarkPink")
+        }
+        return Color("LightBrown")
     }
 }
