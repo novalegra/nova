@@ -9,7 +9,7 @@
 import SwiftUI
 
 struct ExpandablePicker: View {
-    @State var pickerShouldExpand = false
+    @State var pickerShouldExpand = true
     @State var pickerIndex: Int = 0 // initializing with zero so it doesn't error
     let initialPickerIndex: Int
     var onUpdate: (Int) -> Void

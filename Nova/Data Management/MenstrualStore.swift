@@ -29,6 +29,8 @@ class MenstrualStore {
     // MARK: HealthKit
     let healthStore: HKHealthStore
     
+    let onlyObserveSamplesFromCurrentApp = true
+    
     var healthStoreUpdateCompletionHandler: (([MenstrualSample]) -> Void)?
     
     var sampleType: HKSampleType {
@@ -89,7 +91,7 @@ class MenstrualStore {
         
         let updateGroup = DispatchGroup()
         updateGroup.enter()
-        getRecentMenstrualSamples(start: start, matching: hadFlowPredicate, sampleLimit: days) {
+        getRecentMenstrualSamples(start: start, matching: makeCompoundPredicateIfNeeded(for: hadFlowPredicate), sampleLimit: days) {
             (result) in
             switch result {
             case .success(let samples):
@@ -101,7 +103,7 @@ class MenstrualStore {
         }
         
         updateGroup.enter()
-        getRecentMenstrualSamples(start: start, matching: lightFlowPredicate, sampleLimit: days) {
+        getRecentMenstrualSamples(start: start, matching: makeCompoundPredicateIfNeeded(for: lightFlowPredicate), sampleLimit: days) {
             (result) in
             switch result {
             case .success(let samples):
@@ -113,7 +115,7 @@ class MenstrualStore {
         }
         
         updateGroup.enter()
-        getRecentMenstrualSamples(start: start, matching: mediumFlowPredicate, sampleLimit: days) {
+        getRecentMenstrualSamples(start: start, matching: makeCompoundPredicateIfNeeded(for: mediumFlowPredicate), sampleLimit: days) {
             (result) in
             switch result {
             case .success(let samples):
@@ -125,7 +127,7 @@ class MenstrualStore {
         }
         
         updateGroup.enter()
-        getRecentMenstrualSamples(start: start, matching: heavyFlowPredicate, sampleLimit: days) {
+        getRecentMenstrualSamples(start: start, matching: makeCompoundPredicateIfNeeded(for: heavyFlowPredicate), sampleLimit: days) {
             (result) in
             switch result {
             case .success(let samples):
@@ -163,6 +165,18 @@ class MenstrualStore {
             }
         }
         healthStore.execute(query)
+    }
+    
+    func makeCompoundPredicateIfNeeded(for predicate: NSPredicate) -> NSPredicate {
+        guard onlyObserveSamplesFromCurrentApp else {
+            return predicate
+        }
+        return NSCompoundPredicate(
+            andPredicateWithSubpredicates: [
+                predicate,
+                HKQuery.predicateForObjects(from: HKSource.default())
+            ]
+        )
     }
     
     // MARK: Data Storage
