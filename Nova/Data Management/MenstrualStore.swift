@@ -29,6 +29,8 @@ class MenstrualStore {
     // MARK: HealthKit
     let healthStore: HKHealthStore
     
+    var healthStoreUpdateCompletionHandler: (([HKCategorySample]) -> Void)?
+    
     var sampleType: HKSampleType {
         return HKObjectType.categoryType(forIdentifier: .menstrualFlow)!
     }
@@ -39,6 +41,21 @@ class MenstrualStore {
     
     func authorize() {
         healthStore.requestAuthorization(toShare: [sampleType], read: [sampleType]) { _, _ in }
+    }
+
+    func setUpBackgroundDelivery() {
+        let query = HKObserverQuery(sampleType: sampleType, predicate: nil) { [weak self] (query, completionHandler, error) in
+            self?.dataFetch.async {
+                self?.getRecentMenstrualSamples() { samples in
+                    self?.healthStoreUpdateCompletionHandler?(samples)
+                }
+            }
+            completionHandler()
+        }
+        healthStore.execute(query)
+        healthStore.enableBackgroundDelivery(for: sampleType, frequency: .immediate) { (enabled, error) in
+            print("enableBackgroundDeliveryForType handler called for \(self.sampleType) - success: \(enabled), error: \(String(describing: error))")
+        }
     }
     
     // MARK: Data Retrieval
@@ -68,6 +85,7 @@ class MenstrualStore {
         dispatchPrecondition(condition: .onQueue(dataFetch))
         // Go 'days' back
         let start = Calendar.current.date(byAdding: .day, value: -days, to: Date())!
+        var newMenstrualEvents: [HKCategorySample] = []
         
         let updateGroup = DispatchGroup()
         updateGroup.enter()
@@ -75,7 +93,7 @@ class MenstrualStore {
             (result) in
             switch result {
             case .success(let samples):
-                self.menstrualEvents = self.menstrualEvents + samples
+                newMenstrualEvents = newMenstrualEvents + samples
             default:
                 break
             }
@@ -87,7 +105,7 @@ class MenstrualStore {
             (result) in
             switch result {
             case .success(let samples):
-                self.menstrualEvents = self.menstrualEvents + samples
+                newMenstrualEvents = newMenstrualEvents + samples
             default:
                 break
             }
@@ -99,7 +117,7 @@ class MenstrualStore {
             (result) in
             switch result {
             case .success(let samples):
-                self.menstrualEvents = self.menstrualEvents + samples
+                newMenstrualEvents = newMenstrualEvents + samples
             default:
                 break
             }
@@ -111,14 +129,15 @@ class MenstrualStore {
             (result) in
             switch result {
             case .success(let samples):
-                self.menstrualEvents = self.menstrualEvents + samples
+                newMenstrualEvents = newMenstrualEvents + samples
             default:
                 break
             }
             updateGroup.leave()
         }
         updateGroup.wait()
-        completion(self.menstrualEvents)
+        self.menstrualEvents = newMenstrualEvents
+        completion(newMenstrualEvents)
     }
 
     fileprivate func getRecentMenstrualSamples(start: Date, end: Date = Date(), matching predicate: NSPredicate, sampleLimit: Int, _ completion: @escaping (_ result: MenstrualStoreResult<[HKCategorySample]>) -> Void) {

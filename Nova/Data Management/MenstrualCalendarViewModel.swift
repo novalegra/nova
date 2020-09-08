@@ -11,38 +11,21 @@ import HealthKit
 
 class MenstrualCalendarViewModel: ObservableObject {
     let store: MenstrualStore
-    var menstrualEvents: [MenstrualSample] = []
+    @Published var menstrualEvents: [MenstrualSample] = []
     
     init(store: MenstrualStore) {
         self.store = store
-        startTimer()
-    }
-    
-    deinit {
-        stopTimer()
+        store.healthStoreUpdateCompletionHandler = { [weak self] updatedEvents in
+            DispatchQueue.main.async {
+                self?.menstrualEvents = updatedEvents.map { MenstrualSample(sample: $0) }
+            }
+        }
+        store.setUpBackgroundDelivery()
     }
     
     // MARK: Data Refresh
     var timer: DispatchSourceTimer?
     let refreshInterval = 12 /* hours */ * 60 /* minutes */ * 60 /* seconds */
-
-    private func startTimer() {
-        timer = DispatchSource.makeTimerSource(queue: store.dataFetch)
-        timer!.schedule(deadline: .now(), repeating: .seconds(refreshInterval))
-        timer!.setEventHandler { [weak self] in
-            print("Getting samples")
-            self?.store.getRecentMenstrualSamples({ samples in
-                self?.menstrualEvents = samples.map { MenstrualSample(sample: $0) }
-                print("Success retrieving samples \(samples)")
-            })
-        }
-        timer!.resume()
-    }
-
-    func stopTimer() {
-        timer?.cancel()
-        timer = nil
-    }
     
     // MARK: Helper Functions
     func hasMenstrualFlow(at date: Date) -> Bool {

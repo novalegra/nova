@@ -7,113 +7,393 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "1824BB94-E76B-4BBB-A42B-81C0416C4A86"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Nova/Data Management/MenstrualCalendarViewModel.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "34"
-            endingLineNumber = "34"
-            landmarkName = "startTimer()"
-            landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "1824BB94-E76B-4BBB-A42B-81C0416C4A86 - adad235ad3537e44"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 () -&gt; () in Nova.MenstrualCalendarViewModel.(startTimer in _6B8BA9EA5F0DB0F0332B843FA5530AC5)() -&gt; ()"
-                  moduleName = "Nova"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/annaquinlan/Desktop/Nova/Nova/Data%20Management/MenstrualCalendarViewModel.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "33"
-                  endingLineNumber = "33"
-                  offsetFromSymbolStart = "59">
-               </Location>
-               <Location
-                  uuid = "1824BB94-E76B-4BBB-A42B-81C0416C4A86 - a89c8707f51d600e"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 (Nova.MenstrualStoreResult&lt;Swift.Array&lt;__C.HKCategorySample&gt;&gt;) -&gt; () in closure #1 () -&gt; () in Nova.MenstrualCalendarViewModel.(startTimer in _6B8BA9EA5F0DB0F0332B843FA5530AC5)() -&gt; ()"
-                  moduleName = "Nova"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/annaquinlan/Desktop/Nova/Nova/Data%20Management/MenstrualCalendarViewModel.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "32"
-                  endingLineNumber = "32"
-                  offsetFromSymbolStart = "93">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "0D532815-98E9-4FFC-9C68-FD3086CCBD64"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Nova/Data Management/MenstrualCalendarViewModel.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "35"
-            endingLineNumber = "35"
-            landmarkName = "startTimer()"
-            landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "0D532815-98E9-4FFC-9C68-FD3086CCBD64 - a89c8707f51d600e"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 (Nova.MenstrualStoreResult&lt;Swift.Array&lt;__C.HKCategorySample&gt;&gt;) -&gt; () in closure #1 () -&gt; () in Nova.MenstrualCalendarViewModel.(startTimer in _6B8BA9EA5F0DB0F0332B843FA5530AC5)() -&gt; ()"
-                  moduleName = "Nova"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/annaquinlan/Desktop/Nova/Nova/Data%20Management/MenstrualCalendarViewModel.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "36"
-                  endingLineNumber = "36"
-                  offsetFromSymbolStart = "303">
-               </Location>
-               <Location
-                  uuid = "0D532815-98E9-4FFC-9C68-FD3086CCBD64 - a89c8707f51d600e"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 (Nova.MenstrualStoreResult&lt;Swift.Array&lt;__C.HKCategorySample&gt;&gt;) -&gt; () in closure #1 () -&gt; () in Nova.MenstrualCalendarViewModel.(startTimer in _6B8BA9EA5F0DB0F0332B843FA5530AC5)() -&gt; ()"
-                  moduleName = "Nova"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/annaquinlan/Desktop/Nova/Nova/Data%20Management/MenstrualCalendarViewModel.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "36"
-                  endingLineNumber = "36"
-                  offsetFromSymbolStart = "401">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
             uuid = "EF1A9AD1-9CAE-4337-A738-3223D73C4183"
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Nova/Data Management/MenstrualStore.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "68"
-            endingLineNumber = "68"
+            startingLineNumber = "85"
+            endingLineNumber = "85"
             landmarkName = "getRecentMenstrualSamples(days:_:)"
             landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "214838F3-931B-40F6-975B-A5B9B4D26FD0"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Nova/Data Management/MenstrualStore.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "49"
+            endingLineNumber = "49"
+            landmarkName = "setUpBackgroundDelivery()"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "214838F3-931B-40F6-975B-A5B9B4D26FD0 - 1a461e67649fec1b"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 () -&gt; () in closure #1 (__C.HKObserverQuery, () -&gt; (), Swift.Optional&lt;Swift.Error&gt;) -&gt; () in Nova.MenstrualStore.setUpBackgroundDelivery() -&gt; ()"
+                  moduleName = "Nova"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/annaquinlan/Desktop/Nova/Nova/Data%20Management/MenstrualStore.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "49"
+                  endingLineNumber = "49"
+                  offsetFromSymbolStart = "56">
+               </Location>
+               <Location
+                  uuid = "214838F3-931B-40F6-975B-A5B9B4D26FD0 - 86799a1172cefe3"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Swift.Array&lt;__C.HKCategorySample&gt;) -&gt; () in closure #1 () -&gt; () in closure #1 (__C.HKObserverQuery, () -&gt; (), Swift.Optional&lt;Swift.Error&gt;) -&gt; () in Nova.MenstrualStore.setUpBackgroundDelivery() -&gt; ()"
+                  moduleName = "Nova"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/annaquinlan/Desktop/Nova/Nova/Data%20Management/MenstrualStore.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "47"
+                  endingLineNumber = "47"
+                  offsetFromSymbolStart = "88">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "7B31FB5D-556E-463C-B7D4-CC3074A828DE"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Nova/Data Management/MenstrualStore.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "50"
+            endingLineNumber = "50"
+            landmarkName = "setUpBackgroundDelivery()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "EC348064-3A8B-4562-A46E-5DFD8868EFB4"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Nova/Data Management/MenstrualStore.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "138"
+            endingLineNumber = "138"
+            landmarkName = "getRecentMenstrualSamples(days:_:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "4701BDBE-3999-4A88-8EB8-28B224F5B4FC"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Nova/Views/MenstrualCalendarView.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "23"
+            endingLineNumber = "23"
+            landmarkName = "body"
+            landmarkType = "24">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "70BF6A73-B6D7-4F3A-82C9-1D1DAF4BB776"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Nova/Data Management/MenstrualCalendarViewModel.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "20"
+            endingLineNumber = "20"
+            landmarkName = "init(store:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "70BF6A73-B6D7-4F3A-82C9-1D1DAF4BB776 - 2edae93621a71485"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Swift.Array&lt;__C.HKCategorySample&gt;) -&gt; () in Nova.MenstrualCalendarViewModel.init(store: Nova.MenstrualStore) -&gt; Nova.MenstrualCalendarViewModel"
+                  moduleName = "Nova"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/annaquinlan/Desktop/Nova/Nova/Data%20Management/MenstrualCalendarViewModel.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "19"
+                  endingLineNumber = "19"
+                  offsetFromSymbolStart = "53">
+               </Location>
+               <Location
+                  uuid = "70BF6A73-B6D7-4F3A-82C9-1D1DAF4BB776 - 2c841545b687d3da"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (__C.HKCategorySample) -&gt; Nova.MenstrualSample in closure #1 (Swift.Array&lt;__C.HKCategorySample&gt;) -&gt; () in Nova.MenstrualCalendarViewModel.init(store: Nova.MenstrualStore) -&gt; Nova.MenstrualCalendarViewModel"
+                  moduleName = "Nova"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/annaquinlan/Desktop/Nova/Nova/Data%20Management/MenstrualCalendarViewModel.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "19"
+                  endingLineNumber = "19"
+                  offsetFromSymbolStart = "20">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "0F7E6EBB-B944-45C7-BC18-7554EB2641AB"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Nova/Data Management/MenstrualCalendarViewModel.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "14"
+            endingLineNumber = "14"
+            landmarkName = "MenstrualCalendarViewModel"
+            landmarkType = "3">
+            <Locations>
+               <Location
+                  uuid = "0F7E6EBB-B944-45C7-BC18-7554EB2641AB - d854af56cc249b4b"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "property wrapper backing initializer of Nova.MenstrualCalendarViewModel.menstrualEvents : Swift.Array&lt;Nova.MenstrualSample&gt;"
+                  moduleName = "Nova"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/annaquinlan/Desktop/Nova/Nova/Data%20Management/MenstrualCalendarViewModel.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "14"
+                  endingLineNumber = "14"
+                  offsetFromSymbolStart = "28">
+               </Location>
+               <Location
+                  uuid = "0F7E6EBB-B944-45C7-BC18-7554EB2641AB - 7e9b52a2980c4d9a"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Nova.MenstrualCalendarViewModel.menstrualEvents.getter : Swift.Array&lt;Nova.MenstrualSample&gt;"
+                  moduleName = "Nova"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/annaquinlan/Desktop/Nova/Nova/Data%20Management/MenstrualCalendarViewModel.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "14"
+                  endingLineNumber = "14"
+                  offsetFromSymbolStart = "104">
+               </Location>
+               <Location
+                  uuid = "0F7E6EBB-B944-45C7-BC18-7554EB2641AB - 775795629eba6196"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Nova.MenstrualCalendarViewModel.menstrualEvents.setter : Swift.Array&lt;Nova.MenstrualSample&gt;"
+                  moduleName = "Nova"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/annaquinlan/Desktop/Nova/Nova/Data%20Management/MenstrualCalendarViewModel.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "14"
+                  endingLineNumber = "14"
+                  offsetFromSymbolStart = "130">
+               </Location>
+               <Location
+                  uuid = "0F7E6EBB-B944-45C7-BC18-7554EB2641AB - a70f2dc5790eb8e5"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Nova.MenstrualCalendarViewModel.menstrualEvents.modify : Swift.Array&lt;Nova.MenstrualSample&gt;"
+                  moduleName = "Nova"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/annaquinlan/Desktop/Nova/Nova/Data%20Management/MenstrualCalendarViewModel.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "0"
+                  endingLineNumber = "0"
+                  offsetFromSymbolStart = "58">
+               </Location>
+               <Location
+                  uuid = "0F7E6EBB-B944-45C7-BC18-7554EB2641AB - 63a880a66f74deca"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Nova.MenstrualCalendarViewModel.menstrualEvents.modify : Swift.Array&lt;Nova.MenstrualSample&gt; with unmangled suffix &quot;.resume.0&quot;"
+                  moduleName = "Nova"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/annaquinlan/Desktop/Nova/Nova/Data%20Management/MenstrualCalendarViewModel.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "14"
+                  endingLineNumber = "14"
+                  offsetFromSymbolStart = "40">
+               </Location>
+               <Location
+                  uuid = "0F7E6EBB-B944-45C7-BC18-7554EB2641AB - a1931c12d19fc3ef"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Nova.MenstrualCalendarViewModel.$menstrualEvents.getter : Combine.Published&lt;Swift.Array&lt;Nova.MenstrualSample&gt;&gt;.Publisher"
+                  moduleName = "Nova"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/annaquinlan/Desktop/Nova/Nova/Data%20Management/MenstrualCalendarViewModel.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "14"
+                  endingLineNumber = "14"
+                  offsetFromSymbolStart = "110">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "599C86F6-E0B6-40B1-A88C-FA8A64EC9C88"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Nova/Data Management/MenstrualCalendarViewModel.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "22"
+            endingLineNumber = "22"
+            landmarkName = "init(store:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "EDC2428E-3D81-4B6A-BEF5-5E1BB7071122"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Nova/Data Management/MenstrualCalendarViewModel.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "13"
+            endingLineNumber = "13"
+            landmarkName = "MenstrualCalendarViewModel"
+            landmarkType = "3">
+            <Locations>
+               <Location
+                  uuid = "EDC2428E-3D81-4B6A-BEF5-5E1BB7071122 - d854af56cc249b4b"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "property wrapper backing initializer of Nova.MenstrualCalendarViewModel.menstrualEvents : Swift.Array&lt;Nova.MenstrualSample&gt;"
+                  moduleName = "Nova"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/annaquinlan/Desktop/Nova/Nova/Data%20Management/MenstrualCalendarViewModel.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "14"
+                  endingLineNumber = "14"
+                  offsetFromSymbolStart = "28">
+               </Location>
+               <Location
+                  uuid = "EDC2428E-3D81-4B6A-BEF5-5E1BB7071122 - 7e9b52a2980c4d9a"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Nova.MenstrualCalendarViewModel.menstrualEvents.getter : Swift.Array&lt;Nova.MenstrualSample&gt;"
+                  moduleName = "Nova"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/annaquinlan/Desktop/Nova/Nova/Data%20Management/MenstrualCalendarViewModel.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "14"
+                  endingLineNumber = "14"
+                  offsetFromSymbolStart = "104">
+               </Location>
+               <Location
+                  uuid = "EDC2428E-3D81-4B6A-BEF5-5E1BB7071122 - 775795629eba6196"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Nova.MenstrualCalendarViewModel.menstrualEvents.setter : Swift.Array&lt;Nova.MenstrualSample&gt;"
+                  moduleName = "Nova"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/annaquinlan/Desktop/Nova/Nova/Data%20Management/MenstrualCalendarViewModel.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "14"
+                  endingLineNumber = "14"
+                  offsetFromSymbolStart = "130">
+               </Location>
+               <Location
+                  uuid = "EDC2428E-3D81-4B6A-BEF5-5E1BB7071122 - a70f2dc5790eb8e5"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Nova.MenstrualCalendarViewModel.menstrualEvents.modify : Swift.Array&lt;Nova.MenstrualSample&gt;"
+                  moduleName = "Nova"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/annaquinlan/Desktop/Nova/Nova/Data%20Management/MenstrualCalendarViewModel.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "0"
+                  endingLineNumber = "0"
+                  offsetFromSymbolStart = "58">
+               </Location>
+               <Location
+                  uuid = "EDC2428E-3D81-4B6A-BEF5-5E1BB7071122 - 63a880a66f74deca"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Nova.MenstrualCalendarViewModel.menstrualEvents.modify : Swift.Array&lt;Nova.MenstrualSample&gt; with unmangled suffix &quot;.resume.0&quot;"
+                  moduleName = "Nova"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/annaquinlan/Desktop/Nova/Nova/Data%20Management/MenstrualCalendarViewModel.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "14"
+                  endingLineNumber = "14"
+                  offsetFromSymbolStart = "40">
+               </Location>
+               <Location
+                  uuid = "EDC2428E-3D81-4B6A-BEF5-5E1BB7071122 - a1931c12d19fc3ef"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Nova.MenstrualCalendarViewModel.$menstrualEvents.getter : Combine.Published&lt;Swift.Array&lt;Nova.MenstrualSample&gt;&gt;.Publisher"
+                  moduleName = "Nova"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/annaquinlan/Desktop/Nova/Nova/Data%20Management/MenstrualCalendarViewModel.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "14"
+                  endingLineNumber = "14"
+                  offsetFromSymbolStart = "110">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

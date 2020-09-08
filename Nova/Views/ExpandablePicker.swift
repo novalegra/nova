@@ -38,7 +38,6 @@ struct ExpandablePicker: View {
                 Text(label)
                 Spacer()
                 Text(items[pickerIndex])
-                .foregroundColor(.black)
                 Text(unit)
                 
             }
