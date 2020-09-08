@@ -52,13 +52,13 @@ struct FlowPicker: View {
             .onAppear {
                 self.pickerIndex = self.initialPickerIndex
             }
-//            .onReceive(selection.objectWillChange, perform: {
-//                if self.selection != .hadFlow {
-//                        self.pickerIndex = 0
-//                        self.pickerShouldExpand = false
-//                    }
-//                }
-//            )
+            .onReceive(viewModel.objectWillChange, perform: {
+                if self.viewModel.selection != .hadFlow {
+                        self.pickerIndex = 0
+                        self.pickerShouldExpand = false
+                    }
+                }
+            )
             if pickerShouldExpand && viewModel.selection == .hadFlow {
                 HStack {
                     Picker(selection: $pickerIndex.onChange(onUpdate), label: Text("")) {
