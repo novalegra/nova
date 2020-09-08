@@ -11,9 +11,10 @@ import HealthKit
 let MetadataKeyMenstrualVolume = "com.nova.HKMetadataKey.MenstrualVolume"
 
 extension HKCategorySample {
-    convenience init?(entry: MenstrualSample) {
+    convenience init(entry: MenstrualSample) {
         let metadata: [String: Any] = [
-            MetadataKeyMenstrualVolume: entry.volume ?? -1
+            MetadataKeyMenstrualVolume: entry.volume ?? -1,
+            HKMetadataKeyMenstrualCycleStart: 0
         ]
         let type = HKObjectType.categoryType(forIdentifier: .menstrualFlow)!
     

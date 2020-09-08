@@ -20,12 +20,10 @@ struct CalendarView<DateView>: View where DateView: View {
     }
 
     private var months: [Date] {
-        var dates = calendar.generateDates(
+        return calendar.generateDates(
             inside: interval,
             matching: DateComponents(day: 1, hour: 0, minute: 0, second: 0)
         )
-        dates.reverse()
-        return dates
     }
 
     var body: some View {

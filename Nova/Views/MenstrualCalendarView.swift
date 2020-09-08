@@ -18,7 +18,7 @@ struct MenstrualCalendarView: View {
         NavigationView {
             CalendarView(interval: calendarDuraton) { date in
                 NavigationLink(
-                    destination: MenstrualEventEditor(sample: self.viewModel.menstrualEventIfPresent(for: date))
+                    destination: MenstrualEventEditor(viewModel: self.viewModel, sample: self.viewModel.menstrualEventIfPresent(for: date))
                 ) {
                     Text("00") // Placeholder so it works
                         .hidden()

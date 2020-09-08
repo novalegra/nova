@@ -15,14 +15,16 @@ enum SelectionState {
 }
 
 struct MenstrualEventEditor: View {
+    @ObservedObject var viewModel: MenstrualCalendarViewModel
     let sample: MenstrualSample?
     @State var selection: SelectionState = .none
     
     let flowPickerOptions = (0...45).map { String($0) }
     @State var selectedIndex = 0 // TODO: update this if needed
     
-    init(sample: MenstrualSample?) {
+    init(viewModel: MenstrualCalendarViewModel, sample: MenstrualSample?) {
         self.sample = sample
+        self.viewModel = viewModel
     }
     
     var body: some View {
@@ -36,9 +38,24 @@ struct MenstrualEventEditor: View {
         .listStyle(GroupedListStyle())
         .environment(\.horizontalSizeClass, .regular)
         .onAppear {
-            self.selection = self.sample != nil ? .hadFlow : .none
+            if let sample = self.sample {
+                self.selection = .hadFlow
+                // TODO: could this be prettier?
+                self.selectedIndex = self.flowPickerOptions.firstIndex(of: String(sample.volume ?? 0)) ?? 0
+            }
         }
         .navigationBarTitle(sample != nil ? "Edit Flow" : "Track Flow", displayMode: .inline)
+        .navigationBarItems(trailing: saveButton)
+    }
+    
+    var saveButton: some View {
+        Button("Save") {
+            // TODO
+            if let sample = self.sample {
+                sample.volume = Int(self.flowPickerOptions[self.selectedIndex])
+                self.viewModel.store.saveSample(sample)
+            }
+        }
     }
     
     var hadFlowRow: some View {

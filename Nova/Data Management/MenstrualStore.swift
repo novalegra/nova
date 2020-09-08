@@ -164,4 +164,17 @@ class MenstrualStore {
         }
         healthStore.execute(query)
     }
+    
+    // MARK: Data Storage
+    func saveSample(_ entry: MenstrualSample) {
+        let persistedSample = HKCategorySample(entry: entry)
+        healthStore.save(persistedSample) { success, error in
+            if (error != nil) {
+                print("Error: \(String(describing: error))")
+            }
+            if success {
+                print("Saved: \(success)")
+            }
+        }
+    }
 }

@@ -12,7 +12,7 @@ class MenstrualSample {
     let startDate: Date
     let endDate: Date
     let flowLevel: HKCategoryValueMenstrualFlow
-    let volume: Int? // in mL
+    var volume: Int? // in mL
     
     init(startDate: Date, endDate: Date, flowLevel: HKCategoryValueMenstrualFlow, volume: Int? = nil) {
         self.startDate = startDate
