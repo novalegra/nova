@@ -42,6 +42,8 @@ class MenstrualStore {
     }
     
     // MARK: Data Retrieval
+    let dataFetch = DispatchQueue(label: "com.nova.MenstrualStoreQueue", qos: .utility)
+    
     let hadFlowPredicate = HKQuery.predicateForCategorySamples(
         with: .equalTo,
         value: HKCategoryValueMenstrualFlow.unspecified.rawValue
@@ -52,15 +54,23 @@ class MenstrualStore {
         value: HKCategoryValueMenstrualFlow.light.rawValue
     )
     
+    let mediumFlowPredicate = HKQuery.predicateForCategorySamples(
+        with: .equalTo,
+        value: HKCategoryValueMenstrualFlow.medium.rawValue
+    )
+    
     let heavyFlowPredicate = HKQuery.predicateForCategorySamples(
         with: .equalTo,
         value: HKCategoryValueMenstrualFlow.heavy.rawValue
     )
     
-    func getRecentMenstrualSamples(days: Int = 90, _ completion: @escaping (_ result: MenstrualStoreResult<[HKCategorySample]>) -> Void) {
+    func getRecentMenstrualSamples(days: Int = 90, _ completion: @escaping (_ result: [HKCategorySample]) -> Void) {
+        dispatchPrecondition(condition: .onQueue(dataFetch))
         // Go 'days' back
         let start = Calendar.current.date(byAdding: .day, value: -days, to: Date())!
         
+        let updateGroup = DispatchGroup()
+        updateGroup.enter()
         getRecentMenstrualSamples(start: start, matching: hadFlowPredicate, sampleLimit: days) {
             (result) in
             switch result {
@@ -69,11 +79,51 @@ class MenstrualStore {
             default:
                 break
             }
-            completion(result)
+            updateGroup.leave()
         }
+        
+        updateGroup.enter()
+        getRecentMenstrualSamples(start: start, matching: lightFlowPredicate, sampleLimit: days) {
+            (result) in
+            switch result {
+            case .success(let samples):
+                self.menstrualEvents = self.menstrualEvents + samples
+            default:
+                break
+            }
+            updateGroup.leave()
+        }
+        
+        updateGroup.enter()
+        getRecentMenstrualSamples(start: start, matching: mediumFlowPredicate, sampleLimit: days) {
+            (result) in
+            switch result {
+            case .success(let samples):
+                self.menstrualEvents = self.menstrualEvents + samples
+            default:
+                break
+            }
+            updateGroup.leave()
+        }
+        
+        updateGroup.enter()
+        getRecentMenstrualSamples(start: start, matching: heavyFlowPredicate, sampleLimit: days) {
+            (result) in
+            switch result {
+            case .success(let samples):
+                self.menstrualEvents = self.menstrualEvents + samples
+            default:
+                break
+            }
+            updateGroup.leave()
+        }
+        updateGroup.wait()
+        completion(self.menstrualEvents)
     }
 
     fileprivate func getRecentMenstrualSamples(start: Date, end: Date = Date(), matching predicate: NSPredicate, sampleLimit: Int, _ completion: @escaping (_ result: MenstrualStoreResult<[HKCategorySample]>) -> Void) {
+        dispatchPrecondition(condition: .onQueue(dataFetch))
+        
         // get more-recent values first
         let sortByDate = NSSortDescriptor(key: HKSampleSortIdentifierStartDate, ascending: false)
         
@@ -94,6 +144,4 @@ class MenstrualStore {
         }
         healthStore.execute(query)
     }
-    
-    
 }

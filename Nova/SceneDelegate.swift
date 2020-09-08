@@ -8,6 +8,7 @@
 
 import UIKit
 import SwiftUI
+import HealthKit
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
@@ -24,7 +25,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
         // Create the SwiftUI view and set the context as the value for the managedObjectContext environment keyPath.
         // Add `@Environment(\.managedObjectContext)` in the views that will need the context.
-        let contentView = MenstrualCalendarView().environment(\.managedObjectContext, context)
+        let healthStore = HKHealthStore()
+        let store = MenstrualStore(healthStore: healthStore)
+        let model = MenstrualCalendarViewModel(store: store)
+        
+        let contentView = MenstrualCalendarView(viewModel: model).environment(\.managedObjectContext, context)
 
         // Use a UIHostingController as window root view controller.
         if let windowScene = scene as? UIWindowScene {
