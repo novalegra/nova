@@ -87,7 +87,7 @@ struct MenstrualEventEditor: View {
         HStack {
             Text("Had Flow", comment: "Label for had flow selector")
             Spacer()
-            Image(systemName: self.viewModel.selection == .hadFlow ? "checkmark.square" : "square")
+            Image(self.viewModel.selection == .hadFlow ? "Checked-Circle" : "Unchecked-Circle")
             .resizable()
             .frame(width: 20.0, height: 20.0)
             .onTapGesture {
@@ -100,7 +100,7 @@ struct MenstrualEventEditor: View {
         HStack {
             Text("No Flow", comment: "Label for no flow selector")
             Spacer()
-            Image(systemName: self.viewModel.selection == .noFlow ? "checkmark.square" : "square")
+            Image(self.viewModel.selection == .noFlow ? "Checked-Circle" : "Unchecked-Circle")
             .resizable()
             .frame(width: 20.0, height: 20.0)
             .onTapGesture {
