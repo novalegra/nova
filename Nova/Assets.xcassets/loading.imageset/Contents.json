@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "Appicon.jpg",
+      "filename" : "launch screen.jpg",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "Appicon-1.jpg",
+      "filename" : "launch screen-1.jpg",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "Appicon-2.jpg",
+      "filename" : "launch screen-2.jpg",
       "idiom" : "universal",
       "scale" : "3x"
     }

@@ -65,20 +65,7 @@ struct MenstrualEventEditor: View {
     
     var saveButton: some View {
         Button(sample != nil ? "Update" : "Save") {
-            let volume = self.viewModel.selection == .hadFlow ? Int(self.viewModel.flowPickerOptions[self.selectedIndex]): 0
-            
-            if let sample = self.sample {
-                if self.viewModel.selection == .none {
-                    self.viewModel.deleteSample(sample)
-                } else {
-                    sample.volume = volume
-                    sample.flowLevel = self.viewModel.selection.hkFlowLevel
-                    self.viewModel.updateSample(sample)
-                }
-            } else if self.viewModel.selection != .none {
-                let sample = MenstrualSample(startDate: self.date, endDate: self.date, flowLevel: self.viewModel.selection.hkFlowLevel, volume: volume)
-                self.viewModel.saveSample(sample)
-            }
+            self.viewModel.save(sample: self.sample, date: self.date, selectedIndex: self.selectedIndex)
             self.presentationMode.wrappedValue.dismiss()
         }
     }

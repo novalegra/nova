@@ -65,6 +65,23 @@ class MenstrualCalendarViewModel: ObservableObject {
         return (event.startDate <= date && event.endDate >= date) || Calendar.current.isDate(event.startDate, inSameDayAs: date) || Calendar.current.isDate(event.endDate, inSameDayAs: date)
     }
     
+    func save(sample: MenstrualSample?, date: Date, selectedIndex: Int) {
+        let volume = selection == .hadFlow ? Int(flowPickerOptions[selectedIndex]): 0
+        
+        if let sample = sample {
+            if selection == .none {
+                deleteSample(sample)
+            } else {
+                sample.volume = volume
+                sample.flowLevel = selection.hkFlowLevel
+                updateSample(sample)
+            }
+        } else if selection != .none {
+            let sample = MenstrualSample(startDate: date, endDate: date, flowLevel: selection.hkFlowLevel, volume: volume)
+            saveSample(sample)
+        }
+    }
+    
     // MARK: Volume Selection
     let flowPickerOptions = (0...45).map { String($0) }
 }
