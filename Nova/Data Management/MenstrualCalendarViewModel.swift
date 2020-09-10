@@ -65,6 +65,27 @@ class MenstrualCalendarViewModel: ObservableObject {
         return (event.startDate <= date && event.endDate >= date) || Calendar.current.isDate(event.startDate, inSameDayAs: date) || Calendar.current.isDate(event.endDate, inSameDayAs: date)
     }
     
+    func flowLevel(for selection: SelectionState, with volume: Int) -> HKCategoryValueMenstrualFlow {
+        switch selection {
+        // Values from https://www.everydayhealth.com/womens-health/menstruation/making-sense-menstrual-flow/ based on 5 mL flow = 1 pad
+        case .hadFlow:
+            switch volume {
+            case let val where 0 < val && val < 15:
+                return .light
+            case let val where 15 <= val && val <= 30:
+                return .medium
+            case let val where val > 30:
+                return .heavy
+            default:
+                return .unspecified
+            }
+        case .noFlow:
+            return .none
+        case .none:
+            fatalError("Calling hkFlowLevel when entry is .none")
+        }
+    }
+    
     func save(sample: MenstrualSample?, date: Date, selectedIndex: Int) {
         let volume = selection == .hadFlow ? Int(flowPickerOptions[selectedIndex]): 0
         
@@ -73,15 +94,15 @@ class MenstrualCalendarViewModel: ObservableObject {
                 deleteSample(sample)
             } else {
                 sample.volume = volume
-                sample.flowLevel = selection.hkFlowLevel
+                sample.flowLevel = flowLevel(for: selection, with: selectedIndex)
                 updateSample(sample)
             }
         } else if selection != .none {
-            let sample = MenstrualSample(startDate: date, endDate: date, flowLevel: selection.hkFlowLevel, volume: volume)
+            let sample = MenstrualSample(startDate: date, endDate: date, flowLevel: flowLevel(for: selection, with: selectedIndex), volume: volume)
             saveSample(sample)
         }
     }
     
     // MARK: Volume Selection
-    let flowPickerOptions = (0...45).map { String($0) }
+    let flowPickerOptions = (0...80).map { String($0) }
 }

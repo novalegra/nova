@@ -13,17 +13,6 @@ enum SelectionState {
     case hadFlow
     case noFlow
     case none
-    
-    var hkFlowLevel: HKCategoryValueMenstrualFlow {
-        switch self {
-        case .hadFlow:
-            return .unspecified
-        case .noFlow:
-            return .none
-        case .none:
-            fatalError("Calling hkFlowLevel when entry is .none")
-        }
-    }
 }
 
 struct MenstrualEventEditor: View {
@@ -57,7 +46,6 @@ struct MenstrualEventEditor: View {
             } else {
                 self.viewModel.selection = .none
             }
-            print("selection", self.viewModel.selection)
         }
         .navigationBarTitle(sample != nil ? "Edit Flow" : "Track Flow", displayMode: .inline)
         .navigationBarItems(trailing: saveButton)
@@ -103,7 +91,7 @@ struct MenstrualEventEditor: View {
             onUpdate: { index in
                 self.selectedIndex = index
             },
-            label: NSLocalizedString("Menstrual Flow", comment: "Menstrual flow picker label"),
+            label: NSLocalizedString("24-Hour Menstrual Flow", comment: "Menstrual flow picker label"),
             unit: NSLocalizedString("mL", comment: "Milliliter unit label"),
             initialPickerIndex: self.viewModel.flowPickerOptions.firstIndex(of: String(sample?.volume ?? 0)) ?? 0
         )
