@@ -30,7 +30,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Add `@Environment(\.managedObjectContext)` in the views that will need the context.
         
         
-        let contentView = MenstrualCalendarView(viewModel: model).environment(\.managedObjectContext, context)
+        let contentView = CoordinatorView(viewModel: model).environment(\.managedObjectContext, context)
 
         // Use a UIHostingController as window root view controller.
         if let windowScene = scene as? UIWindowScene {
