@@ -34,7 +34,7 @@ struct StatisticsView: View {
         HStack {
             Text("Average Daily Menstrual Volume:")
             Spacer()
-            Text("\(viewModel.getAverageVolume()) mL")
+            Text("\(String(format: "%.1f", viewModel.getAverageVolume())) mL")
         }
     }
 }

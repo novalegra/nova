@@ -97,7 +97,7 @@ class MenstrualDataManager: ObservableObject {
     }
     
     func getLastPeriodDate() -> String {
-        return getFormattedDate(for: menstrualEvents[0].startDate)
+        return getFormattedDate(for: menstrualEvents.first?.startDate)
     }
     
     func getAverageVolume() -> Double {

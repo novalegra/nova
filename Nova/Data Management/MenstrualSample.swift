@@ -16,6 +16,10 @@ class MenstrualSample {
     let uuid: UUID
     
     init(startDate: Date, endDate: Date, flowLevel: HKCategoryValueMenstrualFlow, volume: Int? = nil, uuid: UUID = UUID()) {
+        guard startDate <= endDate else {
+            fatalError("Can't create menstrual event where start is less than end")
+        }
+        
         self.startDate = startDate
         self.endDate = endDate
         self.flowLevel = flowLevel

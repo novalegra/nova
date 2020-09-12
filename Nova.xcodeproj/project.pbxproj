@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		E914695C250C1BD000D64A5A /* CoordinatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E914695B250C1BD000D64A5A /* CoordinatorView.swift */; };
 		E9146975250C7C7E00D64A5A /* StatisticsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9146974250C7C7E00D64A5A /* StatisticsView.swift */; };
+		E9146977250D5F0D00D64A5A /* MenstrualPeriod.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9146976250D5F0D00D64A5A /* MenstrualPeriod.swift */; };
 		E995A4FB2507145E009D52CF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E995A4FA2507145E009D52CF /* AppDelegate.swift */; };
 		E995A4FD2507145E009D52CF /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E995A4FC2507145E009D52CF /* SceneDelegate.swift */; };
 		E995A5002507145E009D52CF /* Nova.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = E995A4FE2507145E009D52CF /* Nova.xcdatamodeld */; };
@@ -33,6 +34,7 @@
 /* Begin PBXFileReference section */
 		E914695B250C1BD000D64A5A /* CoordinatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoordinatorView.swift; sourceTree = "<group>"; };
 		E9146974250C7C7E00D64A5A /* StatisticsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsView.swift; sourceTree = "<group>"; };
+		E9146976250D5F0D00D64A5A /* MenstrualPeriod.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenstrualPeriod.swift; sourceTree = "<group>"; };
 		E995A4F72507145E009D52CF /* Nova.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Nova.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E995A4FA2507145E009D52CF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E995A4FC2507145E009D52CF /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -143,6 +145,7 @@
 				E995A51E25071DC2009D52CF /* MenstrualStore.swift */,
 				E995A5242507237D009D52CF /* MenstrualDataManager.swift */,
 				E995A5262507289B009D52CF /* MenstrualSample.swift */,
+				E9146976250D5F0D00D64A5A /* MenstrualPeriod.swift */,
 			);
 			path = "Data Management";
 			sourceTree = "<group>";
@@ -228,6 +231,7 @@
 			files = (
 				E995A5252507237D009D52CF /* MenstrualDataManager.swift in Sources */,
 				E995A51525071B01009D52CF /* DateFormatter.swift in Sources */,
+				E9146977250D5F0D00D64A5A /* MenstrualPeriod.swift in Sources */,
 				E995A51925071B9F009D52CF /* CalendarView.swift in Sources */,
 				E995A4FB2507145E009D52CF /* AppDelegate.swift in Sources */,
 				E995A51B25071BB7009D52CF /* MonthView.swift in Sources */,
