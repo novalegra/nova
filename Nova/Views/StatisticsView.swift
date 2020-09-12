@@ -12,6 +12,29 @@ struct StatisticsView: View {
     @ObservedObject var viewModel: MenstrualDataManager
     
     var body: some View {
-        Text("Statistics")
+        NavigationView {
+            List {
+                lastPeriodItem
+                averageVolumeItem
+            }
+            .navigationBarTitle("Statistics", displayMode: .large)
+        }
+        
+    }
+    
+    var lastPeriodItem: some View {
+        HStack {
+            Text("Last Recorded Period Date:")
+            Spacer()
+            Text(viewModel.getLastPeriodDate())
+        }
+    }
+    
+    var averageVolumeItem: some View {
+        HStack {
+            Text("Average Daily Menstrual Volume:")
+            Spacer()
+            Text("\(viewModel.getAverageVolume()) mL")
+        }
     }
 }

@@ -14,6 +14,8 @@ class MenstrualDataManager: ObservableObject {
     @Published var menstrualEvents: [MenstrualSample] = []
     @Published var selection: SelectionState = .none
     
+    let dateFormatter = DateFormatter()
+    
     init(store: MenstrualStore) {
         self.store = store
         store.healthStoreUpdateCompletionHandler = { [weak self] updatedEvents in
@@ -84,6 +86,32 @@ class MenstrualDataManager: ObservableObject {
         case .none:
             fatalError("Calling hkFlowLevel when entry is .none")
         }
+    }
+    
+    func getFormattedDate(for date: Date?) -> String {
+        guard let date = date else {
+            return "None"
+        }
+        dateFormatter.dateFormat = "MM-dd-yyyy"
+        return dateFormatter.string(from: date)
+    }
+    
+    func getLastPeriodDate() -> String {
+        return getFormattedDate(for: menstrualEvents[0].startDate)
+    }
+    
+    func getAverageVolume() -> Double {
+        var totalVolume = 0
+        var totalEvents = 0
+        
+        for event in menstrualEvents {
+            if let volume = event.volume, volume > 0 {
+                totalVolume += volume
+                totalEvents += 1
+            }
+        }
+        
+        return Double(totalVolume) / Double(totalEvents)
     }
     
     func save(sample: MenstrualSample?, date: Date, selectedIndex: Int) {
