@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		E90ED4C2250D73D100F56679 /* SegmentedGaugeBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = E90ED4C1250D73D100F56679 /* SegmentedGaugeBar.swift */; };
+		E90ED4C4250D750D00F56679 /* MenstrualStatisticsDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E90ED4C3250D750D00F56679 /* MenstrualStatisticsDetailView.swift */; };
 		E914695C250C1BD000D64A5A /* CoordinatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E914695B250C1BD000D64A5A /* CoordinatorView.swift */; };
 		E9146975250C7C7E00D64A5A /* StatisticsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9146974250C7C7E00D64A5A /* StatisticsView.swift */; };
 		E9146977250D5F0D00D64A5A /* MenstrualPeriod.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9146976250D5F0D00D64A5A /* MenstrualPeriod.swift */; };
@@ -34,6 +35,7 @@
 
 /* Begin PBXFileReference section */
 		E90ED4C1250D73D100F56679 /* SegmentedGaugeBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SegmentedGaugeBar.swift; sourceTree = "<group>"; };
+		E90ED4C3250D750D00F56679 /* MenstrualStatisticsDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenstrualStatisticsDetailView.swift; sourceTree = "<group>"; };
 		E914695B250C1BD000D64A5A /* CoordinatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoordinatorView.swift; sourceTree = "<group>"; };
 		E9146974250C7C7E00D64A5A /* StatisticsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsView.swift; sourceTree = "<group>"; };
 		E9146976250D5F0D00D64A5A /* MenstrualPeriod.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenstrualPeriod.swift; sourceTree = "<group>"; };
@@ -138,6 +140,7 @@
 				E995A52A250732CB009D52CF /* FlowPicker.swift */,
 				E9146974250C7C7E00D64A5A /* StatisticsView.swift */,
 				E90ED4C1250D73D100F56679 /* SegmentedGaugeBar.swift */,
+				E90ED4C3250D750D00F56679 /* MenstrualStatisticsDetailView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -250,6 +253,7 @@
 				E9146975250C7C7E00D64A5A /* StatisticsView.swift in Sources */,
 				E995A4FD2507145E009D52CF /* SceneDelegate.swift in Sources */,
 				E995A51225071ACB009D52CF /* Calendar.swift in Sources */,
+				E90ED4C4250D750D00F56679 /* MenstrualStatisticsDetailView.swift in Sources */,
 				E914695C250C1BD000D64A5A /* CoordinatorView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

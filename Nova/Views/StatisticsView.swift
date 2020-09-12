@@ -16,9 +16,9 @@ struct StatisticsView: View {
             List {
                 lastPeriodItem
                 averageVolumeItem
-                SegmentedGaugeBar(scaler: 1.5)
-                SegmentedGaugeBar(scaler: 3)
-                SegmentedGaugeBar(scaler: 0.1)
+//                SegmentedGaugeBar(scaler: 1.5)
+//                SegmentedGaugeBar(scaler: 3)
+//                SegmentedGaugeBar(scaler: 0.1)
             }
             .navigationBarTitle("Statistics", displayMode: .large)
         }
@@ -34,10 +34,14 @@ struct StatisticsView: View {
     }
     
     var averageVolumeItem: some View {
-        HStack {
-            Text("Average Daily Menstrual Volume:")
-            Spacer()
-            Text("\(String(format: "%.1f", viewModel.getAverageVolume())) mL")
+        NavigationLink(
+            destination: MenstrualStatisticsDetailView(viewModel: viewModel, title: "Menstrual Volume", mode: .volume)
+        ) {
+            HStack {
+                Text("Average Daily Menstrual Volume:")
+                Spacer()
+                Text("\(String(format: "%.1f", viewModel.getAverageVolume())) mL")
+            }
         }
     }
 }

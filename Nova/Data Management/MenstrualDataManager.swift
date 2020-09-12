@@ -13,7 +13,6 @@ class MenstrualDataManager: ObservableObject {
     let store: MenstrualStore
     // Allowable gap (in days) between samples so it's still considered a period
     let allowablePeriodGap: Int = 1
-    @Published var menstrualEvents: [MenstrualSample] = []
     @Published var selection: SelectionState = .none
     var periods: [MenstrualPeriod] = []
     
@@ -23,7 +22,6 @@ class MenstrualDataManager: ObservableObject {
         self.store = store
         store.healthStoreUpdateCompletionHandler = { [weak self] updatedEvents in
             DispatchQueue.main.async {
-                self?.menstrualEvents = updatedEvents
                 if let processedPeriods = self?.processHealthKitQuerySamples(updatedEvents) {
                     self?.periods = processedPeriods
                 }
@@ -130,21 +128,13 @@ class MenstrualDataManager: ObservableObject {
     }
     
     func getAverageVolume() -> Double {
-        var totalVolume = 0
-        var totalEvents = 0
+        let totalVolume = periods.reduce(0.0) {sum, curr in sum + curr.averageFlow}
         
-        for event in menstrualEvents {
-            if let volume = event.volume, volume > 0 {
-                totalVolume += volume
-                totalEvents += 1
-            }
-        }
-        
-        guard totalEvents > 0 else {
+        guard periods.count > 0 else {
             return 0
         }
         
-        return Double(totalVolume) / Double(totalEvents)
+        return Double(totalVolume) / Double(periods.count)
     }
     
     func save(sample: MenstrualSample?, date: Date, selectedIndex: Int) {

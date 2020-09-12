@@ -30,5 +30,23 @@ class MenstrualPeriod {
         self.startDate = minDate
         self.endDate = maxDate
     }
+    
+    var averageFlow: Double {
+        var totalVolume = 0
+        var totalEvents = 0
+        
+        for event in events {
+            if let volume = event.volume, volume > 0 {
+                totalVolume += volume
+                totalEvents += 1
+            }
+        }
+        
+        guard totalEvents > 0 else {
+            return 0
+        }
+        
+        return Double(totalVolume) / Double(totalEvents)
+    }
 }
 

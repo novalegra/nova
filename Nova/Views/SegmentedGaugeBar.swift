@@ -20,8 +20,8 @@ struct SegmentedGaugeBar: UIViewRepresentable {
         let view = SegmentedGaugeBarView()
         view.backgroundColor = .white
         view.numberOfSegments = 2
-        view.startColor = UIColor(named: "LightBlue")!
-        view.endColor = UIColor(named: "DarkBlue")!
+        view.startColor = UIColor(named: "LightBrown")!
+        view.endColor = UIColor(named: "DarkPink")!
         view.borderWidth = 1
         view.borderColor = .systemGray
         view.progress = scaler
