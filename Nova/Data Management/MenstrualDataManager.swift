@@ -51,6 +51,7 @@ class MenstrualDataManager: ObservableObject {
     }
     
     // This function assumes samples are sorted with most-recent ones first
+    // The output menstrual periods are in sorted order
     func processHealthKitQuerySamples(_ samples: [MenstrualSample]) -> [MenstrualPeriod] {
         guard samples.count > 0 else {
             return []
@@ -88,25 +89,11 @@ class MenstrualDataManager: ObservableObject {
     
     // MARK: Helper Functions
     func hasMenstrualFlow(at date: Date) -> Bool {
-        for event in menstrualEvents {
-            if eventWithinDate(date, event) && event.flowLevel != .none {
-                return true
-            }
-        }
-        return false
+        return store.hasMenstrualFlow(at: date)
     }
     
     func menstrualEventIfPresent(for date: Date) -> MenstrualSample? {
-        for event in menstrualEvents {
-            if eventWithinDate(date, event) {
-                return event
-            }
-        }
-        return nil
-    }
-    
-    func eventWithinDate(_ date: Date, _ event: MenstrualSample) -> Bool {
-        return (event.startDate <= date && event.endDate >= date) || Calendar.current.isDate(event.startDate, inSameDayAs: date) || Calendar.current.isDate(event.endDate, inSameDayAs: date)
+        return store.menstrualEventIfPresent(for: date)
     }
     
     func flowLevel(for selection: SelectionState, with volume: Int) -> HKCategoryValueMenstrualFlow {
@@ -139,10 +126,7 @@ class MenstrualDataManager: ObservableObject {
     }
     
     func getLastPeriodDate() -> String {
-        guard let event = menstrualEvents.first, event.flowLevel != .none else {
-            return getFormattedDate(for: nil)
-        }
-        return getFormattedDate(for: menstrualEvents.first?.startDate)
+        return getFormattedDate(for: periods.last?.startDate)
     }
     
     func getAverageVolume() -> Double {
