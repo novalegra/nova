@@ -33,10 +33,15 @@ struct MenstrualStatisticsDetailView: View {
         Section {
             HStack {
                 Text(viewModel.getFormattedDate(for: event.startDate) + " to " + viewModel.getFormattedDate(for: event.endDate))
+                .foregroundColor(Color("DarkBlue"))
                 Spacer()
             }
-            SegmentedGaugeBar(scaler: statisticValue(for: event))
-            .frame(maxHeight: 20)
+            HStack {
+                SegmentedGaugeBar(scaler: statisticValue(for: event))
+                .frame(minHeight: 20, maxHeight: 20)
+                Text("\(String(format: "%.1f", event.averageFlow)) mL average")
+                .font(.callout)
+            }
         }
         
     }
