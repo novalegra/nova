@@ -10,7 +10,7 @@ import SwiftUI
 
 struct MenstrualCalendarView: View {
     @Environment(\.calendar) var calendar
-    @ObservedObject var viewModel: MenstrualCalendarViewModel
+    @ObservedObject var viewModel: MenstrualDataManager
 
     private var calendarDuraton: DateInterval { calendar.dateInterval(of: .quarter, for: Date())! }
 

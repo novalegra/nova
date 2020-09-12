@@ -1,5 +1,5 @@
 //
-//  MenstrualCalendarViewModel.swift
+//  MenstrualDataManager.swift
 //  Nova
 //
 //  Created by Anna Quinlan on 9/7/20.
@@ -9,7 +9,7 @@
 import SwiftUI
 import HealthKit
 
-class MenstrualCalendarViewModel: ObservableObject {
+class MenstrualDataManager: ObservableObject {
     let store: MenstrualStore
     @Published var menstrualEvents: [MenstrualSample] = []
     @Published var selection: SelectionState = .none

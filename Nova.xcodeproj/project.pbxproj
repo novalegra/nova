@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		E914695C250C1BD000D64A5A /* CoordinatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E914695B250C1BD000D64A5A /* CoordinatorView.swift */; };
+		E9146975250C7C7E00D64A5A /* StatisticsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9146974250C7C7E00D64A5A /* StatisticsView.swift */; };
 		E995A4FB2507145E009D52CF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E995A4FA2507145E009D52CF /* AppDelegate.swift */; };
 		E995A4FD2507145E009D52CF /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E995A4FC2507145E009D52CF /* SceneDelegate.swift */; };
 		E995A5002507145E009D52CF /* Nova.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = E995A4FE2507145E009D52CF /* Nova.xcdatamodeld */; };
@@ -22,7 +23,7 @@
 		E995A51D25071BD0009D52CF /* WeekView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E995A51C25071BD0009D52CF /* WeekView.swift */; };
 		E995A51F25071DC2009D52CF /* MenstrualStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = E995A51E25071DC2009D52CF /* MenstrualStore.swift */; };
 		E995A52325071FE5009D52CF /* HealthKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E995A52225071FE5009D52CF /* HealthKit.framework */; };
-		E995A5252507237D009D52CF /* MenstrualCalendarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E995A5242507237D009D52CF /* MenstrualCalendarViewModel.swift */; };
+		E995A5252507237D009D52CF /* MenstrualDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E995A5242507237D009D52CF /* MenstrualDataManager.swift */; };
 		E995A5272507289B009D52CF /* MenstrualSample.swift in Sources */ = {isa = PBXBuildFile; fileRef = E995A5262507289B009D52CF /* MenstrualSample.swift */; };
 		E995A52925073282009D52CF /* MenstrualEventEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = E995A52825073282009D52CF /* MenstrualEventEditor.swift */; };
 		E995A52B250732CB009D52CF /* FlowPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = E995A52A250732CB009D52CF /* FlowPicker.swift */; };
@@ -31,6 +32,7 @@
 
 /* Begin PBXFileReference section */
 		E914695B250C1BD000D64A5A /* CoordinatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoordinatorView.swift; sourceTree = "<group>"; };
+		E9146974250C7C7E00D64A5A /* StatisticsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsView.swift; sourceTree = "<group>"; };
 		E995A4F72507145E009D52CF /* Nova.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Nova.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E995A4FA2507145E009D52CF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E995A4FC2507145E009D52CF /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -48,7 +50,7 @@
 		E995A51E25071DC2009D52CF /* MenstrualStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenstrualStore.swift; sourceTree = "<group>"; };
 		E995A52025071FE5009D52CF /* Nova.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Nova.entitlements; sourceTree = "<group>"; };
 		E995A52225071FE5009D52CF /* HealthKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = HealthKit.framework; path = System/Library/Frameworks/HealthKit.framework; sourceTree = SDKROOT; };
-		E995A5242507237D009D52CF /* MenstrualCalendarViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenstrualCalendarViewModel.swift; sourceTree = "<group>"; };
+		E995A5242507237D009D52CF /* MenstrualDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenstrualDataManager.swift; sourceTree = "<group>"; };
 		E995A5262507289B009D52CF /* MenstrualSample.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenstrualSample.swift; sourceTree = "<group>"; };
 		E995A52825073282009D52CF /* MenstrualEventEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenstrualEventEditor.swift; sourceTree = "<group>"; };
 		E995A52A250732CB009D52CF /* FlowPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlowPicker.swift; sourceTree = "<group>"; };
@@ -130,6 +132,7 @@
 				E995A51C25071BD0009D52CF /* WeekView.swift */,
 				E995A52825073282009D52CF /* MenstrualEventEditor.swift */,
 				E995A52A250732CB009D52CF /* FlowPicker.swift */,
+				E9146974250C7C7E00D64A5A /* StatisticsView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -138,7 +141,7 @@
 			isa = PBXGroup;
 			children = (
 				E995A51E25071DC2009D52CF /* MenstrualStore.swift */,
-				E995A5242507237D009D52CF /* MenstrualCalendarViewModel.swift */,
+				E995A5242507237D009D52CF /* MenstrualDataManager.swift */,
 				E995A5262507289B009D52CF /* MenstrualSample.swift */,
 			);
 			path = "Data Management";
@@ -223,7 +226,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E995A5252507237D009D52CF /* MenstrualCalendarViewModel.swift in Sources */,
+				E995A5252507237D009D52CF /* MenstrualDataManager.swift in Sources */,
 				E995A51525071B01009D52CF /* DateFormatter.swift in Sources */,
 				E995A51925071B9F009D52CF /* CalendarView.swift in Sources */,
 				E995A4FB2507145E009D52CF /* AppDelegate.swift in Sources */,
@@ -236,6 +239,7 @@
 				E995A52D250750C8009D52CF /* HKCategorySample+MenstrualSample.swift in Sources */,
 				E995A5272507289B009D52CF /* MenstrualSample.swift in Sources */,
 				E995A52B250732CB009D52CF /* FlowPicker.swift in Sources */,
+				E9146975250C7C7E00D64A5A /* StatisticsView.swift in Sources */,
 				E995A4FD2507145E009D52CF /* SceneDelegate.swift in Sources */,
 				E995A51225071ACB009D52CF /* Calendar.swift in Sources */,
 				E914695C250C1BD000D64A5A /* CoordinatorView.swift in Sources */,

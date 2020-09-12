@@ -9,7 +9,7 @@
 import SwiftUI
 
 struct CoordinatorView: View {
-    @ObservedObject var viewModel: MenstrualCalendarViewModel
+    @ObservedObject var viewModel: MenstrualDataManager
     
     var body: some View {
         TabView {
@@ -18,7 +18,7 @@ struct CoordinatorView: View {
                 Image(systemName: "calendar")
                 Text("Calendar", comment: "Label for calendar menu item")
             }
-            Text("Statistics")
+            StatisticsView(viewModel: viewModel)
             .tabItem {
                 
                 Image(systemName: "heart.fill")

@@ -13,13 +13,13 @@ import HealthKit
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
-    var applicationViewModel: MenstrualCalendarViewModel!
+    var applicationViewModel: MenstrualDataManager!
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
         let healthStore = HKHealthStore()
         let store = MenstrualStore(healthStore: healthStore)
-        applicationViewModel = MenstrualCalendarViewModel(store: store)
+        applicationViewModel = MenstrualDataManager(store: store)
         
         if store.authorizationRequired {
             store.authorize()

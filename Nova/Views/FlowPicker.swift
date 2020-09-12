@@ -10,7 +10,7 @@ import SwiftUI
 import Combine
 
 struct FlowPicker: View {
-    @ObservedObject var viewModel: MenstrualCalendarViewModel
+    @ObservedObject var viewModel: MenstrualDataManager
     @State var pickerShouldExpand = true
     @State var pickerIndex: Int = 0 // initializing with zero so it doesn't error
     let initialPickerIndex: Int
@@ -21,7 +21,7 @@ struct FlowPicker: View {
     let items: [String]
     
     init (
-        viewModel: MenstrualCalendarViewModel,
+        viewModel: MenstrualDataManager,
         with items: [String],
         onUpdate: @escaping (Int) -> Void,
         label: String = "",

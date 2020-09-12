@@ -18,13 +18,13 @@ enum SelectionState {
 struct MenstrualEventEditor: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     
-    @ObservedObject var viewModel: MenstrualCalendarViewModel
+    @ObservedObject var viewModel: MenstrualDataManager
     let sample: MenstrualSample?
     let date: Date
 
     @State var selectedIndex = 0
     
-    init(viewModel: MenstrualCalendarViewModel, sample: MenstrualSample?, date: Date) {
+    init(viewModel: MenstrualDataManager, sample: MenstrualSample?, date: Date) {
         self.sample = sample
         self.viewModel = viewModel
         self.date = date
