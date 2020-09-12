@@ -11,8 +11,11 @@ import HealthKit
 
 class MenstrualDataManager: ObservableObject {
     let store: MenstrualStore
+    // Allowable gap (in days) between samples so it's still considered a period
+    let allowablePeriodGap: Int = 1
     @Published var menstrualEvents: [MenstrualSample] = []
     @Published var selection: SelectionState = .none
+    var periods: [MenstrualPeriod] = []
     
     let dateFormatter = DateFormatter()
     
@@ -21,6 +24,9 @@ class MenstrualDataManager: ObservableObject {
         store.healthStoreUpdateCompletionHandler = { [weak self] updatedEvents in
             DispatchQueue.main.async {
                 self?.menstrualEvents = updatedEvents
+                if let processedPeriods = self?.processHealthKitQuerySamples(updatedEvents) {
+                    self?.periods = processedPeriods
+                }
             }
         }
     }
@@ -42,6 +48,42 @@ class MenstrualDataManager: ObservableObject {
         store.dataFetch.async {
             self.store.replaceSample(sample)
         }
+    }
+    
+    // This function assumes samples are sorted with most-recent ones first
+    func processHealthKitQuerySamples(_ samples: [MenstrualSample]) -> [MenstrualPeriod] {
+        guard samples.count > 0 else {
+            return []
+        }
+
+        var output: [MenstrualPeriod] = []
+        var periodBuilder: [MenstrualSample] = []
+        
+        var i = samples.count - 1
+        while i >= 0 {
+            defer {
+                i -= 1
+            }
+            
+            let sample = samples[i]
+            if sample.flowLevel == .none {
+                continue
+            }
+            
+            if let last = periodBuilder.last, let dayGap = Calendar.current.dateComponents([.day], from: last.endDate, to: sample.startDate).day, dayGap - 1 > allowablePeriodGap {
+                output.append(MenstrualPeriod(events: periodBuilder))
+                periodBuilder = []
+            }
+            
+            periodBuilder.append(sample)
+        }
+        
+        // Make sure all periods are accounted for
+        if periodBuilder.count > 0 {
+            output.append(MenstrualPeriod(events: periodBuilder))
+        }
+        
+        return output
     }
     
     // MARK: Helper Functions
@@ -114,7 +156,7 @@ class MenstrualDataManager: ObservableObject {
             }
         }
         
-        guard menstrualEvents.count > 0 else {
+        guard totalEvents > 0 else {
             return 0
         }
         
