@@ -16,6 +16,9 @@ struct StatisticsView: View {
             List {
                 lastPeriodItem
                 averageVolumeItem
+                SegmentedGaugeBar(scaler: 1.5)
+                SegmentedGaugeBar(scaler: 3)
+                SegmentedGaugeBar(scaler: 0.1)
             }
             .navigationBarTitle("Statistics", displayMode: .large)
         }
