@@ -97,6 +97,9 @@ class MenstrualDataManager: ObservableObject {
     }
     
     func getLastPeriodDate() -> String {
+        guard let event = menstrualEvents.first, event.flowLevel != .none else {
+            return getFormattedDate(for: nil)
+        }
         return getFormattedDate(for: menstrualEvents.first?.startDate)
     }
     
@@ -109,6 +112,10 @@ class MenstrualDataManager: ObservableObject {
                 totalVolume += volume
                 totalEvents += 1
             }
+        }
+        
+        guard menstrualEvents.count > 0 else {
+            return 0
         }
         
         return Double(totalVolume) / Double(totalEvents)
