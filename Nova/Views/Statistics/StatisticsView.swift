@@ -48,7 +48,7 @@ struct StatisticsView: View {
     
     var averagePeriodLength: some View {
         NavigationLink(
-            destination: MenstrualStatisticsDetailView(viewModel: viewModel, title: "Menstrual Volume", mode: .length)
+            destination: MenstrualStatisticsDetailView(viewModel: viewModel, title: "Period Length", mode: .length)
         ) {
             HStack {
                 Text("Typical Period Length")
