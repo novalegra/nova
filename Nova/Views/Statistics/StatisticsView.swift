@@ -15,8 +15,9 @@ struct StatisticsView: View {
         NavigationView {
             List {
                 lastPeriodItem
-                averageVolumeItem
-                averagePeriodLength
+                totalVolumeItem
+                dailyVolumeItem
+                periodLengthItem
             }
             .navigationBarTitle("Reports", displayMode: .large)
         }
@@ -32,21 +33,35 @@ struct StatisticsView: View {
         }
     }
     
-    var averageVolumeItem: some View {
+    var dailyVolumeItem: some View {
         NavigationLink(
-            destination: MenstrualStatisticsDetailView(viewModel: viewModel, title: "Menstrual Volume", mode: .volume)
+            destination: MenstrualStatisticsDetailView(viewModel: viewModel, title: "Daily Volume", mode: .dailyVolume)
         ) {
             HStack {
-                Text("Typical Daily Menstrual Volume")
+                Text("Typical Daily Volume")
                 Spacer()
-                Text("\(viewModel.averageDailyPeriodVolume) ml")
+                Text("\(viewModel.averageDailyPeriodVolume) mL")
                 .bold()
             }
         }
         .disabled(viewModel.periods.count < 1)
     }
     
-    var averagePeriodLength: some View {
+    var totalVolumeItem: some View {
+        NavigationLink(
+            destination: MenstrualStatisticsDetailView(viewModel: viewModel, title: "Period Volume", mode: .overallVolume)
+        ) {
+            HStack {
+                Text("Typical Period Volume")
+                Spacer()
+                Text("\(viewModel.averageTotalPeriodVolume) mL")
+                .bold()
+            }
+        }
+        .disabled(viewModel.periods.count < 1)
+    }
+    
+    var periodLengthItem: some View {
         NavigationLink(
             destination: MenstrualStatisticsDetailView(viewModel: viewModel, title: "Period Length", mode: .length)
         ) {

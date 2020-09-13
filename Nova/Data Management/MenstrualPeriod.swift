@@ -31,12 +31,23 @@ class MenstrualPeriod {
         self.endDate = maxDate
     }
     
-    var averageFlow: Double {
+    var totalFlow: Int {
+        return events.reduce(0) {sum, event in
+            let volume = flow(event)
+            if volume != -1 {
+                return sum + volume
+            }
+            return sum
+        }
+    }
+    
+    var averageDailyFlow: Double {
         var totalVolume = 0
         var totalEvents = 0
         
         for event in events {
-            if let volume = event.volume, event.flowLevel != .none, volume > 0 {
+            let volume = flow(event)
+            if volume != -1 {
                 totalVolume += volume
                 totalEvents += 1
             }
@@ -47,6 +58,13 @@ class MenstrualPeriod {
         }
         
         return Double(totalVolume) / Double(totalEvents)
+    }
+    
+    private func flow(_ event: MenstrualSample) -> Int {
+        if event.flowLevel != .none, let volume = event.volume, volume > 0 {
+            return volume
+        }
+        return -1
     }
     
     // Duration of period in days

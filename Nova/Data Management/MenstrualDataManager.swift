@@ -89,8 +89,17 @@ class MenstrualDataManager: ObservableObject {
         return yearFormattedDate(for: periods.last?.startDate)
     }
     
+    var averageTotalPeriodVolume: Int {
+        let totalVolume = periods.reduce(0) {sum, curr in sum + curr.totalFlow}
+        
+        guard periods.count > 0 else {
+            return 0
+        }
+        return Int(totalVolume) / periods.count
+    }
+    
     var averageDailyPeriodVolume: Int {
-        let totalVolume = periods.reduce(0) {sum, curr in sum + curr.averageFlow}
+        let totalVolume = periods.reduce(0) {sum, curr in sum + curr.averageDailyFlow}
         
         guard periods.count > 0 else {
             return 0

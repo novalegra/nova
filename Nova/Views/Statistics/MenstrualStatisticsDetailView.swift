@@ -10,7 +10,8 @@ import SwiftUI
 
 enum MenstrualStatistic {
     case length
-    case volume
+    case dailyVolume
+    case overallVolume
 }
 
 struct MenstrualStatisticsDetailView: View {
@@ -20,7 +21,7 @@ struct MenstrualStatisticsDetailView: View {
     
     var body: some View {
         List {
-            averageSecton
+            averageSection
             ForEach(viewModel.reverseOrderedPeriods, id: \.startDate) { period in
                 self.section(for: period)
             }
@@ -30,7 +31,7 @@ struct MenstrualStatisticsDetailView: View {
         .navigationBarTitle(Text(title), displayMode: .large)
     }
     
-    var averageSecton: some View {
+    var averageSection: some View {
         // FIXME: empty header is hack to fix SwiftUI jumping with GroupedListStyle
         Section(header: Text("")) {
             HStack {
@@ -41,44 +42,59 @@ struct MenstrualStatisticsDetailView: View {
             HStack {
                 SegmentedGaugeBar(scaler: 1)
                 .frame(minHeight: 20, maxHeight: 20)
-                Text(mode == .length ? "\(viewModel.averagePeriodLength) days" : "\( viewModel.averageDailyPeriodVolume) mL/day")
+                Text(averageMeasurementLabel)
                 .bold()
                 .font(.callout)
             }
         }
     }
     
-    func section(for event: MenstrualPeriod) -> some View {
+    var averageMeasurementLabel: String {
+        switch mode {
+        case .length:
+            return viewModel.averagePeriodLength == 1 ? "\(viewModel.averagePeriodLength) day" : "\(viewModel.averagePeriodLength) days"
+        case .dailyVolume:
+            return "\(viewModel.averageDailyPeriodVolume) mL/day"
+        case .overallVolume:
+            return "\(viewModel.averageTotalPeriodVolume) mL"
+        }
+    }
+    
+    func section(for period: MenstrualPeriod) -> some View {
         Section {
             HStack {
-                Text(viewModel.monthFormattedDate(for: event.startDate) + " - " + viewModel.monthFormattedDate(for: event.endDate))
+                Text(viewModel.monthFormattedDate(for: period.startDate) + " - " + viewModel.monthFormattedDate(for: period.endDate))
                 .foregroundColor(Color("DarkBlue"))
                 Spacer()
             }
             HStack {
-                SegmentedGaugeBar(scaler: scaler(for: event))
+                SegmentedGaugeBar(scaler: scaler(for: period))
                 .frame(minHeight: 20, maxHeight: 20)
-                Text(description(of: event))
+                Text(description(of: period))
                 .font(.callout)
             }
         }
     }
     
-    func description(of event: MenstrualPeriod) -> String {
+    func description(of period: MenstrualPeriod) -> String {
         switch mode {
-        case .volume:
-            return "\(Int(event.averageFlow)) mL/day"
+        case .dailyVolume:
+            return "\(Int(period.averageDailyFlow)) mL/day"
+        case .overallVolume:
+            return "\(period.totalFlow) mL"
         case .length:
-            return event.duration == 1 ? "\(event.duration) day" : "\(event.duration) days"
+            return period.duration == 1 ? "\(period.duration) day" : "\(period.duration) days"
         }
     }
     
-    func scaler(for event: MenstrualPeriod) -> Double {
+    func scaler(for period: MenstrualPeriod) -> Double {
         switch mode {
-        case .volume:
-            return event.averageFlow / Double(viewModel.averageDailyPeriodVolume)
-        default:
-            return Double(event.duration) / Double(viewModel.averagePeriodLength)
+        case .dailyVolume:
+            return period.averageDailyFlow / Double(viewModel.averageDailyPeriodVolume)
+        case .overallVolume:
+        return Double(period.totalFlow) / Double(viewModel.averageTotalPeriodVolume)
+        case .length:
+            return Double(period.duration) / Double(viewModel.averagePeriodLength)
         }
     }
 }
