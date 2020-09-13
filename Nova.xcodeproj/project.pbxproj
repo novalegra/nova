@@ -75,6 +75,29 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		E90ED4C5250DB2B700F56679 /* Calendar View */ = {
+			isa = PBXGroup;
+			children = (
+				E995A5012507145E009D52CF /* MenstrualCalendarView.swift */,
+				E995A51825071B9F009D52CF /* CalendarView.swift */,
+				E995A51A25071BB7009D52CF /* MonthView.swift */,
+				E995A51C25071BD0009D52CF /* WeekView.swift */,
+				E995A52825073282009D52CF /* MenstrualEventEditor.swift */,
+				E995A52A250732CB009D52CF /* FlowPicker.swift */,
+			);
+			path = "Calendar View";
+			sourceTree = "<group>";
+		};
+		E90ED4C6250DB2D600F56679 /* Statistics */ = {
+			isa = PBXGroup;
+			children = (
+				E9146974250C7C7E00D64A5A /* StatisticsView.swift */,
+				E90ED4C1250D73D100F56679 /* SegmentedGaugeBar.swift */,
+				E90ED4C3250D750D00F56679 /* MenstrualStatisticsDetailView.swift */,
+			);
+			path = Statistics;
+			sourceTree = "<group>";
+		};
 		E995A4EE2507145E009D52CF = {
 			isa = PBXGroup;
 			children = (
@@ -131,16 +154,9 @@
 		E995A51625071B39009D52CF /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				E995A5012507145E009D52CF /* MenstrualCalendarView.swift */,
+				E90ED4C5250DB2B700F56679 /* Calendar View */,
 				E914695B250C1BD000D64A5A /* CoordinatorView.swift */,
-				E995A51825071B9F009D52CF /* CalendarView.swift */,
-				E995A51A25071BB7009D52CF /* MonthView.swift */,
-				E995A51C25071BD0009D52CF /* WeekView.swift */,
-				E995A52825073282009D52CF /* MenstrualEventEditor.swift */,
-				E995A52A250732CB009D52CF /* FlowPicker.swift */,
-				E9146974250C7C7E00D64A5A /* StatisticsView.swift */,
-				E90ED4C1250D73D100F56679 /* SegmentedGaugeBar.swift */,
-				E90ED4C3250D750D00F56679 /* MenstrualStatisticsDetailView.swift */,
+				E90ED4C6250DB2D600F56679 /* Statistics */,
 			);
 			path = Views;
 			sourceTree = "<group>";

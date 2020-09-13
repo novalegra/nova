@@ -20,6 +20,7 @@ struct MenstrualStatisticsDetailView: View {
     
     var body: some View {
         List {
+            averageSecton
             ForEach(viewModel.periods, id: \.startDate) { period in
                 self.section(for: period)
             }
@@ -29,38 +30,54 @@ struct MenstrualStatisticsDetailView: View {
         .navigationBarTitle(Text(title), displayMode: .large)
     }
     
+    var averageSecton: some View {
+        // FIXME: empty header is hack to fix SwiftUI jumping with GroupedListStyle
+        Section(header: Text("")) {
+            HStack {
+                Text("Average")
+                .bold()
+                Spacer()
+            }
+            HStack {
+                SegmentedGaugeBar(scaler: 1)
+                .frame(minHeight: 20, maxHeight: 20)
+                Text(mode == .length ? "\(viewModel.averagePeriodLength) days" : "\( viewModel.averageDailyPeriodVolume) ml/day")
+                .font(.callout)
+            }
+        }
+    }
+    
     func section(for event: MenstrualPeriod) -> some View {
         Section {
             HStack {
-                Text(viewModel.getFormattedDate(for: event.startDate) + " to " + viewModel.getFormattedDate(for: event.endDate))
+                Text(viewModel.formattedDate(for: event.startDate) + " to " + viewModel.formattedDate(for: event.endDate))
                 .foregroundColor(Color("DarkBlue"))
                 Spacer()
             }
             HStack {
-                SegmentedGaugeBar(scaler: statisticValue(for: event))
+                SegmentedGaugeBar(scaler: scaler(for: event))
                 .frame(minHeight: 20, maxHeight: 20)
                 Text(description(of: event))
                 .font(.callout)
             }
         }
-        
     }
     
     func description(of event: MenstrualPeriod) -> String {
         switch mode {
         case .volume:
-            return "\(String(format: "%.1f", event.averageFlow)) ml average"
+            return "\(String(format: "%.1f", event.averageFlow)) ml/day"
         case .length:
-            return "1" // TODO: period length
+            return "\(event.duration) days"
         }
     }
     
-    func statisticValue(for event: MenstrualPeriod) -> Double {
+    func scaler(for event: MenstrualPeriod) -> Double {
         switch mode {
         case .volume:
-            return event.averageFlow / viewModel.getAverageVolume()
+            return event.averageFlow / Double(viewModel.averageDailyPeriodVolume)
         default:
-            return 1 // TODO: period length
+            return Double(event.duration) / Double(viewModel.averagePeriodLength)
         }
     }
 }

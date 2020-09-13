@@ -16,9 +16,7 @@ struct StatisticsView: View {
             List {
                 lastPeriodItem
                 averageVolumeItem
-//                SegmentedGaugeBar(scaler: 1.5)
-//                SegmentedGaugeBar(scaler: 3)
-//                SegmentedGaugeBar(scaler: 0.1)
+                averagePeriodLength
             }
             .navigationBarTitle("Statistics", displayMode: .large)
         }
@@ -27,9 +25,10 @@ struct StatisticsView: View {
     
     var lastPeriodItem: some View {
         HStack {
-            Text("Last Recorded Period Date:")
+            Text("Last Period")
             Spacer()
-            Text(viewModel.getLastPeriodDate())
+            Text(viewModel.lastPeriodDate)
+            .bold()
         }
     }
     
@@ -38,9 +37,24 @@ struct StatisticsView: View {
             destination: MenstrualStatisticsDetailView(viewModel: viewModel, title: "Menstrual Volume", mode: .volume)
         ) {
             HStack {
-                Text("Average Daily Menstrual Volume:")
+                Text("Typical Daily Menstrual Volume")
                 Spacer()
-                Text("\(String(format: "%.1f", viewModel.getAverageVolume())) ml")
+                Text("\(viewModel.averageDailyPeriodVolume) ml")
+                .bold()
+            }
+        }
+        .disabled(viewModel.periods.count < 1)
+    }
+    
+    var averagePeriodLength: some View {
+        NavigationLink(
+            destination: MenstrualStatisticsDetailView(viewModel: viewModel, title: "Menstrual Volume", mode: .length)
+        ) {
+            HStack {
+                Text("Typical Period Length")
+                Spacer()
+                Text(viewModel.averagePeriodLength > 1 ? "\(viewModel.averagePeriodLength) days" :  "\(viewModel.averagePeriodLength) day")
+                .bold()
             }
         }
         .disabled(viewModel.periods.count < 1)

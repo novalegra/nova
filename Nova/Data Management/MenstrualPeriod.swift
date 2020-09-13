@@ -48,5 +48,13 @@ class MenstrualPeriod {
         
         return Double(totalVolume) / Double(totalEvents)
     }
+    
+    // Duration of period in days
+    var duration: Int {
+        guard let days = Calendar.current.dateComponents([.day], from: startDate, to: endDate).day else {
+            return 0
+        }
+        return days + 1
+    }
 }
 

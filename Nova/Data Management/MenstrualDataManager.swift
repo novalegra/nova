@@ -65,6 +65,7 @@ class MenstrualDataManager: ObservableObject {
             }
             
             let sample = samples[i]
+            print(sample.startDate)
             if sample.flowLevel == .none {
                 continue
             }
@@ -85,7 +86,28 @@ class MenstrualDataManager: ObservableObject {
         return output
     }
     
-    // MARK: Helper Functions
+    // MARK: Computed Properties
+    var lastPeriodDate: String {
+        return formattedDate(for: periods.last?.startDate)
+    }
+    
+    var averageDailyPeriodVolume: Int {
+        let totalVolume = periods.reduce(0) {sum, curr in sum + curr.averageFlow}
+        
+        guard periods.count > 0 else {
+            return 0
+        }
+        return Int(totalVolume) / periods.count
+    }
+    
+    var averagePeriodLength: Int {
+        guard periods.count > 0 else {
+            return 0
+        }
+        return periods.reduce(0) {sum, curr in sum + curr.duration} / periods.count
+    }
+    
+    // MARK: Data Helper Functions
     func hasMenstrualFlow(at date: Date) -> Bool {
         return store.hasMenstrualFlow(at: date)
     }
@@ -115,26 +137,12 @@ class MenstrualDataManager: ObservableObject {
         }
     }
     
-    func getFormattedDate(for date: Date?) -> String {
+    func formattedDate(for date: Date?) -> String {
         guard let date = date else {
             return "None"
         }
         dateFormatter.dateFormat = "MM-dd-yyyy"
         return dateFormatter.string(from: date)
-    }
-    
-    func getLastPeriodDate() -> String {
-        return getFormattedDate(for: periods.last?.startDate)
-    }
-    
-    func getAverageVolume() -> Double {
-        let totalVolume = periods.reduce(0.0) {sum, curr in sum + curr.averageFlow}
-        
-        guard periods.count > 0 else {
-            return 0
-        }
-        
-        return Double(totalVolume) / Double(periods.count)
     }
     
     func save(sample: MenstrualSample?, date: Date, selectedIndex: Int) {
