@@ -92,7 +92,7 @@ struct MenstrualEventEditor: View {
                 self.selectedIndex = index
             },
             label: NSLocalizedString("24-Hour Menstrual Flow", comment: "Menstrual flow picker label"),
-            unit: NSLocalizedString("ml", comment: "Milliliter unit label"),
+            unit: NSLocalizedString("mL", comment: "Milliliter unit label"),
             initialPickerIndex: self.viewModel.flowPickerOptions.firstIndex(of: String(sample?.volume ?? 0)) ?? 0
         )
     }

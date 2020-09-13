@@ -41,7 +41,7 @@ struct MenstrualStatisticsDetailView: View {
             HStack {
                 SegmentedGaugeBar(scaler: 1)
                 .frame(minHeight: 20, maxHeight: 20)
-                Text(mode == .length ? "\(viewModel.averagePeriodLength) days" : "\( viewModel.averageDailyPeriodVolume) ml/day")
+                Text(mode == .length ? "\(viewModel.averagePeriodLength) days" : "\( viewModel.averageDailyPeriodVolume) mL/day")
                 .bold()
                 .font(.callout)
             }
@@ -67,7 +67,7 @@ struct MenstrualStatisticsDetailView: View {
     func description(of event: MenstrualPeriod) -> String {
         switch mode {
         case .volume:
-            return "\(Int(event.averageFlow)) ml/day"
+            return "\(Int(event.averageFlow)) mL/day"
         case .length:
             return event.duration == 1 ? "\(event.duration) day" : "\(event.duration) days"
         }
