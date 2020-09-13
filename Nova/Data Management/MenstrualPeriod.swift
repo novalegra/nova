@@ -36,7 +36,7 @@ class MenstrualPeriod {
         var totalEvents = 0
         
         for event in events {
-            if let volume = event.volume, volume > 0 {
+            if let volume = event.volume, event.flowLevel != .none, volume > 0 {
                 totalVolume += volume
                 totalEvents += 1
             }

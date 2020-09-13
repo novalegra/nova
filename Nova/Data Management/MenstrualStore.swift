@@ -203,7 +203,33 @@ class MenstrualStore {
         )
     }
     
-    // MARK: Data Storage
+    // MARK: Data Statistics
+    func hasMenstrualFlow(at date: Date) -> Bool {
+        for event in menstrualEvents {
+            if eventWithinDate(date, event) && event.flowLevel != .none {
+                return true
+            }
+        }
+        return false
+    }
+    
+    func menstrualEventIfPresent(for date: Date) -> MenstrualSample? {
+        for event in menstrualEvents {
+            if eventWithinDate(date, event) {
+                return event
+            }
+        }
+        return nil
+    }
+    
+    func eventWithinDate(_ date: Date, _ event: MenstrualSample) -> Bool {
+        return (event.startDate <= date && event.endDate >= date) || Calendar.current.isDate(event.startDate, inSameDayAs: date) || Calendar.current.isDate(event.endDate, inSameDayAs: date)
+    }
+}
+
+
+// MARK: Data Management
+extension MenstrualStore {
     func saveSample(_ entry: MenstrualSample, _ completion: ((MenstrualStoreResult<Bool>) -> ())? = nil) {
         dispatchPrecondition(condition: .onQueue(dataFetch))
         
@@ -249,28 +275,5 @@ class MenstrualStore {
                 completion?(.success(true))
             }
         }
-    }
-    
-    // MARK: Data Statistics
-    func hasMenstrualFlow(at date: Date) -> Bool {
-        for event in menstrualEvents {
-            if eventWithinDate(date, event) && event.flowLevel != .none {
-                return true
-            }
-        }
-        return false
-    }
-    
-    func menstrualEventIfPresent(for date: Date) -> MenstrualSample? {
-        for event in menstrualEvents {
-            if eventWithinDate(date, event) {
-                return event
-            }
-        }
-        return nil
-    }
-    
-    func eventWithinDate(_ date: Date, _ event: MenstrualSample) -> Bool {
-        return (event.startDate <= date && event.endDate >= date) || Calendar.current.isDate(event.startDate, inSameDayAs: date) || Calendar.current.isDate(event.endDate, inSameDayAs: date)
     }
 }
