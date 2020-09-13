@@ -21,7 +21,7 @@ struct MenstrualStatisticsDetailView: View {
     var body: some View {
         List {
             averageSecton
-            ForEach(viewModel.periods, id: \.startDate) { period in
+            ForEach(viewModel.reverseOrderedPeriods, id: \.startDate) { period in
                 self.section(for: period)
             }
         }
@@ -42,6 +42,7 @@ struct MenstrualStatisticsDetailView: View {
                 SegmentedGaugeBar(scaler: 1)
                 .frame(minHeight: 20, maxHeight: 20)
                 Text(mode == .length ? "\(viewModel.averagePeriodLength) days" : "\( viewModel.averageDailyPeriodVolume) ml/day")
+                .bold()
                 .font(.callout)
             }
         }
@@ -50,7 +51,7 @@ struct MenstrualStatisticsDetailView: View {
     func section(for event: MenstrualPeriod) -> some View {
         Section {
             HStack {
-                Text(viewModel.formattedDate(for: event.startDate) + " to " + viewModel.formattedDate(for: event.endDate))
+                Text(viewModel.monthFormattedDate(for: event.startDate) + " - " + viewModel.monthFormattedDate(for: event.endDate))
                 .foregroundColor(Color("DarkBlue"))
                 Spacer()
             }
@@ -66,9 +67,9 @@ struct MenstrualStatisticsDetailView: View {
     func description(of event: MenstrualPeriod) -> String {
         switch mode {
         case .volume:
-            return "\(String(format: "%.1f", event.averageFlow)) ml/day"
+            return "\(Int(event.averageFlow)) ml/day"
         case .length:
-            return "\(event.duration) days"
+            return event.duration == 1 ? "\(event.duration) day" : "\(event.duration) days"
         }
     }
     

@@ -16,6 +16,10 @@ class MenstrualDataManager: ObservableObject {
     @Published var selection: SelectionState = .none
     @Published var periods: [MenstrualPeriod] = []
     
+    var reverseOrderedPeriods: [MenstrualPeriod] {
+        return periods.reversed()
+    }
+    
     let dateFormatter = DateFormatter()
     
     init(store: MenstrualStore) {
@@ -55,17 +59,11 @@ class MenstrualDataManager: ObservableObject {
             return []
         }
 
+        let sortedSamples = samples.sorted(by: { $0.startDate < $1.startDate })
         var output: [MenstrualPeriod] = []
         var periodBuilder: [MenstrualSample] = []
-        
-        var i = samples.count - 1
-        while i >= 0 {
-            defer {
-                i -= 1
-            }
-            
-            let sample = samples[i]
-            print(sample.startDate)
+
+        for sample in sortedSamples {
             if sample.flowLevel == .none {
                 continue
             }
@@ -88,7 +86,7 @@ class MenstrualDataManager: ObservableObject {
     
     // MARK: Computed Properties
     var lastPeriodDate: String {
-        return formattedDate(for: periods.last?.startDate)
+        return yearFormattedDate(for: periods.last?.startDate)
     }
     
     var averageDailyPeriodVolume: Int {
@@ -137,11 +135,19 @@ class MenstrualDataManager: ObservableObject {
         }
     }
     
-    func formattedDate(for date: Date?) -> String {
+    func yearFormattedDate(for date: Date?) -> String {
         guard let date = date else {
             return "None"
         }
         dateFormatter.dateFormat = "MM-dd-yyyy"
+        return dateFormatter.string(from: date)
+    }
+    
+    func monthFormattedDate(for date: Date?) -> String {
+        guard let date = date else {
+            return "None"
+        }
+        dateFormatter.dateFormat = "MMM dd"
         return dateFormatter.string(from: date)
     }
     

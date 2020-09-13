@@ -18,7 +18,7 @@ struct StatisticsView: View {
                 averageVolumeItem
                 averagePeriodLength
             }
-            .navigationBarTitle("Statistics", displayMode: .large)
+            .navigationBarTitle("Reports", displayMode: .large)
         }
         
     }
@@ -53,7 +53,7 @@ struct StatisticsView: View {
             HStack {
                 Text("Typical Period Length")
                 Spacer()
-                Text(viewModel.averagePeriodLength > 1 ? "\(viewModel.averagePeriodLength) days" :  "\(viewModel.averagePeriodLength) day")
+                Text(viewModel.averagePeriodLength != 1 ? "\(viewModel.averagePeriodLength) days" :  "\(viewModel.averagePeriodLength) day")
                 .bold()
             }
         }

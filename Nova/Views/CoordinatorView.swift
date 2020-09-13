@@ -22,7 +22,7 @@ struct CoordinatorView: View {
             .tabItem {
                 
                 Image(systemName: "heart.fill")
-                Text("Statistics", comment: "Label for statistics menu item")
+                Text("Reports", comment: "Label for reports menu item")
             }
         }
     }
