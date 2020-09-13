@@ -39,13 +39,21 @@ struct MenstrualStatisticsDetailView: View {
                 .bold()
                 Spacer()
             }
-            HStack {
-                SegmentedGaugeBar(scaler: 1)
-                .frame(minHeight: 20, maxHeight: 20)
-                Text(averageMeasurementLabel)
-                .bold()
-                .font(.callout)
+            if !averageDataIsMissing {
+                HStack {
+                    SegmentedGaugeBar(scaler: 1)
+                    .frame(minHeight: 20, maxHeight: 20)
+                    Text(averageMeasurementLabel)
+                    .bold()
+                    .font(.callout)
+                }
+            } else {
+                HStack {
+                    Text("No data")
+                    Spacer()
+                }
             }
+            
         }
     }
     
@@ -54,7 +62,7 @@ struct MenstrualStatisticsDetailView: View {
         case .length:
             return viewModel.averagePeriodLength == 1 ? "\(viewModel.averagePeriodLength) day" : "\(viewModel.averagePeriodLength) days"
         case .dailyVolume:
-            return "\(viewModel.averageDailyPeriodVolume) mL/day"
+            return "\(viewModel.averageDailyPeriodVolume) mL"
         case .overallVolume:
             return "\(viewModel.averageTotalPeriodVolume) mL"
         }
@@ -67,11 +75,18 @@ struct MenstrualStatisticsDetailView: View {
                 .foregroundColor(Color("DarkBlue"))
                 Spacer()
             }
-            HStack {
-                SegmentedGaugeBar(scaler: scaler(for: period))
-                .frame(minHeight: 20, maxHeight: 20)
-                Text(description(of: period))
-                .font(.callout)
+            if !dataIsMissing(for: period) {
+                HStack {
+                    SegmentedGaugeBar(scaler: scaler(for: period))
+                    .frame(minHeight: 20, maxHeight: 20)
+                    Text(description(of: period))
+                    .font(.callout)
+                }
+            } else {
+                HStack {
+                    Text("No data")
+                    Spacer()
+                }
             }
         }
     }
@@ -79,7 +94,7 @@ struct MenstrualStatisticsDetailView: View {
     func description(of period: MenstrualPeriod) -> String {
         switch mode {
         case .dailyVolume:
-            return "\(Int(period.averageDailyFlow)) mL/day"
+            return "\(Int(period.averageDailyFlow)) mL"
         case .overallVolume:
             return "\(period.totalFlow) mL"
         case .length:
@@ -95,6 +110,28 @@ struct MenstrualStatisticsDetailView: View {
         return Double(period.totalFlow) / Double(viewModel.averageTotalPeriodVolume)
         case .length:
             return Double(period.duration) / Double(viewModel.averagePeriodLength)
+        }
+    }
+    
+    func dataIsMissing(for period: MenstrualPeriod) -> Bool {
+        switch mode {
+        case .dailyVolume:
+            return period.averageDailyFlow == 0
+        case .overallVolume:
+            return period.totalFlow == 0
+        default:
+            return false
+        }
+    }
+    
+    var averageDataIsMissing: Bool {
+        switch mode {
+        case .dailyVolume:
+            return viewModel.averageDailyPeriodVolume == 0
+        case .overallVolume:
+            return viewModel.averageTotalPeriodVolume == 0
+        default:
+            return false
         }
     }
 }

@@ -91,20 +91,22 @@ class MenstrualDataManager: ObservableObject {
     
     var averageTotalPeriodVolume: Int {
         let totalVolume = periods.reduce(0) {sum, curr in sum + curr.totalFlow}
+        let totalPeriods = periods.reduce(0) {sum, curr in curr.averageDailyFlow > 0 ? sum + 1: sum}
         
-        guard periods.count > 0 else {
+        guard totalPeriods > 0 else {
             return 0
         }
-        return Int(totalVolume) / periods.count
+        return Int(totalVolume) / totalPeriods
     }
     
     var averageDailyPeriodVolume: Int {
         let totalVolume = periods.reduce(0) {sum, curr in sum + curr.averageDailyFlow}
+        let totalPeriods = periods.reduce(0) {sum, curr in curr.averageDailyFlow > 0 ? sum + 1: sum}
         
-        guard periods.count > 0 else {
+        guard totalPeriods > 0 else {
             return 0
         }
-        return Int(totalVolume) / periods.count
+        return Int(totalVolume) / totalPeriods
     }
     
     var averagePeriodLength: Int {
