@@ -14,7 +14,7 @@ class MenstrualDataManager: ObservableObject {
     // Allowable gap (in days) between samples so it's still considered a period
     let allowablePeriodGap: Int = 1
     @Published var selection: SelectionState = .none
-    var periods: [MenstrualPeriod] = []
+    @Published var periods: [MenstrualPeriod] = []
     
     let dateFormatter = DateFormatter()
     

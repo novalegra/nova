@@ -39,11 +39,20 @@ struct MenstrualStatisticsDetailView: View {
             HStack {
                 SegmentedGaugeBar(scaler: statisticValue(for: event))
                 .frame(minHeight: 20, maxHeight: 20)
-                Text("\(String(format: "%.1f", event.averageFlow)) mL average")
+                Text(description(of: event))
                 .font(.callout)
             }
         }
         
+    }
+    
+    func description(of event: MenstrualPeriod) -> String {
+        switch mode {
+        case .volume:
+            return "\(String(format: "%.1f", event.averageFlow)) ml average"
+        case .length:
+            return "1" // TODO: period length
+        }
     }
     
     func statisticValue(for event: MenstrualPeriod) -> Double {
