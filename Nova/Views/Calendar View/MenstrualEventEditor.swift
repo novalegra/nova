@@ -23,6 +23,7 @@ struct MenstrualEventEditor: View {
     let date: Date
 
     @State var selectedIndex = 0
+    @State var showingAuthorizationAlert = false
     
     init(viewModel: MenstrualDataManager, sample: MenstrualSample?, date: Date) {
         self.sample = sample
@@ -49,12 +50,22 @@ struct MenstrualEventEditor: View {
         }
         .navigationBarTitle(sample != nil ? "Edit Flow" : "Track Flow", displayMode: .inline)
         .navigationBarItems(trailing: saveButton)
+        .alert(isPresented: $showingAuthorizationAlert, content: alert)
     }
     
     var saveButton: some View {
         Button(sample != nil ? "Update" : "Save") {
-            self.viewModel.save(sample: self.sample, date: self.date, selectedIndex: self.selectedIndex)
-            self.presentationMode.wrappedValue.dismiss()
+            self.viewModel.save(sample: self.sample, date: self.date, selectedIndex: self.selectedIndex) { result in
+                switch result {
+                case .success:
+                    DispatchQueue.main.async {
+                        self.presentationMode.wrappedValue.dismiss()
+                    }
+                case .failure(let error):
+                    print("Error when saving", error)
+                    self.showingAuthorizationAlert = true
+                }
+            }
         }
     }
     
@@ -95,5 +106,22 @@ struct MenstrualEventEditor: View {
             unit: NSLocalizedString("mL", comment: "Milliliter unit label"),
             initialPickerIndex: self.viewModel.flowPickerOptions.firstIndex(of: String(sample?.volume ?? 0)) ?? 0
         )
+    }
+    
+    private func alert() -> SwiftUI.Alert {
+        SwiftUI.Alert(
+            title: Text("HealthKit Not Authorized", comment: "Alert title for un-authorized HealthKit"),
+            // For the message, preMeal and workout are the same
+            message: Text("Allow Nova to save samples by enabling access to menstration data in Health -> Profile -> Apps."),
+            primaryButton: .default(Text("OK")),
+            secondaryButton: .cancel(
+                Text("Go to Health"),
+                action: gotoSettings
+            )
+        )
+    }
+    
+    private func gotoSettings() {
+        UIApplication.shared.open(URL(string: "x-apple-health://")!)
     }
 }

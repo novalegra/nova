@@ -20,7 +20,7 @@ struct MenstrualCalendarView: View {
                 NavigationLink(
                     destination: MenstrualEventEditor(viewModel: self.viewModel, sample: self.viewModel.menstrualEventIfPresent(for: date), date: date)
                 ) {
-                    Text("00") // Placeholder so it works
+                    Text("00") // Placeholder so circles are correct size
                         .hidden()
                         .padding(8)
                         .background(self.buttonColor(for: date))

@@ -34,21 +34,27 @@ class MenstrualDataManager: ObservableObject {
     }
     
     // MARK: Data Management
-    func saveSample(_ sample: MenstrualSample) {
+    func saveSample(_ sample: MenstrualSample, _ completion: @escaping (MenstrualStoreResult<Bool>) -> ()) {
         store.dataFetch.async {
-            self.store.saveSample(sample)
+            self.store.saveSample(sample) { result in
+                completion(result)
+            }
         }
     }
     
-    func deleteSample(_ sample: MenstrualSample) {
+    func deleteSample(_ sample: MenstrualSample, _ completion: @escaping (MenstrualStoreResult<Bool>) -> ()) {
         store.dataFetch.async {
-            self.store.deleteSample(sample)
+            self.store.deleteSample(sample) { result in
+                completion(result)
+            }
         }
     }
     
-    func updateSample(_ sample: MenstrualSample) {
+    func updateSample(_ sample: MenstrualSample,  _ completion: @escaping (MenstrualStoreResult<Bool>) -> ()) {
         store.dataFetch.async {
-            self.store.replaceSample(sample)
+            self.store.replaceSample(sample) { result in
+                completion(result)
+            }
         }
     }
     
@@ -162,20 +168,23 @@ class MenstrualDataManager: ObservableObject {
         return dateFormatter.string(from: date)
     }
     
-    func save(sample: MenstrualSample?, date: Date, selectedIndex: Int) {
+    func save(sample: MenstrualSample?, date: Date, selectedIndex: Int, _ completion: @escaping (MenstrualStoreResult<Bool>) -> Void) {
         let volume = selection == .hadFlow ? Int(flowPickerOptions[selectedIndex]): 0
+        let saveCompletion: (MenstrualStoreResult<Bool>) -> () = { result in
+            completion(result)
+        }
         
         if let sample = sample {
             if selection == .none {
-                deleteSample(sample)
+                deleteSample(sample, saveCompletion)
             } else {
                 sample.volume = volume
                 sample.flowLevel = flowLevel(for: selection, with: selectedIndex)
-                updateSample(sample)
+                updateSample(sample, saveCompletion)
             }
         } else if selection != .none {
             let sample = MenstrualSample(startDate: date, endDate: date, flowLevel: flowLevel(for: selection, with: selectedIndex), volume: volume)
-            saveSample(sample)
+            saveSample(sample, saveCompletion)
         }
     }
     
