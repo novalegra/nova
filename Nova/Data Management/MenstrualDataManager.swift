@@ -168,8 +168,7 @@ class MenstrualDataManager: ObservableObject {
         return dateFormatter.string(from: date)
     }
     
-    func save(sample: MenstrualSample?, date: Date, selectedIndex: Int, _ completion: @escaping (MenstrualStoreResult<Bool>) -> Void) {
-        let volume = selection == .hadFlow ? Int(flowPickerOptions[selectedIndex]): 0
+    func save(sample: MenstrualSample?, date: Date, newVolume: Int, _ completion: @escaping (MenstrualStoreResult<Bool>) -> Void) {
         let saveCompletion: (MenstrualStoreResult<Bool>) -> () = { result in
             completion(result)
         }
@@ -178,16 +177,43 @@ class MenstrualDataManager: ObservableObject {
             if selection == .none {
                 deleteSample(sample, saveCompletion)
             } else {
-                sample.volume = volume
-                sample.flowLevel = flowLevel(for: selection, with: selectedIndex)
+                sample.volume = newVolume
+                sample.flowLevel = flowLevel(for: selection, with: newVolume)
                 updateSample(sample, saveCompletion)
             }
         } else if selection != .none {
-            let sample = MenstrualSample(startDate: date, endDate: date, flowLevel: flowLevel(for: selection, with: selectedIndex), volume: volume)
+            let sample = MenstrualSample(startDate: date, endDate: date, flowLevel: flowLevel(for: selection, with: newVolume), volume: newVolume)
             saveSample(sample, saveCompletion)
         }
     }
     
-    // MARK: Volume Selection
-    let flowPickerOptions = (0...80).map { String($0) }
+    // MARK: Settings
+    var volumeUnit: VolumeType = UserDefaults.app?.volumeType ?? .mL {
+        didSet {
+            UserDefaults.app?.volumeType = volumeUnit
+        }
+    }
+    
+    var cupType: MenstrualCupType = UserDefaults.app?.menstrualCupType ?? .lenaSmall {
+        didSet {
+            UserDefaults.app?.menstrualCupType = cupType
+        }
+    }
+    
+    var flowPickerOptions: [String] {
+        flowPickerNumbers.map { String($0) }
+    }
+    
+    var flowPickerNumbers: [Int] {
+        switch volumeUnit {
+        case .mL:
+            return Array(0...80)
+        case .percentOfCup:
+            return Array(0...10).map { $0 * 10 }
+        }
+    }
+    
+    func closestNumberOnPicker(num: Int) -> Int {
+        return  flowPickerNumbers.reduce(flowPickerNumbers.first!) { abs($1 - num) < abs($0 - num) ? $1 : $0 }
+    }
 }

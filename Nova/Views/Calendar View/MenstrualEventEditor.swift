@@ -55,7 +55,8 @@ struct MenstrualEventEditor: View {
     
     var saveButton: some View {
         Button(sample != nil ? "Update" : "Save") {
-            self.viewModel.save(sample: self.sample, date: self.date, selectedIndex: self.selectedIndex) { result in
+            let newVolume = self.percentToVolume(self.viewModel.flowPickerNumbers[self.selectedIndex] )
+            self.viewModel.save(sample: self.sample, date: self.date, newVolume: newVolume) { result in
                 switch result {
                 case .success:
                     DispatchQueue.main.async {
@@ -96,16 +97,29 @@ struct MenstrualEventEditor: View {
     }
     
     var flowPickerRow: some View {
-        FlowPicker(
+        let sampleVolume = sample?.volume ?? 0
+        // FIXME: this could be cleaner type-wise
+        let pickerValue = viewModel.volumeUnit == .percentOfCup ? volumeToPercent(sampleVolume) : sampleVolume
+        let pickerStart = viewModel.closestNumberOnPicker(num: pickerValue)
+        
+        return FlowPicker(
             viewModel: viewModel,
             with: viewModel.flowPickerOptions,
             onUpdate: { index in
                 self.selectedIndex = index
             },
             label: NSLocalizedString("24-Hour Menstrual Flow", comment: "Menstrual flow picker label"),
-            unit: NSLocalizedString("mL", comment: "Milliliter unit label"),
-            initialPickerIndex: self.viewModel.flowPickerOptions.firstIndex(of: String(sample?.volume ?? 0)) ?? 0
+            unit: viewModel.volumeUnit.shortUnit,
+            initialPickerIndex: self.viewModel.flowPickerOptions.firstIndex(of: String(pickerStart)) ?? 0
         )
+    }
+    
+    private func percentToVolume(_ percent: Int) -> Int {
+        return Int(Double(percent) / Double(100) * Double(viewModel.cupType.maxVolume))
+    }
+    
+    private func volumeToPercent(_ volume: Int) -> Int {
+        return Int(Double(volume) / Double(viewModel.cupType.maxVolume) * 100)
     }
     
     private func alert() -> SwiftUI.Alert {

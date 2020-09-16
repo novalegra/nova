@@ -12,6 +12,7 @@
 		E914695C250C1BD000D64A5A /* CoordinatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E914695B250C1BD000D64A5A /* CoordinatorView.swift */; };
 		E9146975250C7C7E00D64A5A /* StatisticsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9146974250C7C7E00D64A5A /* StatisticsView.swift */; };
 		E9146977250D5F0D00D64A5A /* MenstrualPeriod.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9146976250D5F0D00D64A5A /* MenstrualPeriod.swift */; };
+		E957BBFD251267CF00171FDC /* UserDefaults+Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = E957BBFC251267CF00171FDC /* UserDefaults+Settings.swift */; };
 		E995A4FB2507145E009D52CF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E995A4FA2507145E009D52CF /* AppDelegate.swift */; };
 		E995A4FD2507145E009D52CF /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E995A4FC2507145E009D52CF /* SceneDelegate.swift */; };
 		E995A5002507145E009D52CF /* Nova.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = E995A4FE2507145E009D52CF /* Nova.xcdatamodeld */; };
@@ -31,6 +32,7 @@
 		E995A52925073282009D52CF /* MenstrualEventEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = E995A52825073282009D52CF /* MenstrualEventEditor.swift */; };
 		E995A52B250732CB009D52CF /* FlowPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = E995A52A250732CB009D52CF /* FlowPicker.swift */; };
 		E995A52D250750C8009D52CF /* HKCategorySample+MenstrualSample.swift in Sources */ = {isa = PBXBuildFile; fileRef = E995A52C250750C7009D52CF /* HKCategorySample+MenstrualSample.swift */; };
+		E9E51FC72512529E00D96B7C /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9E51FC62512529E00D96B7C /* SettingsView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -39,6 +41,7 @@
 		E914695B250C1BD000D64A5A /* CoordinatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoordinatorView.swift; sourceTree = "<group>"; };
 		E9146974250C7C7E00D64A5A /* StatisticsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsView.swift; sourceTree = "<group>"; };
 		E9146976250D5F0D00D64A5A /* MenstrualPeriod.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenstrualPeriod.swift; sourceTree = "<group>"; };
+		E957BBFC251267CF00171FDC /* UserDefaults+Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDefaults+Settings.swift"; sourceTree = "<group>"; };
 		E995A4F72507145E009D52CF /* Nova.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Nova.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E995A4FA2507145E009D52CF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E995A4FC2507145E009D52CF /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -61,6 +64,7 @@
 		E995A52825073282009D52CF /* MenstrualEventEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenstrualEventEditor.swift; sourceTree = "<group>"; };
 		E995A52A250732CB009D52CF /* FlowPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlowPicker.swift; sourceTree = "<group>"; };
 		E995A52C250750C7009D52CF /* HKCategorySample+MenstrualSample.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HKCategorySample+MenstrualSample.swift"; sourceTree = "<group>"; };
+		E9E51FC62512529E00D96B7C /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -156,6 +160,7 @@
 			children = (
 				E90ED4C5250DB2B700F56679 /* Calendar View */,
 				E914695B250C1BD000D64A5A /* CoordinatorView.swift */,
+				E9E51FC52512526300D96B7C /* Settings */,
 				E90ED4C6250DB2D600F56679 /* Statistics */,
 			);
 			path = Views;
@@ -168,6 +173,7 @@
 				E995A5242507237D009D52CF /* MenstrualDataManager.swift */,
 				E995A5262507289B009D52CF /* MenstrualSample.swift */,
 				E9146976250D5F0D00D64A5A /* MenstrualPeriod.swift */,
+				E957BBFC251267CF00171FDC /* UserDefaults+Settings.swift */,
 			);
 			path = "Data Management";
 			sourceTree = "<group>";
@@ -178,6 +184,14 @@
 				E995A52225071FE5009D52CF /* HealthKit.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		E9E51FC52512526300D96B7C /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				E9E51FC62512529E00D96B7C /* SettingsView.swift */,
+			);
+			path = Settings;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -251,6 +265,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E9E51FC72512529E00D96B7C /* SettingsView.swift in Sources */,
 				E995A5252507237D009D52CF /* MenstrualDataManager.swift in Sources */,
 				E995A51525071B01009D52CF /* DateFormatter.swift in Sources */,
 				E9146977250D5F0D00D64A5A /* MenstrualPeriod.swift in Sources */,
@@ -261,6 +276,7 @@
 				E995A5002507145E009D52CF /* Nova.xcdatamodeld in Sources */,
 				E995A51F25071DC2009D52CF /* MenstrualStore.swift in Sources */,
 				E995A5022507145E009D52CF /* MenstrualCalendarView.swift in Sources */,
+				E957BBFD251267CF00171FDC /* UserDefaults+Settings.swift in Sources */,
 				E995A51D25071BD0009D52CF /* WeekView.swift in Sources */,
 				E90ED4C2250D73D100F56679 /* SegmentedGaugeBar.swift in Sources */,
 				E995A52D250750C8009D52CF /* HKCategorySample+MenstrualSample.swift in Sources */,
@@ -408,7 +424,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = Nova/Nova.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 8;
+				CURRENT_PROJECT_VERSION = 9;
 				DEVELOPMENT_ASSET_PATHS = "\"Nova/Preview Content\"";
 				DEVELOPMENT_TEAM = T93DJEUU9W;
 				ENABLE_PREVIEWS = YES;
@@ -418,7 +434,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.2.1;
+				MARKETING_VERSION = 1.2.2;
 				PRODUCT_BUNDLE_IDENTIFIER = novalegra.Nova;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -432,7 +448,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = Nova/Nova.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 8;
+				CURRENT_PROJECT_VERSION = 9;
 				DEVELOPMENT_ASSET_PATHS = "\"Nova/Preview Content\"";
 				DEVELOPMENT_TEAM = T93DJEUU9W;
 				ENABLE_PREVIEWS = YES;
@@ -442,7 +458,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.2.1;
+				MARKETING_VERSION = 1.2.2;
 				PRODUCT_BUNDLE_IDENTIFIER = novalegra.Nova;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;

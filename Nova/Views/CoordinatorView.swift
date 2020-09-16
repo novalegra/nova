@@ -24,6 +24,12 @@ struct CoordinatorView: View {
                 Image(systemName: "heart.fill")
                 Text("Reports", comment: "Label for reports menu item")
             }
+            SettingsView(viewModel: viewModel)
+            .tabItem {
+                
+                Image(systemName: "gear")
+                Text("Settings", comment: "Label for settings menu item")
+            }
         }
     }
 }

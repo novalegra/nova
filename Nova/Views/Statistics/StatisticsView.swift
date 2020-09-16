@@ -15,13 +15,16 @@ struct StatisticsView: View {
         NavigationView {
             List {
                 lastPeriodItem
-                totalVolumeItem
-                dailyVolumeItem
-                periodLengthItem
+                Section {
+                    totalVolumeItem
+                    dailyVolumeItem
+                    periodLengthItem
+                }
             }
             .navigationBarTitle("Reports", displayMode: .large)
+            .listStyle(GroupedListStyle())
+            .environment(\.horizontalSizeClass, .regular)
         }
-        
     }
     
     var lastPeriodItem: some View {
