@@ -80,6 +80,9 @@ struct MenstrualEventEditor: View {
             .frame(width: 20.0, height: 20.0)
             .onTapGesture {
                 self.viewModel.selection = self.viewModel.selection == .hadFlow ? .none : .hadFlow
+                if self.viewModel.selection == .none {
+                    self.selectedIndex = 0 // reset value
+                }
             }
         }
     }
@@ -93,6 +96,7 @@ struct MenstrualEventEditor: View {
             .frame(width: 20.0, height: 20.0)
             .onTapGesture {
                 self.viewModel.selection = self.viewModel.selection == .noFlow ? .none : .noFlow
+                self.selectedIndex = 0 // reset value
             }
         }
     }
