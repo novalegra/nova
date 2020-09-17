@@ -55,7 +55,8 @@ struct MenstrualEventEditor: View {
     
     var saveButton: some View {
         Button(sample != nil ? "Update" : "Save") {
-            let newVolume = self.percentToVolume(self.viewModel.flowPickerNumbers[self.selectedIndex] )
+            let selection = self.viewModel.flowPickerNumbers[self.selectedIndex]
+            let newVolume = self.viewModel.volumeUnit == .percentOfCup ? self.percentToVolume(selection) : selection
             self.viewModel.save(sample: self.sample, date: self.date, newVolume: newVolume) { result in
                 switch result {
                 case .success:
@@ -98,7 +99,6 @@ struct MenstrualEventEditor: View {
     
     var flowPickerRow: some View {
         let sampleVolume = sample?.volume ?? 0
-        // FIXME: this could be cleaner type-wise
         let pickerValue = viewModel.volumeUnit == .percentOfCup ? volumeToPercent(sampleVolume) : sampleVolume
         let pickerStart = viewModel.closestNumberOnPicker(num: pickerValue)
         
