@@ -17,7 +17,7 @@ enum VolumeType: String, Equatable, CaseIterable {
         case .mL:
             return "mL"
         case .percentOfCup:
-            return "%"
+            return "% of cup"
         }
     }
 }

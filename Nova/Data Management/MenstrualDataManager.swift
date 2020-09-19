@@ -151,7 +151,7 @@ class MenstrualDataManager: ObservableObject {
             fatalError("Calling hkFlowLevel when entry is .none")
         }
     }
-    
+
     func yearFormattedDate(for date: Date?) -> String {
         guard let date = date else {
             return "None"

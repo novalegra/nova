@@ -41,9 +41,7 @@ struct FlowPicker: View {
             HStack(alignment: .center) {
                 Text(label)
                 Spacer()
-                Text(items[pickerIndex])
-                Text(unit)
-                
+                Text(items[pickerIndex] + " " + unit)                
             }
             .padding(.vertical, 5)
             .frame(minWidth: 0, maxWidth: .infinity).onTapGesture {

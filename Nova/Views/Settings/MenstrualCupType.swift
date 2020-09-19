@@ -8,33 +8,34 @@
 
 // Values from https://putacupinit.com/chart/
 enum MenstrualCupType: String, Equatable, CaseIterable {
-    case lenaSmall = "Lena (S)"
-    case lenaLarge = "Lena (L)"
+    case blossomSmall = "Blossom (S)"
+    case blossomLarge = "Blossom (L)"
     
     case divaXsmall = "Diva Cup (XS)"
     case divaSmall = "Diva Cup (S)"
     case divaLarge = "Diva Cup (L)"
     
-    case saaltSmall = "Saalt Cup (S)"
-    case saaltLarge = "Saalt Cup (L)"
-    
-    case blossomSmall = "Blossom (S)"
-    case blossomLarge = "Blossom (L)"
-    
-    case lunetteSmall = "Lunette (S)"
-    case lunetteLarge = "Lunette (L)"
-    
-    case honeyPotSmall = "Honey Pot (S)"
-    case honeyPotLarge = "Honey Pot (L)"
-    
-    case lilySmall = "Lily Cup (S)"
-    case lilyLarge = "Lily Cup (L)"
+    case femmyCycleSmall = "FemmyCycle (S)"
+    case femmyCycleLarge = "FemmyCycle (L)"
     
     case flexSmall = "Flex (S)"
     case flexLarge = "Flex (L)"
     
-    case femmyCycleSmall = "FemmyCycle (S)"
-    case femmyCycleLarge = "FemmyCycle (L)"
+    case honeyPotSmall = "Honey Pot (S)"
+    case honeyPotLarge = "Honey Pot (L)"
+    
+    case lunetteSmall = "Lunette (S)"
+    case lunetteLarge = "Lunette (L)"
+    
+    case lenaSmall = "Lena (S)"
+    case lenaLarge = "Lena (L)"
+    
+    case lilySmall = "Lily Cup (S)"
+    case lilyLarge = "Lily Cup (L)"
+    
+    
+    case saaltSmall = "Saalt Cup (S)"
+    case saaltLarge = "Saalt Cup (L)"
     
     case superJennieSmall = "Super Jennie (S)"
     case superJennieLarge = "Super Jennie (L)"
