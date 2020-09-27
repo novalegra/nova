@@ -13,18 +13,33 @@ struct StatisticsView: View {
     
     var body: some View {
         NavigationView {
-            List {
-                lastPeriodItem
-                Section {
-                    totalVolumeItem
-                    dailyVolumeItem
-                    periodLengthItem
+            #if swift(>=5.2)
+                if #available(iOS 14.0, *) {
+                    mainBody
+                    .listStyle(InsetGroupedListStyle())
+                } else {
+                    mainBody
+                        .listStyle(GroupedListStyle())
+                        .environment(\.horizontalSizeClass, .regular)
                 }
-            }
-            .navigationBarTitle("Reports", displayMode: .large)
-            .listStyle(GroupedListStyle())
-            .environment(\.horizontalSizeClass, .regular)
+            #else
+                mainBody
+                .listStyle(GroupedListStyle())
+                .environment(\.horizontalSizeClass, .regular)
+            #endif
         }
+    }
+    
+    var mainBody: some View {
+        List {
+            lastPeriodItem
+            Section {
+                totalVolumeItem
+                dailyVolumeItem
+                periodLengthItem
+            }
+        }
+        .navigationBarTitle("Reports", displayMode: .large)
     }
     
     var lastPeriodItem: some View {

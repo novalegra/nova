@@ -1,0 +1,6 @@
+/* Bundle name */
+"CFBundleName" = "Nova";
+/* Privacy - Health Share Usage Description */
+"NSHealthShareUsageDescription" = "Nova reads data from Health to generate visualizations about your cycles.";
+/* Privacy - Health Update Usage Description */
+"NSHealthUpdateUsageDescription" = "Nova securely stores menstrual data in Health that you enter into the app.";

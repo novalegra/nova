@@ -29,22 +29,37 @@ struct SettingsView: View {
 
     var body: some View {
         NavigationView {
-            List {
-                volumeTypeSection
-                if selectedVolumeType == .percentOfCup {
-                    cupPickerSection
+            #if swift(>=5.2)
+                if #available(iOS 14.0, *) {
+                    mainBody
+                    .listStyle(InsetGroupedListStyle())
+                } else {
+                    mainBody
+                        .listStyle(GroupedListStyle())
+                        .environment(\.horizontalSizeClass, .regular)
                 }
+            #else
+                mainBody
+                .listStyle(GroupedListStyle())
+                .environment(\.horizontalSizeClass, .regular)
+            #endif
+        }
+    }
+    
+    var mainBody: some View {
+        List {
+            volumeTypeSection
+            if selectedVolumeType == .percentOfCup {
+                cupPickerSection
             }
-            .listStyle(GroupedListStyle())
-            .environment(\.horizontalSizeClass, .regular)
-            .navigationBarTitle("Settings", displayMode: .large)
-            .onAppear {
-                self.selectedMenstrualCupType = self.viewModel.cupType
-                self.selectedVolumeType = self.viewModel.volumeUnit
-            }
-            .onDisappear {
-                self.saveSettingsToDataManager()
-            }
+        }
+        .navigationBarTitle("Settings", displayMode: .large)
+        .onAppear {
+            self.selectedMenstrualCupType = self.viewModel.cupType
+            self.selectedVolumeType = self.viewModel.volumeUnit
+        }
+        .onDisappear {
+            self.saveSettingsToDataManager()
         }
     }
     

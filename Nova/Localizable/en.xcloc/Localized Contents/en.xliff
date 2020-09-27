@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.2" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:1.2 http://docs.oasis-open.org/xliff/v1.2/os/xliff-core-1.2-strict.xsd">
+  <file original="Nova/en.lproj/InfoPlist.strings" source-language="en" target-language="en" datatype="plaintext">
+    <header>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="11.5" build-num="11E608c"/>
+    </header>
+    <body>
+      <trans-unit id="CFBundleName" xml:space="preserve">
+        <source>Nova</source>
+        <target>Nova</target>
+        <note>Bundle name</note>
+      </trans-unit>
+      <trans-unit id="NSHealthShareUsageDescription" xml:space="preserve">
+        <source>Nova reads data from Health to generate visualizations about your cycles.</source>
+        <target>Nova reads data from Health to generate visualizations about your cycles.</target>
+        <note>Privacy - Health Share Usage Description</note>
+      </trans-unit>
+      <trans-unit id="NSHealthUpdateUsageDescription" xml:space="preserve">
+        <source>Nova securely stores menstrual data in Health that you enter into the app.</source>
+        <target>Nova securely stores menstrual data in Health that you enter into the app.</target>
+        <note>Privacy - Health Update Usage Description</note>
+      </trans-unit>
+    </body>
+  </file>
+  <file original="Nova/en.lproj/Localizable.strings" source-language="en" target-language="en" datatype="plaintext">
+    <header>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="11.5" build-num="11E608c"/>
+    </header>
+    <body>
+      <trans-unit id=" " xml:space="preserve">
+        <source> </source>
+        <target> </target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="%@ mL" xml:space="preserve">
+        <source>%@ mL</source>
+        <target>%@ mL</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="00" xml:space="preserve">
+        <source>00</source>
+        <target>00</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="24-Hour Flow" xml:space="preserve">
+        <source>24-Hour Flow</source>
+        <target>24-Hour Flow</target>
+        <note>Menstrual flow picker label</note>
+      </trans-unit>
+      <trans-unit id="Allow Nova to save samples by enabling access to menstration data in Health -&gt; Profile -&gt; Apps." xml:space="preserve">
+        <source>Allow Nova to save samples by enabling access to menstration data in Health -&gt; Profile -&gt; Apps.</source>
+        <target>Allow Nova to save samples by enabling access to menstration data in Health -&gt; Profile -&gt; Apps.</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Average" xml:space="preserve">
+        <source>Average</source>
+        <target>Average</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Calendar" xml:space="preserve">
+        <source>Calendar</source>
+        <target>Calendar</target>
+        <note>Label for calendar menu item</note>
+      </trans-unit>
+      <trans-unit id="Go to Health" xml:space="preserve">
+        <source>Go to Health</source>
+        <target>Go to Health</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Had Flow" xml:space="preserve">
+        <source>Had Flow</source>
+        <target>Had Flow</target>
+        <note>Label for had flow selector</note>
+      </trans-unit>
+      <trans-unit id="HealthKit Not Authorized" xml:space="preserve">
+        <source>HealthKit Not Authorized</source>
+        <target>HealthKit Not Authorized</target>
+        <note>Alert title for un-authorized HealthKit</note>
+      </trans-unit>
+      <trans-unit id="Last Period" xml:space="preserve">
+        <source>Last Period</source>
+        <target>Last Period</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Menstrual Cup Type" xml:space="preserve">
+        <source>Menstrual Cup Type</source>
+        <target>Menstrual Cup Type</target>
+        <note>Label for menstrual cup type setting</note>
+      </trans-unit>
+      <trans-unit id="No Flow" xml:space="preserve">
+        <source>No Flow</source>
+        <target>No Flow</target>
+        <note>Label for no flow selector</note>
+      </trans-unit>
+      <trans-unit id="No data" xml:space="preserve">
+        <source>No data</source>
+        <target>No data</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="OK" xml:space="preserve">
+        <source>OK</source>
+        <target>OK</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Reports" xml:space="preserve">
+        <source>Reports</source>
+        <target>Reports</target>
+        <note>Label for reports menu item</note>
+      </trans-unit>
+      <trans-unit id="Settings" xml:space="preserve">
+        <source>Settings</source>
+        <target>Settings</target>
+        <note>Label for settings menu item</note>
+      </trans-unit>
+      <trans-unit id="Typical Daily Volume" xml:space="preserve">
+        <source>Typical Daily Volume</source>
+        <target>Typical Daily Volume</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Typical Period Length" xml:space="preserve">
+        <source>Typical Period Length</source>
+        <target>Typical Period Length</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Typical Period Volume" xml:space="preserve">
+        <source>Typical Period Volume</source>
+        <target>Typical Period Volume</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Volume Entry Unit" xml:space="preserve">
+        <source>Volume Entry Unit</source>
+        <target>Volume Entry Unit</target>
+        <note>Label for volume picker setting</note>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

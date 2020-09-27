@@ -32,6 +32,23 @@ struct MenstrualEventEditor: View {
     }
     
     var body: some View {
+        #if swift(>=5.2)
+            if #available(iOS 14.0, *) {
+                mainBody
+                .listStyle(InsetGroupedListStyle())
+            } else {
+                mainBody
+                    .listStyle(GroupedListStyle())
+                    .environment(\.horizontalSizeClass, .regular)
+            }
+        #else
+            mainBody
+            .listStyle(GroupedListStyle())
+            .environment(\.horizontalSizeClass, .regular)
+        #endif
+    }
+    
+    var mainBody: some View {
         List {
             Section {
                 hadFlowRow
@@ -39,8 +56,6 @@ struct MenstrualEventEditor: View {
             }
             flowPickerRow
         }
-        .listStyle(GroupedListStyle())
-        .environment(\.horizontalSizeClass, .regular)
         .onAppear {
             if let sample = self.sample {
                 self.viewModel.selection = sample.flowLevel == .none ? .noFlow : .hadFlow

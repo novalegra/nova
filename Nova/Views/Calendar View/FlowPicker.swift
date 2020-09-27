@@ -58,14 +58,13 @@ struct FlowPicker: View {
                 }
             )
             if pickerShouldExpand && viewModel.selection == .hadFlow {
-                HStack {
+                HStack(alignment: .center) {
                     Picker(selection: $pickerIndex.onChange(onUpdate), label: Text("")) {
                         ForEach(0 ..< items.count) {
                             Text(self.items[$0])
                        }
                     }
                     .pickerStyle(WheelPickerStyle())
-                    .frame(maxWidth: 300, alignment: .center)
                 }
             }
         }
