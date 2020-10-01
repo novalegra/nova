@@ -13,8 +13,8 @@ struct MenstrualCalendarView: View {
     @ObservedObject var viewModel: MenstrualDataManager
 
     private var calendarDuraton: DateInterval {
-        let now = Date()
-        let threeMonthsAgo = Calendar.current.date(byAdding: .month, value: -3, to: now)!
+        let now = calendar.startOfDay(for: Date())
+        let threeMonthsAgo = calendar.date(byAdding: .month, value: -3, to: now)!
         
         return DateInterval(start: threeMonthsAgo, end: now)
     }
