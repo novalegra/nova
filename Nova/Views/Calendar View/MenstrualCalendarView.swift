@@ -12,7 +12,12 @@ struct MenstrualCalendarView: View {
     @Environment(\.calendar) var calendar
     @ObservedObject var viewModel: MenstrualDataManager
 
-    private var calendarDuraton: DateInterval { calendar.dateInterval(of: .quarter, for: Date())! }
+    private var calendarDuraton: DateInterval {
+        let now = Date()
+        let threeMonthsAgo = Calendar.current.date(byAdding: .month, value: -3, to: now)!
+        
+        return DateInterval(start: threeMonthsAgo, end: now)
+    }
 
     var body: some View {
         NavigationView {
