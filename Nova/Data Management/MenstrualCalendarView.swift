@@ -16,7 +16,7 @@ struct MenstrualCalendarView: View {
         let now = calendar.startOfDay(for: Date())
         let threeMonthsAgo = calendar.date(byAdding: .month, value: -3, to: now)!
         
-        return DateInterval(start: threeMonthsAgo, end: now)
+        return DateInterval(start: threeMonthsAgo, end: now.addingTimeInterval(60 * 60 * 24))
     }
 
     var body: some View {
