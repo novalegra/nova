@@ -49,26 +49,29 @@ struct MenstrualStatisticsDetailView: View {
     var averageSection: some View {
         // FIXME: empty header is hack to fix SwiftUI jumping with GroupedListStyle
         Section(header: Text("")) {
-            HStack {
-                Text("Average")
-                .bold()
-                Spacer()
-            }
-            if !averageDataIsMissing {
+            // FIXME: VStack is a hack to fix spacing in iOS 14.1
+            VStack(spacing: 10) {
                 HStack {
-                    SegmentedGaugeBar(scaler: 1)
-                    .frame(minHeight: 20, maxHeight: 20)
-                    Text(averageMeasurementLabel)
+                    Text("Average")
                     .bold()
-                    .font(.callout)
-                }
-            } else {
-                HStack {
-                    Text("No data")
                     Spacer()
                 }
+                if !averageDataIsMissing {
+                    HStack {
+                        SegmentedGaugeBar(scaler: 1)
+                        .frame(minHeight: 20, maxHeight: 20)
+                        Text(averageMeasurementLabel)
+                        .bold()
+                        .font(.callout)
+                    }
+                } else {
+                    HStack {
+                        Text("No data")
+                        Spacer()
+                    }
+                }
             }
-            
+            .padding(5)
         }
     }
     
@@ -85,26 +88,48 @@ struct MenstrualStatisticsDetailView: View {
     
     func section(for period: MenstrualPeriod) -> some View {
         Section {
-            HStack {
-                Text(viewModel.monthFormattedDate(for: period.startDate) + " - " + viewModel.monthFormattedDate(for: period.endDate))
-                .foregroundColor(Color("DarkBlue"))
-                Spacer()
-            }
-            if !dataIsMissing(for: period) {
+            // FIXME: VStack is a hack to fix spacing in iOS 14.1
+            VStack(spacing: 10) {
                 HStack {
-                    SegmentedGaugeBar(scaler: scaler(for: period))
-                    .frame(minHeight: 20, maxHeight: 20)
-                    Text(description(of: period))
-                    .font(.callout)
-                }
-            } else {
-                HStack {
-                    Text("No data")
+                    Text(viewModel.monthFormattedDate(for: period.startDate) + " - " + viewModel.monthFormattedDate(for: period.endDate))
+                    .foregroundColor(Color("DarkBlue"))
                     Spacer()
                 }
+                if !dataIsMissing(for: period) {
+                    HStack {
+                        SegmentedGaugeBar(scaler: scaler(for: period))
+                        .frame(minHeight: 20, maxHeight: 20)
+                        Text(description(of: period))
+                        .font(.callout)
+                    }
+                } else {
+                    HStack {
+                        Text("No data")
+                        Spacer()
+                    }
+                }
             }
+            .padding(5)
         }
     }
+    
+//    func visualRepresentation(for period: MenstrualPeriod) -> some View {
+//        return Group {
+//            if !dataIsMissing(for: period) {
+//                HStack {
+//                    SegmentedGaugeBar(scaler: scaler(for: period))
+//                    .frame(minHeight: 20, maxHeight: 20)
+//                    Text(description(of: period))
+//                    .font(.callout)
+//                }
+//            } else {
+//                HStack {
+//                    Text("No data")
+//                    Spacer()
+//                }
+//            }
+//        }
+//    }
     
     func description(of period: MenstrualPeriod) -> String {
         switch mode {
