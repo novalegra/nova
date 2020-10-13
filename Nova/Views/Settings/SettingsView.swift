@@ -48,15 +48,18 @@ struct SettingsView: View {
     
     var mainBody: some View {
         List {
-            volumeTypeSection
-            if selectedVolumeType == .percentOfCup {
-                cupPickerSection
-            }
+            // FIXME: removed due to iOS 14 bug
+//            volumeTypeSection
+//            if selectedVolumeType == .percentOfCup {
+//                cupPickerSection
+//            }
+            cupPickerSection
         }
         .navigationBarTitle("Settings", displayMode: .large)
         .onAppear {
+            // FIXME: removed due to iOS 14 bug
             self.selectedMenstrualCupType = self.viewModel.cupType
-            self.selectedVolumeType = self.viewModel.volumeUnit
+            self.selectedVolumeType = .percentOfCup//self.viewModel.volumeUnit
         }
         .onDisappear {
             self.saveSettingsToDataManager()
