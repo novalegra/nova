@@ -64,7 +64,12 @@ class MenstrualStore {
                     self?.getRecentMenstrualSamples() { samples in
                         self?.healthStoreUpdateCompletionHandler?(samples)
                         if let events = self?.menstrualEvents {
-                            self?.watchCoordinator.updateWatch(with: events)
+                            print("Updating watch with",  events.count, "events")
+                            do {
+                                try self?.watchCoordinator.updateWatch(with: events)
+                            } catch let error {
+                                print("Error while passing data to watch", error)
+                            }
                         }
                     }
                 }

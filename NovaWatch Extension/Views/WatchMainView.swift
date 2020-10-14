@@ -18,8 +18,10 @@ struct WatchMainView: View {
             ForEach(reversedDays, id: \.self) { date in
                 FlowTile(date: date)
                 .listRowBackground(buttonColor(for: date))
+                .cornerRadius(10)
             }
         }
+        .navigationTitle(Text("Overview"))
     }
 
     private var calendarDuration: DateInterval {
@@ -67,6 +69,7 @@ struct FlowTile: View {
     var body: some View {
         LazyVStack {
             Text(formattedDate(for: date))
+            .foregroundColor(Color.black)
         }
     }
 }

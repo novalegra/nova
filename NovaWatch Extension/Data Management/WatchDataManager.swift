@@ -12,7 +12,7 @@ import WatchConnectivity
 import WatchKit
 
 class WatchDataManager: NSObject, ObservableObject, WKExtensionDelegate {
-    var menstrualEvents: [MenstrualSample] = []
+    @Published var menstrualEvents: [MenstrualSample] = []
     
     override init() {
         super.init()
@@ -22,17 +22,25 @@ class WatchDataManager: NSObject, ObservableObject, WKExtensionDelegate {
         session.activate()
     }
     
-    private func updateMenstrualData(_ context: [String: Any]) {
-        print(context)
-        guard let events = context["events"] as? [MenstrualSample] else {
+    private let decoder: JSONDecoder = {
+        let decoder = JSONDecoder()
+        decoder.dateDecodingStrategy = .iso8601
+        return decoder
+    }()
+    
+    private func updateMenstrualData(_ context: [String: Any]) throws {
+        guard let codedEvents = context["events"] as? Data else {
             print("Couldn't get events")
             return
         }
-        menstrualEvents = events
-        menstrualDataDidUpdate()
+        let events = try decoder.decode([MenstrualSample].self, from: codedEvents)
+        DispatchQueue.main.sync {
+            menstrualEvents = events
+        }
+        scheduleSnapshot()
     }
     
-    private func menstrualDataDidUpdate() {
+    private func scheduleSnapshot() {
         if WKExtension.shared().applicationState != .active {
             WKExtension.shared().scheduleSnapshotRefresh(withPreferredDate: Date(), userInfo: nil) { (error) in
                 if let error = error {
@@ -69,12 +77,21 @@ extension WatchDataManager: WCSessionDelegate {
     func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) {
         if activationState == .activated {
             print("Watch received data")
-            updateMenstrualData(session.receivedApplicationContext)
+            do {
+                try updateMenstrualData(session.receivedApplicationContext)
+            } catch let error {
+                print(error)
+            }
+            
         }
     }
     
     func session(_ session: WCSession, didReceiveApplicationContext applicationContext: [String : Any]) {
         print("Watch received data")
-        updateMenstrualData(applicationContext)
+        do {
+            try updateMenstrualData(applicationContext)
+        } catch let error {
+            print(error)
+        }
     }
 }
