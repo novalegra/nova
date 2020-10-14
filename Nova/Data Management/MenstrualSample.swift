@@ -8,7 +8,7 @@
 
 import HealthKit
 
-class MenstrualSample {
+class MenstrualSample {    
     let startDate: Date
     let endDate: Date
     var flowLevel: HKCategoryValueMenstrualFlow

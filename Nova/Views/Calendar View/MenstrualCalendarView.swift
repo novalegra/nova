@@ -12,7 +12,7 @@ struct MenstrualCalendarView: View {
     @Environment(\.calendar) var calendar
     @ObservedObject var viewModel: MenstrualDataManager
 
-    private var calendarDuraton: DateInterval {
+    private var calendarDuration: DateInterval {
         let now = calendar.startOfDay(for: Date())
         let threeMonthsAgo = calendar.date(byAdding: .month, value: -3, to: now)!
         
@@ -21,7 +21,7 @@ struct MenstrualCalendarView: View {
 
     var body: some View {
         NavigationView {
-            CalendarView(interval: calendarDuraton) { date in
+            CalendarView(interval: calendarDuration) { date in
                 NavigationLink(
                     destination: MenstrualEventEditor(viewModel: self.viewModel, sample: self.viewModel.menstrualEventIfPresent(for: date), date: date)
                 ) {

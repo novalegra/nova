@@ -13,7 +13,7 @@ struct NovaApp: App {
     @SceneBuilder var body: some Scene {
         WindowGroup {
             NavigationView {
-                ContentView()
+                WatchMainView()
             }
         }
 

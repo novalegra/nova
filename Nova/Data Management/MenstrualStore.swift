@@ -8,6 +8,12 @@
 
 import HealthKit
 
+enum SelectionState {
+    case hadFlow
+    case noFlow
+    case none
+}
+
 enum MenstrualStoreResult<T> {
     case success(T)
     case failure(MenstrualStoreError)
@@ -52,19 +58,27 @@ class MenstrualStore {
     }
 
     func setUpBackgroundDelivery() {
-        let query = HKObserverQuery(sampleType: sampleType, predicate: nil) { [weak self] (query, completionHandler, error) in
-            self?.dataFetch.async {
-                self?.getRecentMenstrualSamples() { samples in
-                    self?.healthStoreUpdateCompletionHandler?(samples)
+        #if os(iOS)
+            let query = HKObserverQuery(sampleType: sampleType, predicate: nil) { [weak self] (query, completionHandler, error) in
+                self?.dataFetch.async {
+                    self?.getRecentMenstrualSamples() { samples in
+                        self?.healthStoreUpdateCompletionHandler?(samples)
+                        if let events = self?.menstrualEvents {
+                            self?.watchCoordinator.updateWatch(with: events)
+                        }
+                    }
                 }
+                completionHandler()
             }
-            completionHandler()
-        }
-        healthStore.execute(query)
-        healthStore.enableBackgroundDelivery(for: sampleType, frequency: .immediate) { (enabled, error) in
-            print("enableBackgroundDeliveryForType handler called for \(self.sampleType) - success: \(enabled), error: \(String(describing: error))")
-        }
+            healthStore.execute(query)
+            healthStore.enableBackgroundDelivery(for: sampleType, frequency: .immediate) { (enabled, error) in
+                print("enableBackgroundDeliveryForType handler called for \(self.sampleType) - success: \(enabled), error: \(String(describing: error))")
+            }
+        #endif
     }
+    
+    // MARK: Watch App
+    let watchCoordinator = WatchDataCoordinator()
     
     // MARK: Data Retrieval
     let dataFetch = DispatchQueue(label: "com.nova.MenstrualStoreQueue", qos: .utility)

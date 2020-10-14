@@ -9,11 +9,6 @@
 import SwiftUI
 import HealthKit
 
-enum SelectionState {
-    case hadFlow
-    case noFlow
-    case none
-}
 
 struct MenstrualEventEditor: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
