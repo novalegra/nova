@@ -74,7 +74,7 @@ class WatchDataManager: NSObject, ObservableObject, WKExtensionDelegate {
     }
     
     // MARK: Settings
-    var volumeUnit: VolumeType = UserDefaults.app?.volumeType ?? .mL
+    var volumeUnit: VolumeType = UserDefaults.app?.volumeType ?? .percentOfCup
     
     var cupType: MenstrualCupType = UserDefaults.app?.menstrualCupType ?? .lenaSmall
     

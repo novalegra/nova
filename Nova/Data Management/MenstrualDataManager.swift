@@ -136,7 +136,7 @@ class MenstrualDataManager: ObservableObject {
     }
     
     // MARK: Settings
-    var volumeUnit: VolumeType = UserDefaults.app?.volumeType ?? .mL {
+    var volumeUnit: VolumeType = UserDefaults.app?.volumeType ?? .percentOfCup {
         didSet {
             UserDefaults.app?.volumeType = volumeUnit
         }

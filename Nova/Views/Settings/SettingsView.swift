@@ -24,7 +24,7 @@ enum VolumeType: String, Equatable, CaseIterable {
 
 struct SettingsView: View {
     @ObservedObject var viewModel: MenstrualDataManager
-    @State private var selectedVolumeType: VolumeType = .mL
+    @State private var selectedVolumeType: VolumeType = .percentOfCup
     @State private var selectedMenstrualCupType: MenstrualCupType = .lenaSmall
 
     var body: some View {
