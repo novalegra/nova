@@ -227,12 +227,76 @@ class MenstrualStore {
     func eventWithinDate(_ date: Date, _ event: MenstrualSample) -> Bool {
         return (event.startDate <= date && event.endDate >= date) || Calendar.current.isDate(event.startDate, inSameDayAs: date) || Calendar.current.isDate(event.endDate, inSameDayAs: date)
     }
+    
+    func flowLevel(for selection: SelectionState, with volume: Int) -> HKCategoryValueMenstrualFlow {
+        switch selection {
+        // Values from https://www.everydayhealth.com/womens-health/menstruation/making-sense-menstrual-flow/ based on 5 mL flow = 1 pad
+        case .hadFlow:
+            switch volume {
+            case let val where 0 < val && val < 15:
+                return .light
+            case let val where 15 <= val && val <= 30:
+                return .medium
+            case let val where val > 30:
+                return .heavy
+            default:
+                return .unspecified
+            }
+        case .noFlow:
+            return .none
+        case .none:
+            fatalError("Calling hkFlowLevel when entry is .none")
+        }
+    }
 }
 
 
 // MARK: Data Management
-extension MenstrualStore {    
-    func saveSample(_ entry: MenstrualSample, _ completion: @escaping (MenstrualStoreResult<Bool>) -> ()) {
+extension MenstrualStore {
+    func saveInHealthKit(sample: MenstrualSample?, date: Date, newVolume: Int, flowSelection: SelectionState, _ completion: @escaping (MenstrualStoreResult<Bool>) -> Void) {
+        let saveCompletion: (MenstrualStoreResult<Bool>) -> () = { result in
+            completion(result)
+        }
+        
+        if let sample = sample {
+            if flowSelection == .none {
+                deleteSample(sample, saveCompletion)
+            } else {
+                sample.volume = newVolume
+                sample.flowLevel = flowLevel(for: flowSelection, with: newVolume)
+                updateSample(sample, saveCompletion)
+            }
+        } else if flowSelection != .none {
+            let sample = MenstrualSample(startDate: date, endDate: date, flowLevel: flowLevel(for: flowSelection, with: newVolume), volume: newVolume)
+            saveSample(sample, saveCompletion)
+        }
+    }
+    
+    func saveSample(_ sample: MenstrualSample, _ completion: @escaping (MenstrualStoreResult<Bool>) -> ()) {
+        dataFetch.async {
+            self.save(sample) { result in
+                completion(result)
+            }
+        }
+    }
+    
+    func deleteSample(_ sample: MenstrualSample, _ completion: @escaping (MenstrualStoreResult<Bool>) -> ()) {
+        dataFetch.async {
+            self.delete(sample) { result in
+                completion(result)
+            }
+        }
+    }
+    
+    func updateSample(_ sample: MenstrualSample,  _ completion: @escaping (MenstrualStoreResult<Bool>) -> ()) {
+        dataFetch.async {
+            self.replace(sample) { result in
+                completion(result)
+            }
+        }
+    }
+    
+    func save(_ entry: MenstrualSample, _ completion: @escaping (MenstrualStoreResult<Bool>) -> ()) {
         dispatchPrecondition(condition: .onQueue(dataFetch))
         
         let persistedSample = HKCategorySample(entry: entry)
@@ -248,7 +312,7 @@ extension MenstrualStore {
         }
     }
     
-    func replaceSample(_ entry: MenstrualSample, _ completion: @escaping (MenstrualStoreResult<Bool>) -> ()) {
+    func replace(_ entry: MenstrualSample, _ completion: @escaping (MenstrualStoreResult<Bool>) -> ()) {
         dispatchPrecondition(condition: .onQueue(dataFetch))
 
         self.deleteSample(entry) { result in
@@ -265,7 +329,7 @@ extension MenstrualStore {
         }
     }
     
-    func deleteSample(_ entry: MenstrualSample, _ completion: @escaping (MenstrualStoreResult<Bool>) -> ()) {
+    func delete(_ entry: MenstrualSample, _ completion: @escaping (MenstrualStoreResult<Bool>) -> ()) {
         dispatchPrecondition(condition: .onQueue(dataFetch))
         
         let predicate = HKQuery.predicateForObject(with: entry.uuid)

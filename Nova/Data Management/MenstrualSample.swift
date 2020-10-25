@@ -33,8 +33,8 @@ class MenstrualSample: Codable, RawRepresentable {
         guard
             let startDate = rawValue["startDate"] as? Date,
             let endDate = rawValue["endDate"] as? Date,
-            let flow = rawValue["flow"] as? HKCategoryValueMenstrualFlow,
-            let uuid = rawValue["uuid"] as? UUID
+            let flow = (rawValue["flow"] as? HKCategoryValueMenstrualFlow.RawValue).flatMap(HKCategoryValueMenstrualFlow.init(rawValue:)),
+            let uuid = (rawValue["uuid"] as? UUID.RawValue).flatMap(UUID.init(rawValue:))
         else {
             return nil
         }
@@ -52,8 +52,8 @@ class MenstrualSample: Codable, RawRepresentable {
         var rawValue: RawValue = [
             "startDate": startDate,
             "endDate": endDate,
-            "flow": flowLevel,
-            "uuid": uuid
+            "flow": flowLevel.rawValue,
+            "uuid": uuid.rawValue
         ]
         
         rawValue["volume"] = volume
@@ -95,3 +95,18 @@ class MenstrualSample: Codable, RawRepresentable {
 }
 
 extension HKCategoryValueMenstrualFlow: Codable { }
+
+extension UUID: RawRepresentable {
+    public typealias RawValue = String
+
+    public init?(rawValue: String) {
+        guard let id = UUID(uuidString: rawValue) else {
+            return nil
+        }
+        self = id
+    }
+
+    public var rawValue: String {
+        return self.uuidString
+    }
+}

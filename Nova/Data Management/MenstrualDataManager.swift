@@ -41,29 +41,6 @@ class MenstrualDataManager: ObservableObject {
     }
     
     // MARK: Data Management
-    func saveSample(_ sample: MenstrualSample, _ completion: @escaping (MenstrualStoreResult<Bool>) -> ()) {
-        store.dataFetch.async {
-            self.store.saveSample(sample) { result in
-                completion(result)
-            }
-        }
-    }
-    
-    func deleteSample(_ sample: MenstrualSample, _ completion: @escaping (MenstrualStoreResult<Bool>) -> ()) {
-        store.dataFetch.async {
-            self.store.deleteSample(sample) { result in
-                completion(result)
-            }
-        }
-    }
-    
-    func updateSample(_ sample: MenstrualSample,  _ completion: @escaping (MenstrualStoreResult<Bool>) -> ()) {
-        store.dataFetch.async {
-            self.store.replaceSample(sample) { result in
-                completion(result)
-            }
-        }
-    }
     
     // This function assumes samples are sorted with most-recent ones first
     // The output menstrual periods are in sorted order
@@ -137,27 +114,6 @@ class MenstrualDataManager: ObservableObject {
     func menstrualEventIfPresent(for date: Date) -> MenstrualSample? {
         return store.menstrualEventIfPresent(for: date)
     }
-    
-    func flowLevel(for selection: SelectionState, with volume: Int) -> HKCategoryValueMenstrualFlow {
-        switch selection {
-        // Values from https://www.everydayhealth.com/womens-health/menstruation/making-sense-menstrual-flow/ based on 5 mL flow = 1 pad
-        case .hadFlow:
-            switch volume {
-            case let val where 0 < val && val < 15:
-                return .light
-            case let val where 15 <= val && val <= 30:
-                return .medium
-            case let val where val > 30:
-                return .heavy
-            default:
-                return .unspecified
-            }
-        case .noFlow:
-            return .none
-        case .none:
-            fatalError("Calling hkFlowLevel when entry is .none")
-        }
-    }
 
     func yearFormattedDate(for date: Date?) -> String {
         guard let date = date else {
@@ -176,22 +132,7 @@ class MenstrualDataManager: ObservableObject {
     }
     
     func save(sample: MenstrualSample?, date: Date, newVolume: Int, flowSelection: SelectionState, _ completion: @escaping (MenstrualStoreResult<Bool>) -> Void) {
-        let saveCompletion: (MenstrualStoreResult<Bool>) -> () = { result in
-            completion(result)
-        }
-        
-        if let sample = sample {
-            if flowSelection == .none {
-                deleteSample(sample, saveCompletion)
-            } else {
-                sample.volume = newVolume
-                sample.flowLevel = flowLevel(for: flowSelection, with: newVolume)
-                updateSample(sample, saveCompletion)
-            }
-        } else if flowSelection != .none {
-            let sample = MenstrualSample(startDate: date, endDate: date, flowLevel: flowLevel(for: flowSelection, with: newVolume), volume: newVolume)
-            saveSample(sample, saveCompletion)
-        }
+        store.saveInHealthKit(sample: sample, date: date, newVolume: newVolume, flowSelection: flowSelection, completion)
     }
     
     // MARK: Settings

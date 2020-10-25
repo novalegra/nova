@@ -76,11 +76,19 @@ extension WatchDataCoordinator: WCSessionDelegate {
     }
     
     func session(_ session: WCSession, didReceiveMessage message: [String: Any], replyHandler: @escaping ([String: Any]) -> Void) {
-        // TODO
-//        switch message["name"] as? String {
-//        case RecordedMenstrualEventInfo.name?:
-//            viewMo
-//        }
+        print("Got message from watch")
+        switch message["name"] as? String {
+        case RecordedMenstrualEventInfo.name?:
+            if let data = RecordedMenstrualEventInfo(rawValue: message) {
+                dataStore.saveInHealthKit(sample: data.sample, date: data.date, newVolume: data.volume, flowSelection: data.selectionState) { result in
+                    // ANNA TODO: remove this print
+                    print(result)
+                    replyHandler([:])
+                }
+            }
+        default:
+            break
+        }
     }
     
     func sessionDidBecomeInactive(_ session: WCSession) {

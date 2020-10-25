@@ -7,12 +7,12 @@
 //
 
 import Foundation
-//func save(sample: MenstrualSample?, date: Date, newVolume: Int
 
 struct RecordedMenstrualEventInfo {
     let sample: MenstrualSample?
     let date: Date
     let volume: Int
+    let selectionState: SelectionState
 }
 
 
@@ -23,7 +23,8 @@ extension RecordedMenstrualEventInfo: RawRepresentable {
 
     init?(rawValue: RawValue) {
         guard rawValue["name"] as? String == RecordedMenstrualEventInfo.name, let date = rawValue["date"] as? Date,
-            let volume = rawValue["volume"] as? Int else
+            let volume = rawValue["volume"] as? Int,
+            let selection = (rawValue["selectionState"] as? SelectionState.RawValue).flatMap(SelectionState.init(rawValue:)) else
         {
             return nil
         }
@@ -31,13 +32,15 @@ extension RecordedMenstrualEventInfo: RawRepresentable {
         self.volume = volume
         self.date = date
         self.sample = (rawValue["sample"] as? MenstrualSample.RawValue).flatMap(MenstrualSample.init(rawValue:))
+        self.selectionState = selection
     }
 
     var rawValue: RawValue {
         var raw: RawValue = [
             "name": RecordedMenstrualEventInfo.name,
             "date": date,
-            "volume": volume
+            "volume": volume,
+            "selectionState": selectionState.rawValue
         ]
 
         if let sample = sample {

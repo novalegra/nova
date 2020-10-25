@@ -105,7 +105,7 @@ class WatchDataManager: NSObject, ObservableObject, WKExtensionDelegate {
     }
 
     func save(sample: MenstrualSample?, date: Date, newVolume: Int, _ completion: @escaping (Bool) -> Void) {
-        let info = RecordedMenstrualEventInfo(sample: sample, date: date, volume: newVolume)
+        let info = RecordedMenstrualEventInfo(sample: sample, date: date, volume: newVolume, selectionState: selection)
         
         WCSession.default.sendMenstrualEvent(info, completion: completion)
     }
@@ -135,18 +135,21 @@ extension WatchDataManager: WCSessionDelegate {
 }
 
 extension WCSession {
-    // TODO: integrate
     func sendMenstrualEvent(_ userInfo: RecordedMenstrualEventInfo, completion: @escaping (Bool) -> Void) {
         guard activationState == .activated, isReachable else {
+            print("Not activated or not reachable")
             completion(false)
             return
         }
+        
+        print(userInfo.rawValue)
 
         sendMessage(userInfo.rawValue,
             replyHandler: { reply in
                 completion(true)
             },
             errorHandler: { error in
+                print(error)
                 completion(false)
             }
         )
