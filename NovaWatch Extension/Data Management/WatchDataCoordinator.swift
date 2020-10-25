@@ -10,7 +10,10 @@ import WatchConnectivity
 
 // iOS app manager of watch data & data sending
 class WatchDataCoordinator: NSObject {
-    override init() {
+    unowned let dataStore: MenstrualStore
+    
+    init(dataStore: MenstrualStore) {
+        self.dataStore = dataStore
         super.init()
         watchSession?.delegate = self
         watchSession?.activate()
@@ -70,6 +73,14 @@ extension WatchDataCoordinator: WCSessionDelegate {
         @unknown default:
             break
         }
+    }
+    
+    func session(_ session: WCSession, didReceiveMessage message: [String: Any], replyHandler: @escaping ([String: Any]) -> Void) {
+        // TODO
+//        switch message["name"] as? String {
+//        case RecordedMenstrualEventInfo.name?:
+//            viewMo
+//        }
     }
     
     func sessionDidBecomeInactive(_ session: WCSession) {

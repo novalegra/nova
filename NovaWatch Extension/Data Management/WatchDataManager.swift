@@ -13,6 +13,7 @@ import WatchKit
 
 class WatchDataManager: NSObject, ObservableObject, WKExtensionDelegate {
     @Published var menstrualEvents: [MenstrualSample] = []
+    @Published var selection: SelectionState = .none
     
     override init() {
         super.init()
@@ -34,8 +35,8 @@ class WatchDataManager: NSObject, ObservableObject, WKExtensionDelegate {
             return
         }
         let events = try decoder.decode([MenstrualSample].self, from: codedEvents)
-        DispatchQueue.main.sync {
-            menstrualEvents = events
+        DispatchQueue.main.async {
+            self.menstrualEvents = events
         }
         scheduleSnapshot()
     }
@@ -71,6 +72,43 @@ class WatchDataManager: NSObject, ObservableObject, WKExtensionDelegate {
     func eventWithinDate(_ date: Date, _ event: MenstrualSample) -> Bool {
         return (event.startDate <= date && event.endDate >= date) || Calendar.current.isDate(event.startDate, inSameDayAs: date) || Calendar.current.isDate(event.endDate, inSameDayAs: date)
     }
+    
+    // MARK: Settings
+    var volumeUnit: VolumeType = UserDefaults.app?.volumeType ?? .mL
+    
+    var cupType: MenstrualCupType = UserDefaults.app?.menstrualCupType ?? .lenaSmall
+    
+    var flowPickerNumbers: [Int] {
+        switch volumeUnit {
+        case .mL:
+            return Array(0...120)
+        case .percentOfCup:
+            return Array(0...30).map { $0 * 10 }
+        }
+    }
+    
+    var flowPickerMin: Int {
+        return flowPickerNumbers.first!
+    }
+    
+    var flowPickerMax: Int {
+        return flowPickerNumbers.last!
+    }
+    
+    var flowPickerInterval: Int {
+        switch volumeUnit {
+        case .mL:
+            return 1
+        case .percentOfCup:
+            return 10
+        }
+    }
+
+    func save(sample: MenstrualSample?, date: Date, newVolume: Int, _ completion: @escaping (Bool) -> Void) {
+        let info = RecordedMenstrualEventInfo(sample: sample, date: date, volume: newVolume)
+        
+        WCSession.default.sendMenstrualEvent(info, completion: completion)
+    }
 }
 
 extension WatchDataManager: WCSessionDelegate {
@@ -93,5 +131,24 @@ extension WatchDataManager: WCSessionDelegate {
         } catch let error {
             print(error)
         }
+    }
+}
+
+extension WCSession {
+    // TODO: integrate
+    func sendMenstrualEvent(_ userInfo: RecordedMenstrualEventInfo, completion: @escaping (Bool) -> Void) {
+        guard activationState == .activated, isReachable else {
+            completion(false)
+            return
+        }
+
+        sendMessage(userInfo.rawValue,
+            replyHandler: { reply in
+                completion(true)
+            },
+            errorHandler: { error in
+                completion(false)
+            }
+        )
     }
 }

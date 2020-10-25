@@ -8,7 +8,9 @@
 
 import HealthKit
 
-class MenstrualSample: Codable {
+class MenstrualSample: Codable, RawRepresentable {
+    typealias RawValue = [String: Any]
+    
     let startDate: Date
     let endDate: Date
     var flowLevel: HKCategoryValueMenstrualFlow
@@ -25,6 +27,38 @@ class MenstrualSample: Codable {
         self.flowLevel = flowLevel
         self.volume = volume
         self.uuid = uuid
+    }
+    
+    required convenience init?(rawValue: RawValue) {
+        guard
+            let startDate = rawValue["startDate"] as? Date,
+            let endDate = rawValue["endDate"] as? Date,
+            let flow = rawValue["flow"] as? HKCategoryValueMenstrualFlow,
+            let uuid = rawValue["uuid"] as? UUID
+        else {
+            return nil
+        }
+
+        self.init(
+            startDate: startDate,
+            endDate: endDate,
+            flowLevel: flow,
+            volume: rawValue["volume"] as? Int,
+            uuid: uuid
+        )
+    }
+
+    var rawValue: RawValue {
+        var rawValue: RawValue = [
+            "startDate": startDate,
+            "endDate": endDate,
+            "flow": flowLevel,
+            "uuid": uuid
+        ]
+        
+        rawValue["volume"] = volume
+
+        return rawValue
     }
     
     convenience init(sample: HKCategorySample, flowLevel: HKCategoryValueMenstrualFlow) {

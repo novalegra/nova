@@ -10,7 +10,7 @@ import SwiftUI
 import Combine
 
 struct FlowPicker: View {
-    @ObservedObject var viewModel: MenstrualDataManager
+    @Binding var selectionState: SelectionState
     @State var pickerShouldExpand = true
     @State var pickerIndex: Int = 0 // initializing with zero so it doesn't error
     let initialPickerIndex: Int
@@ -21,14 +21,14 @@ struct FlowPicker: View {
     let items: [String]
     
     init (
-        viewModel: MenstrualDataManager,
+        selectionState: Binding<SelectionState>,
         with items: [String],
         onUpdate: @escaping (Int) -> Void,
         label: String = "",
         unit: String = "",
         initialPickerIndex: Int = 0
     ) {
-        self.viewModel = viewModel
+        self._selectionState = selectionState
         self.items = items
         self.onUpdate = onUpdate
         self.label = label
@@ -50,14 +50,20 @@ struct FlowPicker: View {
             .onAppear {
                 self.pickerIndex = self.initialPickerIndex
             }
-            .onReceive(viewModel.objectWillChange, perform: {
-                if self.viewModel.selection != .hadFlow {
-                        self.pickerIndex = 0
-                        self.pickerShouldExpand = false
-                    }
+            .onChange(of: selectionState) { _ in
+                if selectionState != .hadFlow {
+                    self.pickerIndex = 0
+                    self.pickerShouldExpand = false
                 }
-            )
-            if pickerShouldExpand && viewModel.selection == .hadFlow {
+            }
+//            .onReceive(viewModel.objectWillChange, perform: {
+//                if self.viewModel.selection != .hadFlow {
+//                        self.pickerIndex = 0
+//                        self.pickerShouldExpand = false
+//                    }
+//                }
+//            )
+            if pickerShouldExpand && selectionState == .hadFlow {
                 HStack(alignment: .center) {
                     Picker(selection: $pickerIndex.onChange(onUpdate), label: Text("")) {
                         ForEach(0 ..< items.count) {

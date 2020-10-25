@@ -11,16 +11,24 @@ import Foundation
 
 struct WatchMainView: View {
     @Environment(\.calendar) var calendar
-    @ObservedObject var dataManager: WatchDataManager = WatchDataManager()
+    @StateObject var dataManager: WatchDataManager = WatchDataManager()
     
     var body: some View {
         List {
             ForEach(reversedDays, id: \.self) { date in
-                FlowTile(date: date)
-                .listRowBackground(buttonColor(for: date))
-                .cornerRadius(10)
+                NavigationLink(
+                    destination: MenstrualEventEditor(viewModel: self.dataManager, sample: self.dataManager.menstrualEventIfPresent(for: date), date: date)
+                ) {
+                    FlowTile(date: date, dataManager: dataManager)
+                }
+                .padding(5)
+                .frame(height: 50)
+                .listRowBackground(Color.white.cornerRadius(15))
+                .disabled(date > Date())
+                .buttonStyle(PlainButtonStyle())
             }
         }
+        .listStyle(CarouselListStyle())
         .navigationTitle(Text("Overview"))
     }
 
@@ -42,23 +50,17 @@ struct WatchMainView: View {
         )
     }
     
-    private func buttonColor(for date: Date) -> Color {
-        if date > Date() {
-            return Color(UIColor.gray.withAlphaComponent(0.14))
-        }
-        if self.dataManager.hasMenstrualFlow(at: date) {
-            return Color("DarkPink")
-        }
-        return Color("LightBrown")
-    }
+    
 }
 
 struct FlowTile: View {
     let date: Date
     let dateFormatter = DateFormatter()
+    @ObservedObject var dataManager: WatchDataManager
     
-    init(date: Date) {
+    init(date: Date, dataManager: WatchDataManager) {
         self.date = date
+        self.dataManager = dataManager
     }
     
     func formattedDate(for date: Date) -> String {
@@ -67,10 +69,28 @@ struct FlowTile: View {
     }
     
     var body: some View {
-        LazyVStack {
+        LazyHStack {
+            Circle()
+            .fill(buttonColor(for: date))
+            .frame(width: 20, height: 20)
+            .overlay(
+               Circle()
+              .stroke(Color.black, lineWidth: 1)
+             )
+            Spacer(minLength: 10)
             Text(formattedDate(for: date))
             .foregroundColor(Color.black)
         }
+    }
+    
+    private func buttonColor(for date: Date) -> Color {
+        if date > Date() {
+            return Color(UIColor.gray.withAlphaComponent(0.14))
+        }
+        if self.dataManager.hasMenstrualFlow(at: date) {
+            return Color("DarkPink")
+        }
+        return Color("LightBrown")
     }
 }
 

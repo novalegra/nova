@@ -11,9 +11,9 @@ import HealthKit
 
 class MenstrualDataManager: ObservableObject {
     let store: MenstrualStore
+    let watchManager: WatchDataCoordinator
     // Allowable gap (in days) between samples so it's still considered a period
     let allowablePeriodGap: Int = 1
-    @Published var selection: SelectionState = .none
     @Published var periods: [MenstrualPeriod] = []
     
     var reverseOrderedPeriods: [MenstrualPeriod] {
@@ -24,11 +24,18 @@ class MenstrualDataManager: ObservableObject {
     
     init(store: MenstrualStore) {
         self.store = store
+        self.watchManager = WatchDataCoordinator(dataStore: store)
         store.healthStoreUpdateCompletionHandler = { [weak self] updatedEvents in
             DispatchQueue.main.async {
                 if let processedPeriods = self?.processHealthKitQuerySamples(updatedEvents) {
                     self?.periods = processedPeriods
                 }
+            }
+            
+            do {
+                try self?.watchManager.updateWatch(with: updatedEvents)
+            } catch let error {
+                print("Error while passing data to watch", error)
             }
         }
     }
@@ -168,21 +175,21 @@ class MenstrualDataManager: ObservableObject {
         return dateFormatter.string(from: date)
     }
     
-    func save(sample: MenstrualSample?, date: Date, newVolume: Int, _ completion: @escaping (MenstrualStoreResult<Bool>) -> Void) {
+    func save(sample: MenstrualSample?, date: Date, newVolume: Int, flowSelection: SelectionState, _ completion: @escaping (MenstrualStoreResult<Bool>) -> Void) {
         let saveCompletion: (MenstrualStoreResult<Bool>) -> () = { result in
             completion(result)
         }
         
         if let sample = sample {
-            if selection == .none {
+            if flowSelection == .none {
                 deleteSample(sample, saveCompletion)
             } else {
                 sample.volume = newVolume
-                sample.flowLevel = flowLevel(for: selection, with: newVolume)
+                sample.flowLevel = flowLevel(for: flowSelection, with: newVolume)
                 updateSample(sample, saveCompletion)
             }
-        } else if selection != .none {
-            let sample = MenstrualSample(startDate: date, endDate: date, flowLevel: flowLevel(for: selection, with: newVolume), volume: newVolume)
+        } else if flowSelection != .none {
+            let sample = MenstrualSample(startDate: date, endDate: date, flowLevel: flowLevel(for: flowSelection, with: newVolume), volume: newVolume)
             saveSample(sample, saveCompletion)
         }
     }

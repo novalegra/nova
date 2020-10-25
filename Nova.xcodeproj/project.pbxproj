@@ -15,6 +15,14 @@
 		E93AB001253672ED00A02F67 /* WatchDataCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E93AB000253672EC00A02F67 /* WatchDataCoordinator.swift */; };
 		E93AB013253751DC00A02F67 /* Calendar.swift in Sources */ = {isa = PBXBuildFile; fileRef = E995A51125071ACB009D52CF /* Calendar.swift */; };
 		E93AB01A253753EC00A02F67 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E995A50325071463009D52CF /* Assets.xcassets */; };
+		E95656DA2537B014006CD2BA /* EventEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = E95656D92537B014006CD2BA /* EventEditor.swift */; };
+		E95656DF2537B307006CD2BA /* SelectionState.swift in Sources */ = {isa = PBXBuildFile; fileRef = E95656DE2537B307006CD2BA /* SelectionState.swift */; };
+		E95656E02537B307006CD2BA /* SelectionState.swift in Sources */ = {isa = PBXBuildFile; fileRef = E95656DE2537B307006CD2BA /* SelectionState.swift */; };
+		E95656E62537B503006CD2BA /* VolumeType.swift in Sources */ = {isa = PBXBuildFile; fileRef = E95656E42537B503006CD2BA /* VolumeType.swift */; };
+		E95656EA2537B51E006CD2BA /* UserDefaults+Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = E957BBFC251267CF00171FDC /* UserDefaults+Settings.swift */; };
+		E95656EE2537B53C006CD2BA /* MenstrualCupType.swift in Sources */ = {isa = PBXBuildFile; fileRef = E957BBFE2512EA9000171FDC /* MenstrualCupType.swift */; };
+		E95656F92537B57C006CD2BA /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9E51FC62512529E00D96B7C /* SettingsView.swift */; };
+		E95657072537C866006CD2BA /* CircleButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = E95657062537C866006CD2BA /* CircleButtonStyle.swift */; };
 		E957BBFD251267CF00171FDC /* UserDefaults+Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = E957BBFC251267CF00171FDC /* UserDefaults+Settings.swift */; };
 		E957BBFF2512EA9000171FDC /* MenstrualCupType.swift in Sources */ = {isa = PBXBuildFile; fileRef = E957BBFE2512EA9000171FDC /* MenstrualCupType.swift */; };
 		E976174F252EA6330011B715 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E976174E252EA6330011B715 /* Assets.xcassets */; };
@@ -31,6 +39,8 @@
 		E9761783252EA8110011B715 /* MenstrualPeriod.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9146976250D5F0D00D64A5A /* MenstrualPeriod.swift */; };
 		E9761787252EA81D0011B715 /* MenstrualSample.swift in Sources */ = {isa = PBXBuildFile; fileRef = E995A5262507289B009D52CF /* MenstrualSample.swift */; };
 		E976178B252EA8260011B715 /* HKCategorySample+MenstrualSample.swift in Sources */ = {isa = PBXBuildFile; fileRef = E995A52C250750C7009D52CF /* HKCategorySample+MenstrualSample.swift */; };
+		E98BB0FE2542876700140BE0 /* RecordedMenstrualEventInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = E98BB0FD2542876700140BE0 /* RecordedMenstrualEventInfo.swift */; };
+		E98BB0FF2542876700140BE0 /* RecordedMenstrualEventInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = E98BB0FD2542876700140BE0 /* RecordedMenstrualEventInfo.swift */; };
 		E995A4FB2507145E009D52CF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E995A4FA2507145E009D52CF /* AppDelegate.swift */; };
 		E995A4FD2507145E009D52CF /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E995A4FC2507145E009D52CF /* SceneDelegate.swift */; };
 		E995A5002507145E009D52CF /* Nova.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = E995A4FE2507145E009D52CF /* Nova.xcdatamodeld */; };
@@ -51,7 +61,6 @@
 		E995A52B250732CB009D52CF /* FlowPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = E995A52A250732CB009D52CF /* FlowPicker.swift */; };
 		E995A52D250750C8009D52CF /* HKCategorySample+MenstrualSample.swift in Sources */ = {isa = PBXBuildFile; fileRef = E995A52C250750C7009D52CF /* HKCategorySample+MenstrualSample.swift */; };
 		E9D7132225199F4000F56BB1 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = E9D7132025199F4000F56BB1 /* Localizable.strings */; };
-		E9E51FC72512529E00D96B7C /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9E51FC62512529E00D96B7C /* SettingsView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -103,6 +112,10 @@
 		E9146974250C7C7E00D64A5A /* StatisticsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsView.swift; sourceTree = "<group>"; };
 		E9146976250D5F0D00D64A5A /* MenstrualPeriod.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenstrualPeriod.swift; sourceTree = "<group>"; };
 		E93AB000253672EC00A02F67 /* WatchDataCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchDataCoordinator.swift; sourceTree = "<group>"; };
+		E95656D92537B014006CD2BA /* EventEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventEditor.swift; sourceTree = "<group>"; };
+		E95656DE2537B307006CD2BA /* SelectionState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectionState.swift; sourceTree = "<group>"; };
+		E95656E42537B503006CD2BA /* VolumeType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VolumeType.swift; sourceTree = "<group>"; };
+		E95657062537C866006CD2BA /* CircleButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleButtonStyle.swift; sourceTree = "<group>"; };
 		E957BBFC251267CF00171FDC /* UserDefaults+Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDefaults+Settings.swift"; sourceTree = "<group>"; };
 		E957BBFE2512EA9000171FDC /* MenstrualCupType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenstrualCupType.swift; sourceTree = "<group>"; };
 		E976174C252EA6310011B715 /* NovaWatch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NovaWatch.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -119,6 +132,7 @@
 		E9761769252EA6360011B715 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E976176A252EA6360011B715 /* PushNotificationPayload.apns */ = {isa = PBXFileReference; lastKnownFileType = text; path = PushNotificationPayload.apns; sourceTree = "<group>"; };
 		E9761779252EA7710011B715 /* WatchDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchDataManager.swift; sourceTree = "<group>"; };
+		E98BB0FD2542876700140BE0 /* RecordedMenstrualEventInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordedMenstrualEventInfo.swift; sourceTree = "<group>"; };
 		E995A4F72507145E009D52CF /* Nova.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Nova.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E995A4FA2507145E009D52CF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E995A4FC2507145E009D52CF /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -192,7 +206,10 @@
 		E93AB012253751CD00A02F67 /* Shared */ = {
 			isa = PBXGroup;
 			children = (
+				E957BBFC251267CF00171FDC /* UserDefaults+Settings.swift */,
 				E995A51125071ACB009D52CF /* Calendar.swift */,
+				E95656DE2537B307006CD2BA /* SelectionState.swift */,
+				E95656E42537B503006CD2BA /* VolumeType.swift */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -244,6 +261,8 @@
 			isa = PBXGroup;
 			children = (
 				E976175C252EA6340011B715 /* WatchMainView.swift */,
+				E95656D92537B014006CD2BA /* EventEditor.swift */,
+				E95657062537C866006CD2BA /* CircleButtonStyle.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -324,7 +343,7 @@
 				E995A5242507237D009D52CF /* MenstrualDataManager.swift */,
 				E995A5262507289B009D52CF /* MenstrualSample.swift */,
 				E9146976250D5F0D00D64A5A /* MenstrualPeriod.swift */,
-				E957BBFC251267CF00171FDC /* UserDefaults+Settings.swift */,
+				E98BB0FD2542876700140BE0 /* RecordedMenstrualEventInfo.swift */,
 			);
 			path = "Data Management";
 			sourceTree = "<group>";
@@ -481,15 +500,22 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E98BB0FF2542876700140BE0 /* RecordedMenstrualEventInfo.swift in Sources */,
 				E976175F252EA6340011B715 /* NotificationController.swift in Sources */,
+				E95657072537C866006CD2BA /* CircleButtonStyle.swift in Sources */,
+				E95656EE2537B53C006CD2BA /* MenstrualCupType.swift in Sources */,
 				E976177A252EA7710011B715 /* WatchDataManager.swift in Sources */,
 				E976175D252EA6340011B715 /* WatchMainView.swift in Sources */,
+				E95656EA2537B51E006CD2BA /* UserDefaults+Settings.swift in Sources */,
 				E9761763252EA6340011B715 /* ComplicationController.swift in Sources */,
 				E976178B252EA8260011B715 /* HKCategorySample+MenstrualSample.swift in Sources */,
 				E9761783252EA8110011B715 /* MenstrualPeriod.swift in Sources */,
+				E95656E02537B307006CD2BA /* SelectionState.swift in Sources */,
 				E9761787252EA81D0011B715 /* MenstrualSample.swift in Sources */,
 				E976175B252EA6340011B715 /* NovaApp.swift in Sources */,
+				E95656DA2537B014006CD2BA /* EventEditor.swift in Sources */,
 				E9761761252EA6340011B715 /* NotificationView.swift in Sources */,
+				E95656E62537B503006CD2BA /* VolumeType.swift in Sources */,
 				E93AB013253751DC00A02F67 /* Calendar.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -498,13 +524,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E9E51FC72512529E00D96B7C /* SettingsView.swift in Sources */,
 				E995A5252507237D009D52CF /* MenstrualDataManager.swift in Sources */,
 				E93AB001253672ED00A02F67 /* WatchDataCoordinator.swift in Sources */,
 				E995A51525071B01009D52CF /* DateFormatter.swift in Sources */,
 				E9146977250D5F0D00D64A5A /* MenstrualPeriod.swift in Sources */,
 				E995A51925071B9F009D52CF /* CalendarView.swift in Sources */,
 				E995A4FB2507145E009D52CF /* AppDelegate.swift in Sources */,
+				E98BB0FE2542876700140BE0 /* RecordedMenstrualEventInfo.swift in Sources */,
 				E995A51B25071BB7009D52CF /* MonthView.swift in Sources */,
 				E995A52925073282009D52CF /* MenstrualEventEditor.swift in Sources */,
 				E995A5002507145E009D52CF /* Nova.xcdatamodeld in Sources */,
@@ -515,6 +541,7 @@
 				E90ED4C2250D73D100F56679 /* SegmentedGaugeBar.swift in Sources */,
 				E995A52D250750C8009D52CF /* HKCategorySample+MenstrualSample.swift in Sources */,
 				E995A5272507289B009D52CF /* MenstrualSample.swift in Sources */,
+				E95656DF2537B307006CD2BA /* SelectionState.swift in Sources */,
 				E995A52B250732CB009D52CF /* FlowPicker.swift in Sources */,
 				E9146975250C7C7E00D64A5A /* StatisticsView.swift in Sources */,
 				E995A4FD2507145E009D52CF /* SceneDelegate.swift in Sources */,
@@ -522,6 +549,7 @@
 				E995A51225071ACB009D52CF /* Calendar.swift in Sources */,
 				E90ED4C4250D750D00F56679 /* MenstrualStatisticsDetailView.swift in Sources */,
 				E914695C250C1BD000D64A5A /* CoordinatorView.swift in Sources */,
+				E95656F92537B57C006CD2BA /* SettingsView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -570,7 +598,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 18;
+				CURRENT_PROJECT_VERSION = 19;
 				DEVELOPMENT_TEAM = T93DJEUU9W;
 				IBSC_MODULE = NovaWatch_Extension;
 				INFOPLIST_FILE = NovaWatch/Info.plist;
@@ -593,7 +621,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 18;
+				CURRENT_PROJECT_VERSION = 19;
 				DEVELOPMENT_TEAM = T93DJEUU9W;
 				IBSC_MODULE = NovaWatch_Extension;
 				INFOPLIST_FILE = NovaWatch/Info.plist;
@@ -614,7 +642,7 @@
 				ASSETCATALOG_COMPILER_COMPLICATION_NAME = Complication;
 				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 18;
+				CURRENT_PROJECT_VERSION = 19;
 				DEVELOPMENT_ASSET_PATHS = "\"NovaWatch Extension/Preview Content\"";
 				DEVELOPMENT_TEAM = T93DJEUU9W;
 				ENABLE_PREVIEWS = YES;
@@ -641,7 +669,7 @@
 				ASSETCATALOG_COMPILER_COMPLICATION_NAME = Complication;
 				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 18;
+				CURRENT_PROJECT_VERSION = 19;
 				DEVELOPMENT_ASSET_PATHS = "\"NovaWatch Extension/Preview Content\"";
 				DEVELOPMENT_TEAM = T93DJEUU9W;
 				ENABLE_PREVIEWS = YES;
@@ -784,12 +812,12 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = Nova/Nova.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 18;
+				CURRENT_PROJECT_VERSION = 19;
 				DEVELOPMENT_ASSET_PATHS = "\"Nova/Preview Content\"";
 				DEVELOPMENT_TEAM = T93DJEUU9W;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = Nova/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -808,12 +836,12 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = Nova/Nova.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 18;
+				CURRENT_PROJECT_VERSION = 19;
 				DEVELOPMENT_ASSET_PATHS = "\"Nova/Preview Content\"";
 				DEVELOPMENT_TEAM = T93DJEUU9W;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = Nova/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

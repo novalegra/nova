@@ -8,12 +8,6 @@
 
 import HealthKit
 
-enum SelectionState {
-    case hadFlow
-    case noFlow
-    case none
-}
-
 enum MenstrualStoreResult<T> {
     case success(T)
     case failure(MenstrualStoreError)
@@ -63,14 +57,6 @@ class MenstrualStore {
                 self?.dataFetch.async {
                     self?.getRecentMenstrualSamples() { samples in
                         self?.healthStoreUpdateCompletionHandler?(samples)
-                        if let events = self?.menstrualEvents {
-                            print("Updating watch with",  events.count, "events")
-                            do {
-                                try self?.watchCoordinator.updateWatch(with: events)
-                            } catch let error {
-                                print("Error while passing data to watch", error)
-                            }
-                        }
                     }
                 }
                 completionHandler()
@@ -81,9 +67,6 @@ class MenstrualStore {
             }
         #endif
     }
-    
-    // MARK: Watch App
-    let watchCoordinator = WatchDataCoordinator()
     
     // MARK: Data Retrieval
     let dataFetch = DispatchQueue(label: "com.nova.MenstrualStoreQueue", qos: .utility)
@@ -248,7 +231,7 @@ class MenstrualStore {
 
 
 // MARK: Data Management
-extension MenstrualStore {
+extension MenstrualStore {    
     func saveSample(_ entry: MenstrualSample, _ completion: @escaping (MenstrualStoreResult<Bool>) -> ()) {
         dispatchPrecondition(condition: .onQueue(dataFetch))
         

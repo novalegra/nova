@@ -14,6 +14,7 @@ struct MenstrualEventEditor: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     
     @ObservedObject var viewModel: MenstrualDataManager
+    @State var selection: SelectionState = .none
     let sample: MenstrualSample?
     let date: Date
 
@@ -53,9 +54,9 @@ struct MenstrualEventEditor: View {
         }
         .onAppear {
             if let sample = self.sample {
-                self.viewModel.selection = sample.flowLevel == .none ? .noFlow : .hadFlow
+                self.selection = sample.flowLevel == .none ? .noFlow : .hadFlow
             } else {
-                self.viewModel.selection = .none
+                self.selection = .none
             }
         }
         .navigationBarTitle(sample != nil ? "Edit Flow" : "Track Flow", displayMode: .inline)
@@ -65,9 +66,9 @@ struct MenstrualEventEditor: View {
     
     var saveButton: some View {
         Button(sample != nil ? "Update" : "Save") {
-            let selection = self.viewModel.flowPickerNumbers[self.selectedIndex]
-            let newVolume = self.viewModel.volumeUnit == .percentOfCup ? self.percentToVolume(selection) : selection
-            self.viewModel.save(sample: self.sample, date: self.date, newVolume: newVolume) { result in
+            let selectedValue = self.viewModel.flowPickerNumbers[self.selectedIndex]
+            let newVolume = self.viewModel.volumeUnit == .percentOfCup ? self.percentToVolume(selectedValue) : selectedValue
+            self.viewModel.save(sample: self.sample, date: self.date, newVolume: newVolume, flowSelection: selection) { result in
                 switch result {
                 case .success:
                     DispatchQueue.main.async {
@@ -85,12 +86,12 @@ struct MenstrualEventEditor: View {
         HStack {
             Text("Had Flow", comment: "Label for had flow selector")
             Spacer()
-            Image(self.viewModel.selection == .hadFlow ? "Checked-Circle" : "Unchecked-Circle")
+            Image(selection == .hadFlow ? "Checked-Circle" : "Unchecked-Circle")
             .resizable()
             .frame(width: 20.0, height: 20.0)
             .onTapGesture {
-                self.viewModel.selection = self.viewModel.selection == .hadFlow ? .none : .hadFlow
-                if self.viewModel.selection == .none {
+                self.selection = self.selection == .hadFlow ? .none : .hadFlow
+                if self.selection == .none {
                     self.selectedIndex = 0 // reset value
                 }
             }
@@ -101,11 +102,11 @@ struct MenstrualEventEditor: View {
         HStack {
             Text("No Flow", comment: "Label for no flow selector")
             Spacer()
-            Image(self.viewModel.selection == .noFlow ? "Checked-Circle" : "Unchecked-Circle")
+            Image(selection == .noFlow ? "Checked-Circle" : "Unchecked-Circle")
             .resizable()
             .frame(width: 20.0, height: 20.0)
             .onTapGesture {
-                self.viewModel.selection = self.viewModel.selection == .noFlow ? .none : .noFlow
+                self.selection = self.selection == .noFlow ? .none : .noFlow
                 self.selectedIndex = 0 // reset value
             }
         }
@@ -117,7 +118,7 @@ struct MenstrualEventEditor: View {
         let pickerStart = viewModel.closestNumberOnPicker(num: pickerValue)
         
         return FlowPicker(
-            viewModel: viewModel,
+            selectionState: $selection,
             with: viewModel.flowPickerOptions,
             onUpdate: { index in
                 self.selectedIndex = index
