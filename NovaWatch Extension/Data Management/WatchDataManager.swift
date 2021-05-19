@@ -10,14 +10,23 @@ import Foundation
 import SwiftUI
 import WatchConnectivity
 import WatchKit
+import HealthKit
 
 class WatchDataManager: NSObject, ObservableObject, WKExtensionDelegate {
     @Published var menstrualEvents: [MenstrualSample] = []
     @Published var selection: SelectionState = .none
+    var menstrualStore: MenstrualStore
     
     override init() {
+        let healthStore = HKHealthStore()
+        menstrualStore = MenstrualStore(healthStore: healthStore)
+        
         super.init()
 
+        menstrualStore.healthStoreUpdateCompletionHandler = { [weak self] updatedEvents in
+            self?.menstrualEvents = updatedEvents
+        }
+        
         let session = WCSession.default
         session.delegate = self
         session.activate()
@@ -105,9 +114,27 @@ class WatchDataManager: NSObject, ObservableObject, WKExtensionDelegate {
     }
 
     func save(sample: MenstrualSample?, date: Date, newVolume: Int, _ completion: @escaping (Bool) -> Void) {
-        let info = RecordedMenstrualEventInfo(sample: sample, date: date, volume: newVolume, selectionState: selection)
-        
-        WCSession.default.sendMenstrualEvent(info, completion: completion)
+        // TODO: clean up this logic
+//        let info = RecordedMenstrualEventInfo(sample: sample, date: date, volume: newVolume, selectionState: selection)
+//
+//        WCSession.default.sendMenstrualEvent(info, completion: completion)
+        menstrualStore.saveInHealthKit(sample: sample, date: date, newVolume: newVolume, flowSelection: selection) { result in
+            switch result {
+            case .success:
+                self.menstrualStore.dataFetch.async {
+                    // BIG TODO: update menstrual events correctly
+                    self.menstrualStore.getRecentMenstrualSamples { samples in
+                        DispatchQueue.main.async {
+                            self.menstrualEvents = samples
+                        }
+                        completion(true)
+                    }
+                }
+            case .failure(let error):
+                print("Error saving samples in watch", error)
+                completion(false)
+            }
+        }
     }
 }
 
@@ -142,7 +169,7 @@ extension WCSession {
             return
         }
         
-        print(userInfo.rawValue)
+        print("Sending", String(describing: userInfo.sample), "to phone")
 
         sendMessage(userInfo.rawValue,
             replyHandler: { reply in

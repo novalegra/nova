@@ -12,6 +12,8 @@
 		E914695C250C1BD000D64A5A /* CoordinatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E914695B250C1BD000D64A5A /* CoordinatorView.swift */; };
 		E9146975250C7C7E00D64A5A /* StatisticsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9146974250C7C7E00D64A5A /* StatisticsView.swift */; };
 		E9146977250D5F0D00D64A5A /* MenstrualPeriod.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9146976250D5F0D00D64A5A /* MenstrualPeriod.swift */; };
+		E9209492257BFDB1004D6192 /* MenstrualStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = E995A51E25071DC2009D52CF /* MenstrualStore.swift */; };
+		E9209499257C1425004D6192 /* HealthKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E9209498257C1425004D6192 /* HealthKit.framework */; };
 		E93AB001253672ED00A02F67 /* WatchDataCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E93AB000253672EC00A02F67 /* WatchDataCoordinator.swift */; };
 		E93AB013253751DC00A02F67 /* Calendar.swift in Sources */ = {isa = PBXBuildFile; fileRef = E995A51125071ACB009D52CF /* Calendar.swift */; };
 		E93AB01A253753EC00A02F67 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E995A50325071463009D52CF /* Assets.xcassets */; };
@@ -111,6 +113,8 @@
 		E914695B250C1BD000D64A5A /* CoordinatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoordinatorView.swift; sourceTree = "<group>"; };
 		E9146974250C7C7E00D64A5A /* StatisticsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsView.swift; sourceTree = "<group>"; };
 		E9146976250D5F0D00D64A5A /* MenstrualPeriod.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenstrualPeriod.swift; sourceTree = "<group>"; };
+		E9209497257C1425004D6192 /* NovaWatch Extension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "NovaWatch Extension.entitlements"; sourceTree = "<group>"; };
+		E9209498257C1425004D6192 /* HealthKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = HealthKit.framework; path = Platforms/WatchOS.platform/Developer/SDKs/WatchOS7.0.sdk/System/Library/Frameworks/HealthKit.framework; sourceTree = DEVELOPER_DIR; };
 		E93AB000253672EC00A02F67 /* WatchDataCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchDataCoordinator.swift; sourceTree = "<group>"; };
 		E95656D92537B014006CD2BA /* EventEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventEditor.swift; sourceTree = "<group>"; };
 		E95656DE2537B307006CD2BA /* SelectionState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectionState.swift; sourceTree = "<group>"; };
@@ -166,6 +170,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E9209499257C1425004D6192 /* HealthKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -226,6 +231,7 @@
 		E9761759252EA6340011B715 /* NovaWatch Extension */ = {
 			isa = PBXGroup;
 			children = (
+				E9209497257C1425004D6192 /* NovaWatch Extension.entitlements */,
 				E976175A252EA6340011B715 /* NovaApp.swift */,
 				E976177F252EA78F0011B715 /* Views */,
 				E976175E252EA6340011B715 /* NotificationController.swift */,
@@ -351,6 +357,7 @@
 		E995A52125071FE5009D52CF /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				E9209498257C1425004D6192 /* HealthKit.framework */,
 				E995A52225071FE5009D52CF /* HealthKit.framework */,
 			);
 			name = Frameworks;
@@ -513,6 +520,7 @@
 				E95656E02537B307006CD2BA /* SelectionState.swift in Sources */,
 				E9761787252EA81D0011B715 /* MenstrualSample.swift in Sources */,
 				E976175B252EA6340011B715 /* NovaApp.swift in Sources */,
+				E9209492257BFDB1004D6192 /* MenstrualStore.swift in Sources */,
 				E95656DA2537B014006CD2BA /* EventEditor.swift in Sources */,
 				E9761761252EA6340011B715 /* NotificationView.swift in Sources */,
 				E95656E62537B503006CD2BA /* VolumeType.swift in Sources */,
@@ -641,6 +649,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_COMPLICATION_NAME = Complication;
 				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CODE_SIGN_ENTITLEMENTS = "NovaWatch Extension/NovaWatch Extension.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 22;
 				DEVELOPMENT_ASSET_PATHS = "\"NovaWatch Extension/Preview Content\"";
@@ -668,6 +677,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_COMPLICATION_NAME = Complication;
 				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CODE_SIGN_ENTITLEMENTS = "NovaWatch Extension/NovaWatch Extension.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 22;
 				DEVELOPMENT_ASSET_PATHS = "\"NovaWatch Extension/Preview Content\"";

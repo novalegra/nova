@@ -31,7 +31,7 @@ class MenstrualDataManager: ObservableObject {
                     self?.periods = processedPeriods
                 }
             }
-            
+
             do {
                 try self?.watchManager.updateWatch(with: updatedEvents)
             } catch let error {
@@ -157,7 +157,7 @@ class MenstrualDataManager: ObservableObject {
         case .mL:
             return Array(0...120)
         case .percentOfCup:
-            return Array(0...30).map { $0 * 10 }
+            return Array(0...60).map { $0 * 5 }
         }
     }
     

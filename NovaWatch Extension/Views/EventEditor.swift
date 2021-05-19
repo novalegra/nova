@@ -13,7 +13,7 @@ struct MenstrualEventEditor: View {
     let sample: MenstrualSample?
     let date: Date
 
-    @State var selectedAmount: Double = 0
+    @State var selectedPercent: Double = 0
     
     init(viewModel: WatchDataManager, sample: MenstrualSample?, date: Date) {
         self.sample = sample
@@ -37,14 +37,14 @@ struct MenstrualEventEditor: View {
             } else {
                 self.viewModel.selection = .none
             }
-            self.selectedAmount = Double(sample?.volume ?? 0)
+            self.selectedPercent = Double(volumeToPercent(sample?.volume ?? 0))
         }
         .onDisappear {
             self.saveEvent()
         }
         .focusable()
         .digitalCrownRotation(
-            $selectedAmount,
+            $selectedPercent,
             from: 0,
             through: 100,
             by: 1,
@@ -66,7 +66,7 @@ struct MenstrualEventEditor: View {
             .onTapGesture {
                 self.viewModel.selection = self.viewModel.selection == .hadFlow ? .none : .hadFlow
                 if self.viewModel.selection == .none {
-                    self.selectedAmount = 0 // reset value
+                    self.selectedPercent = 0 // reset value
                 }
             }
         }
@@ -82,7 +82,7 @@ struct MenstrualEventEditor: View {
             .foregroundColor(Color.white)
             .onTapGesture {
                 self.viewModel.selection = self.viewModel.selection == .noFlow ? .none : .noFlow
-                self.selectedAmount = 0 // reset value
+                self.selectedPercent = 0 // reset value
             }
         }
     }
@@ -93,7 +93,7 @@ struct MenstrualEventEditor: View {
             HStack {
                 decrementButton
                 Spacer()
-                Text(String(describing: Int(selectedAmount)))
+                Text(String(describing: Int(selectedPercent)))
                 Text(viewModel.volumeUnit.shortUnit)
                 Spacer()
                 incrementButton
@@ -103,10 +103,10 @@ struct MenstrualEventEditor: View {
     
     private var decrementButton: some View {
         Button(action: {
-            if selectedAmount > 5 {
-                selectedAmount -= 5
+            if selectedPercent > 5 {
+                selectedPercent -= 5
             } else {
-                selectedAmount = 0
+                selectedPercent = 0
             }
             WKInterfaceDevice.current().play(.directionDown)
         }, label: {
@@ -120,7 +120,7 @@ struct MenstrualEventEditor: View {
     
     private var incrementButton: some View {
         Button(action: {
-            selectedAmount += 5
+            selectedPercent += 5
             WKInterfaceDevice.current().play(.directionUp)
         }, label: {
             Text(verbatim: "+")
@@ -140,7 +140,7 @@ struct MenstrualEventEditor: View {
     }
     
     private func saveEvent() {
-        let newVolume = self.viewModel.volumeUnit == .percentOfCup ? self.percentToVolume(Int(selectedAmount)) : Int(selectedAmount)
+        let newVolume = percentToVolume(Int(selectedPercent))
         self.viewModel.save(sample: self.sample, date: self.date, newVolume: newVolume) { success in
             if success {
                 print("Sent menstrual event")
