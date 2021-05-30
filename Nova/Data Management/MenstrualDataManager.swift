@@ -35,7 +35,7 @@ class MenstrualDataManager: ObservableObject {
             do {
                 try self?.watchManager.updateWatch(with: updatedEvents)
             } catch let error {
-                NSLog("Error while passing data to watch", error)
+                NSLog("Error while passing data to watch: \(error)")
             }
         }
     }

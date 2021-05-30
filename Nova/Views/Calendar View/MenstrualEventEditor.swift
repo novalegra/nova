@@ -75,7 +75,7 @@ struct MenstrualEventEditor: View {
                         self.presentationMode.wrappedValue.dismiss()
                     }
                 case .failure(let error):
-                    NSLog("Error when saving", error)
+                    NSLog("Error when saving: \(error)")
                     self.showingAuthorizationAlert = true
                 }
             }

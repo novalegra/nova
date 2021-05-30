@@ -44,7 +44,7 @@ class MenstrualStore {
     func authorize() {
         healthStore.requestAuthorization(toShare: [sampleType], read: [sampleType]) { success, error in
             if let error = error {
-                NSLog(error)
+                NSLog("\(error)")
             } else if success {
                 self.setUpBackgroundDelivery()
             }
