@@ -26,8 +26,9 @@ class WatchDataManager: NSObject, ObservableObject, WKExtensionDelegate {
         store.healthStoreUpdateCompletionHandler = { [weak self] updatedEvents in
             self?.menstrualEvents = updatedEvents
         }
-        // TODO: only call this if needed
-        store.authorize()
+        if store.authorizationRequired {
+            store.authorize()
+        }
         
         let session = WCSession.default
         session.delegate = self
@@ -46,31 +47,18 @@ class WatchDataManager: NSObject, ObservableObject, WKExtensionDelegate {
             return
         }
         let events = try decoder.decode([MenstrualSample].self, from: codedEvents)
-        DispatchQueue.main.async {
-            self.menstrualEvents = events
+        DispatchQueue.main.async { [unowned self] in
+            menstrualEvents = events
+            store.menstrualEvents = events
         }
     }
     
     func hasMenstrualFlow(at date: Date) -> Bool {
-        for event in menstrualEvents {
-            if eventWithinDate(date, event) && event.flowLevel != .none {
-                return true
-            }
-        }
-        return false
+        return store.hasMenstrualFlow(at: date)
     }
     
     func menstrualEventIfPresent(for date: Date) -> MenstrualSample? {
-        for event in menstrualEvents {
-            if eventWithinDate(date, event) {
-                return event
-            }
-        }
-        return nil
-    }
-    
-    func eventWithinDate(_ date: Date, _ event: MenstrualSample) -> Bool {
-        return (event.startDate <= date && event.endDate >= date) || Calendar.current.isDate(event.startDate, inSameDayAs: date) || Calendar.current.isDate(event.endDate, inSameDayAs: date)
+        return store.menstrualEventIfPresent(for: date)
     }
     
     // MARK: Settings
@@ -86,26 +74,8 @@ class WatchDataManager: NSObject, ObservableObject, WKExtensionDelegate {
             return Array(0...30).map { $0 * 10 }
         }
     }
-    
-    var flowPickerMin: Int {
-        return flowPickerNumbers.first!
-    }
-    
-    var flowPickerMax: Int {
-        return flowPickerNumbers.last!
-    }
-    
-    var flowPickerInterval: Int {
-        switch volumeUnit {
-        case .mL:
-            return 1
-        case .percentOfCup:
-            return 10
-        }
-    }
 
     func save(sample: MenstrualSample?, date: Date, newVolume: Int, _ completion: @escaping (Bool) -> Void) {
-        // TODO: clean up this logic
         let info = RecordedMenstrualEventInfo(sample: sample, date: date, volume: newVolume, selectionState: selection)
         WCSession.default.didUpdateMenstrualEvents(info) { [unowned self] didSave in
             if didSave {

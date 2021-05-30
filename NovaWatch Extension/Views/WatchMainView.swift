@@ -17,7 +17,7 @@ struct WatchMainView: View {
         List {
             ForEach(reversedDays, id: \.self) { date in
                 NavigationLink(
-                    destination: MenstrualEventEditor(viewModel: self.dataManager, sample: self.dataManager.menstrualEventIfPresent(for: date), date: date)
+                    destination: MenstrualEventEditor(viewModel: dataManager, sample: dataManager.menstrualEventIfPresent(for: date), date: date)
                 ) {
                     FlowTile(date: date, dataManager: dataManager)
                 }
