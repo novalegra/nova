@@ -54,13 +54,7 @@ class MenstrualStore {
     func setUpBackgroundDelivery() {
         #if os(iOS)
             let query = HKObserverQuery(sampleType: sampleType, predicate: nil) { [weak self] (query, completionHandler, error) in
-                self?.dataFetch.async {
-                    self?.getRecentMenstrualSamples() { samples in
-                        NSLog("Wooho - got \(samples.count) updated samples from HealthKit; \(samples.filter { $0.flowLevel == .heavy }.count) heavy, \(samples.filter { $0.flowLevel == .medium }.count) medium, \(samples.filter { $0.flowLevel == .light }.count) light, \(samples.filter { $0.flowLevel == .unspecified }.count) unspecified")
-                        self?.healthStoreUpdateCompletionHandler?(samples)
-                        completionHandler()
-                    }
-                }
+                self?.manuallyUpdateMenstrualData(completion: completionHandler)
             }
             healthStore.execute(query)
             healthStore.enableBackgroundDelivery(for: sampleType, frequency: .immediate) { (enabled, error) in
@@ -96,6 +90,16 @@ class MenstrualStore {
         with: .equalTo,
         value: HKCategoryValueMenstrualFlow.heavy.rawValue
     )
+    
+    func manuallyUpdateMenstrualData(completion: (() -> Void)? = nil) {
+        dataFetch.async { [unowned self] in
+            getRecentMenstrualSamples() { samples in
+                NSLog("Wooho - got \(samples.count) updated samples from HealthKit; \(samples.filter { $0.flowLevel == .heavy }.count) heavy, \(samples.filter { $0.flowLevel == .medium }.count) medium, \(samples.filter { $0.flowLevel == .light }.count) light, \(samples.filter { $0.flowLevel == .unspecified }.count) unspecified")
+                healthStoreUpdateCompletionHandler?(samples)
+                completion?()
+            }
+        }
+    }
     
     func getRecentMenstrualSamples(days: Int = 90, _ completion: @escaping (_ result: [MenstrualSample]) -> Void) {
         dispatchPrecondition(condition: .onQueue(dataFetch))

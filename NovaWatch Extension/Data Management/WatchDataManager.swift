@@ -117,16 +117,25 @@ class WatchDataManager: NSObject, ObservableObject, WKExtensionDelegate {
 
     func save(sample: MenstrualSample?, date: Date, newVolume: Int, _ completion: @escaping (Bool) -> Void) {
         // TODO: clean up this logic
-//        let info = RecordedMenstrualEventInfo(sample: sample, date: date, volume: newVolume, selectionState: selection)
-//
-//        WCSession.default.sendMenstrualEvent(info, completion: completion)
-        menstrualStore.saveInHealthKit(sample: sample, date: date, newVolume: newVolume, flowSelection: selection) { result in
-            switch result {
-            case .success:
-                NSLog("Successfully saved samples to HK with watch")
-            case .failure(let error):
-                NSLog("Error saving samples in watch: \(error)")
-                completion(false)
+        let info = RecordedMenstrualEventInfo(sample: sample, date: date, volume: newVolume, selectionState: selection)
+        WCSession.default.didUpdateMenstrualEvents(info) { [unowned self] didSave in
+            if didSave {
+                NSLog("Watch was told that sample was saved in HK on phone")
+                completion(didSave)
+                return
+            }
+            
+            // If it didn't save on the phone, save it on the watch
+            // This is the backup option since the watch health store is much slower to sync
+            menstrualStore.saveInHealthKit(sample: sample, date: date, newVolume: newVolume, flowSelection: selection) { result in
+                switch result {
+                case .success:
+                    NSLog("Successfully saved samples to HK on watch")
+                    completion(true)
+                case .failure(let error):
+                    NSLog("Error saving samples in watch: \(error)")
+                    completion(false)
+                }
             }
         }
     }
@@ -156,7 +165,7 @@ extension WatchDataManager: WCSessionDelegate {
 }
 
 extension WCSession {
-    func sendMenstrualEvent(_ userInfo: RecordedMenstrualEventInfo, completion: @escaping (Bool) -> Void) {
+    func didUpdateMenstrualEvents(_ userInfo: RecordedMenstrualEventInfo, completion: @escaping (Bool) -> Void) {
         guard activationState == .activated, isReachable else {
             NSLog("Not activated or not reachable")
             completion(false)
@@ -167,7 +176,8 @@ extension WCSession {
 
         sendMessage(userInfo.rawValue,
             replyHandler: { reply in
-                completion(true)
+                NSLog("Reply from iPhone in response to HK save request: \(String(describing: reply["didSave"] as? Bool))")
+                completion(reply["didSave"] as? Bool ?? false)
             },
             errorHandler: { error in
                 NSLog("Error sending watch events: \(error)")

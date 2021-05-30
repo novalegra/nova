@@ -53,7 +53,7 @@ class WatchDataCoordinator: NSObject {
         let encodedEvents = try encoder.encode(events)
         let eventsDict = ["events": encodedEvents]
         
-        NSLog("Updating watch data with \(events.map { $0.startDate })")
+        NSLog("Updating watch data with \(events.count) events; \(events.filter { $0.flowLevel == .heavy }.count) heavy, \(events.filter { $0.flowLevel == .medium }.count) medium, \(events.filter { $0.flowLevel == .light }.count) light, \(events.filter { $0.flowLevel == .unspecified }.count) unspecified")
         try session.updateApplicationContext(eventsDict)
     }
 }
@@ -80,13 +80,16 @@ extension WatchDataCoordinator: WCSessionDelegate {
         switch message["name"] as? String {
         case RecordedMenstrualEventInfo.name?:
             if let data = RecordedMenstrualEventInfo(rawValue: message) {
-                dataStore.saveInHealthKit(sample: data.sample, date: data.date, newVolume: data.volume, flowSelection: data.selectionState) { result in
+                NSLog("Reacting to message for RecordedMenstrualEventInfo")
+
+                dataStore.saveInHealthKit(sample: data.sample, date: data.date, newVolume: data.volume, flowSelection: data.selectionState) { [unowned self] result in
                     NSLog("HK save result: \(result)")
-                    replyHandler([:])
+                    dataStore.manuallyUpdateMenstrualData()
+                    replyHandler(["didSave": result])
                 }
             }
         default:
-            break
+            replyHandler(["didSave": false])
         }
     }
     
