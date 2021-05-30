@@ -27,20 +27,20 @@ struct MenstrualEventEditor: View {
                 hadFlowRow
                 noFlowRow
             }
-            if self.viewModel.selection == .hadFlow {
+            if viewModel.selection == .hadFlow {
                 flowPickerRow
             }
         }
         .onAppear {
-            if let sample = self.sample {
-                self.viewModel.selection = sample.flowLevel == .none ? .noFlow : .hadFlow
+            if let sample = sample {
+                viewModel.selection = sample.flowLevel == .none ? .noFlow : .hadFlow
             } else {
-                self.viewModel.selection = .none
+                viewModel.selection = .none
             }
-            self.selectedPercent = Double(volumeToPercent(sample?.volume ?? 0))
+            selectedPercent = Double(volumeToPercent(sample?.volume ?? 0))
         }
         .onDisappear {
-            self.saveEvent()
+            saveEvent()
         }
         .focusable()
         .digitalCrownRotation(
@@ -59,14 +59,14 @@ struct MenstrualEventEditor: View {
         HStack {
             Text("Had Flow", comment: "Label for had flow selector")
             Spacer()
-            Image(self.viewModel.selection == .hadFlow ? "Checked-Circle" : "Unchecked-Circle")
+            Image(viewModel.selection == .hadFlow ? "Checked-Circle" : "Unchecked-Circle")
             .resizable()
             .frame(width: 20.0, height: 20.0)
             .foregroundColor(Color.white)
             .onTapGesture {
-                self.viewModel.selection = self.viewModel.selection == .hadFlow ? .none : .hadFlow
-                if self.viewModel.selection == .none {
-                    self.selectedPercent = 0 // reset value
+                viewModel.selection = viewModel.selection == .hadFlow ? .none : .hadFlow
+                if viewModel.selection == .none {
+                    selectedPercent = 0 // reset value
                 }
             }
         }
@@ -76,13 +76,13 @@ struct MenstrualEventEditor: View {
         HStack {
             Text("No Flow", comment: "Label for no flow selector")
             Spacer()
-            Image(self.viewModel.selection == .noFlow ? "Checked-Circle" : "Unchecked-Circle")
+            Image(viewModel.selection == .noFlow ? "Checked-Circle" : "Unchecked-Circle")
             .resizable()
             .frame(width: 20.0, height: 20.0)
             .foregroundColor(Color.white)
             .onTapGesture {
-                self.viewModel.selection = self.viewModel.selection == .noFlow ? .none : .noFlow
-                self.selectedPercent = 0 // reset value
+                viewModel.selection = viewModel.selection == .noFlow ? .none : .noFlow
+                selectedPercent = 0 // reset value
             }
         }
     }
@@ -141,7 +141,7 @@ struct MenstrualEventEditor: View {
     
     private func saveEvent() {
         let newVolume = percentToVolume(Int(selectedPercent))
-        self.viewModel.save(sample: self.sample, date: self.date, newVolume: newVolume) { success in
+        viewModel.save(sample: sample, date: date, newVolume: newVolume) { success in
             if success {
                 NSLog("Saved menstrual event")
             } else {
