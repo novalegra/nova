@@ -14,10 +14,10 @@ class MenstrualSample: Codable, RawRepresentable {
     let startDate: Date
     let endDate: Date
     var flowLevel: HKCategoryValueMenstrualFlow
-    var volume: Int? // in mL
+    var volume: Double? // in mL
     let uuid: UUID
     
-    init(startDate: Date, endDate: Date, flowLevel: HKCategoryValueMenstrualFlow, volume: Int? = nil, uuid: UUID = UUID()) {
+    init(startDate: Date, endDate: Date, flowLevel: HKCategoryValueMenstrualFlow, volume: Double? = nil, uuid: UUID = UUID()) {
         guard startDate <= endDate else {
             fatalError("Can't create menstrual event where start is less than end")
         }
@@ -43,7 +43,7 @@ class MenstrualSample: Codable, RawRepresentable {
             startDate: startDate,
             endDate: endDate,
             flowLevel: flow,
-            volume: rawValue["volume"] as? Int,
+            volume: rawValue["volume"] as? Double,
             uuid: uuid
         )
     }
@@ -78,7 +78,7 @@ class MenstrualSample: Codable, RawRepresentable {
         let startDate: Date = try container.decode(Date.self, forKey: .start)
         let endDate: Date = try container.decode(Date.self, forKey: .end)
         let flowLevel: HKCategoryValueMenstrualFlow = try container.decode(HKCategoryValueMenstrualFlow.self, forKey: .flow)
-        let volume: Int? = try container.decodeIfPresent(Int.self, forKey: .volume)
+        let volume: Double? = try container.decodeIfPresent(Double.self, forKey: .volume)
         let uuid: UUID = try container.decode(UUID.self, forKey: .id)
         
         self.init(startDate: startDate, endDate: endDate, flowLevel: flowLevel, volume: volume, uuid: uuid)

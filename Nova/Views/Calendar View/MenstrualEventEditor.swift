@@ -66,17 +66,17 @@ struct MenstrualEventEditor: View {
     
     var saveButton: some View {
         Button(sample != nil ? "Update" : "Save") {
-            let selectedValue = self.viewModel.flowPickerNumbers[self.selectedIndex]
-            let newVolume = self.viewModel.volumeUnit == .percentOfCup ? self.percentToVolume(selectedValue) : selectedValue
-            self.viewModel.save(sample: self.sample, date: self.date, newVolume: newVolume, flowSelection: selection) { result in
+            let selectedValue = viewModel.flowPickerNumbers[selectedIndex]
+            let newVolume = viewModel.volumeUnit == .percentOfCup ? percentToVolume(selectedValue) : selectedValue
+            viewModel.save(sample: sample, date: date, newVolume: newVolume, flowSelection: selection) { result in
                 switch result {
                 case .success:
                     DispatchQueue.main.async {
-                        self.presentationMode.wrappedValue.dismiss()
+                        presentationMode.wrappedValue.dismiss()
                     }
                 case .failure(let error):
                     NSLog("Error when saving: \(error)")
-                    self.showingAuthorizationAlert = true
+                    showingAuthorizationAlert = true
                 }
             }
         }
@@ -125,16 +125,16 @@ struct MenstrualEventEditor: View {
             },
             label: NSLocalizedString("24-Hour Flow", comment: "Menstrual flow picker label"),
             unit: viewModel.volumeUnit.shortUnit,
-            initialPickerIndex: self.viewModel.flowPickerOptions.firstIndex(of: String(pickerStart)) ?? 0
+            initialPickerIndex: self.viewModel.flowPickerOptions.firstIndex(of: String(Int(pickerStart))) ?? 0
         )
     }
     
-    private func percentToVolume(_ percent: Int) -> Int {
-        return Int(Double(percent) / Double(100) * Double(viewModel.cupType.maxVolume))
+    private func percentToVolume(_ percent: Double) -> Double {
+        return percent / 100 * viewModel.cupType.maxVolume
     }
     
-    private func volumeToPercent(_ volume: Int) -> Int {
-        return Int(Double(volume) / Double(viewModel.cupType.maxVolume) * 100)
+    private func volumeToPercent(_ volume: Double) -> Double {
+        return volume / viewModel.cupType.maxVolume * 100
     }
     
     private func alert() -> SwiftUI.Alert {

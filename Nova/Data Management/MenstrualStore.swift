@@ -233,7 +233,7 @@ class MenstrualStore {
         return (event.startDate <= date && event.endDate >= date) || Calendar.current.isDate(event.startDate, inSameDayAs: date) || Calendar.current.isDate(event.endDate, inSameDayAs: date)
     }
     
-    func flowLevel(for selection: SelectionState, with volume: Int) -> HKCategoryValueMenstrualFlow {
+    func flowLevel(for selection: SelectionState, with volume: Double) -> HKCategoryValueMenstrualFlow {
         switch selection {
         // Values from https://www.everydayhealth.com/womens-health/menstruation/making-sense-menstrual-flow/ based on 5 mL flow = 1 pad
         case .hadFlow:
@@ -258,7 +258,7 @@ class MenstrualStore {
 
 // MARK: Data Management
 extension MenstrualStore {
-    func saveInHealthKit(sample: MenstrualSample?, date: Date, newVolume: Int, flowSelection: SelectionState, _ completion: @escaping (MenstrualStoreResult<Bool>) -> Void) {
+    func saveInHealthKit(sample: MenstrualSample?, date: Date, newVolume: Double, flowSelection: SelectionState, _ completion: @escaping (MenstrualStoreResult<Bool>) -> Void) {
         let saveCompletion: (MenstrualStoreResult<Bool>) -> () = { result in
             completion(result)
         }

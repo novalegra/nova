@@ -28,8 +28,8 @@ extension HKCategorySample {
         )
     }
 
-    var volume: Int? {
-        guard let volume = metadata?[MetadataKeyMenstrualVolume] as? Int else {
+    var volume: Double? {
+        guard let volume = metadata?[MetadataKeyMenstrualVolume] as? Double else {
             return nil
         }
         return volume

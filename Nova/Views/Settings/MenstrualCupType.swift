@@ -50,7 +50,7 @@ enum MenstrualCupType: String, Equatable, CaseIterable {
     case superJennieLarge = "Super Jennie (L)"
     
     // Unit: mL
-    var maxVolume: Int {
+    var maxVolume: Double {
         switch self {
         case .melunaShortSmall:
             return 8

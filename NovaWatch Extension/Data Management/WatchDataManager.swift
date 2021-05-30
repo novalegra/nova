@@ -75,7 +75,7 @@ class WatchDataManager: NSObject, ObservableObject, WKExtensionDelegate {
         }
     }
 
-    func save(sample: MenstrualSample?, date: Date, newVolume: Int, _ completion: @escaping (Bool) -> Void) {
+    func save(sample: MenstrualSample?, date: Date, newVolume: Double, _ completion: @escaping (Bool) -> Void) {
         let info = RecordedMenstrualEventInfo(sample: sample, date: date, volume: newVolume, selectionState: selection)
         WCSession.default.didUpdateMenstrualEvents(info) { [unowned self] didSave in
             if didSave {

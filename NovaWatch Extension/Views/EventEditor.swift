@@ -37,7 +37,7 @@ struct MenstrualEventEditor: View {
             } else {
                 viewModel.selection = .none
             }
-            selectedPercent = Double(volumeToPercent(sample?.volume ?? 0))
+            selectedPercent = volumeToPercent(sample?.volume ?? 0)
         }
         .onDisappear {
             saveEvent()
@@ -47,7 +47,7 @@ struct MenstrualEventEditor: View {
             $selectedPercent,
             from: 0,
             through: 100,
-            by: 1,
+            by: 5,
             sensitivity: .low,
             isContinuous: false,
             isHapticFeedbackEnabled: true
@@ -131,16 +131,16 @@ struct MenstrualEventEditor: View {
         .transition(.opacity)
     }
 
-    private func percentToVolume(_ percent: Int) -> Int {
-        return Int(Double(percent) / Double(100) * Double(viewModel.cupType.maxVolume))
+    private func percentToVolume(_ percent: Double) -> Double {
+        return percent / 100 * viewModel.cupType.maxVolume
     }
 
-    private func volumeToPercent(_ volume: Int) -> Int {
-        return Int(Double(volume) / Double(viewModel.cupType.maxVolume) * 100)
+    private func volumeToPercent(_ volume: Double) -> Double {
+        return volume / viewModel.cupType.maxVolume * 100
     }
     
     private func saveEvent() {
-        let newVolume = percentToVolume(Int(selectedPercent))
+        let newVolume = percentToVolume(selectedPercent)
         viewModel.save(sample: sample, date: date, newVolume: newVolume) { success in
             if success {
                 NSLog("Saved menstrual event")

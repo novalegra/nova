@@ -80,9 +80,9 @@ struct MenstrualStatisticsDetailView: View {
         case .length:
             return viewModel.averagePeriodLength == 1 ? "\(viewModel.averagePeriodLength) day" : "\(viewModel.averagePeriodLength) days"
         case .dailyVolume:
-            return "\(viewModel.averageDailyPeriodVolume) mL"
+            return "\(Int(viewModel.averageDailyPeriodVolume)) mL"
         case .overallVolume:
-            return "\(viewModel.averageTotalPeriodVolume) mL"
+            return "\(Int(viewModel.averageTotalPeriodVolume)) mL"
         }
     }
     
@@ -136,7 +136,7 @@ struct MenstrualStatisticsDetailView: View {
         case .dailyVolume:
             return "\(Int(period.averageDailyFlow)) mL"
         case .overallVolume:
-            return "\(period.totalFlow) mL"
+            return "\(Int(period.totalFlow)) mL"
         case .length:
             return period.duration == 1 ? "\(period.duration) day" : "\(period.duration) days"
         }

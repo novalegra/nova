@@ -58,7 +58,7 @@ struct StatisticsView: View {
             HStack {
                 Text("Typical Daily Volume")
                 Spacer()
-                Text("\(viewModel.averageDailyPeriodVolume) mL")
+                Text("\(Int(viewModel.averageDailyPeriodVolume)) mL")
                 .bold()
             }
         }
@@ -72,7 +72,7 @@ struct StatisticsView: View {
             HStack {
                 Text("Typical Period Volume")
                 Spacer()
-                Text("\(viewModel.averageTotalPeriodVolume) mL")
+                Text("\(Int(viewModel.averageTotalPeriodVolume)) mL")
                 .bold()
             }
         }

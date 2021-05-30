@@ -79,24 +79,24 @@ class MenstrualDataManager: ObservableObject {
         return yearFormattedDate(for: periods.last?.startDate)
     }
     
-    var averageTotalPeriodVolume: Int {
-        let totalVolume = periods.reduce(0) {sum, curr in sum + curr.totalFlow}
-        let totalPeriods = periods.reduce(0) {sum, curr in curr.averageDailyFlow > 0 ? sum + 1: sum}
+    var averageTotalPeriodVolume: Double {
+        let totalVolume = periods.reduce(0.0) {sum, curr in sum + curr.totalFlow}
+        let totalPeriods = periods.reduce(0.0) {sum, curr in curr.averageDailyFlow > 0 ? sum + 1: sum}
         
         guard totalPeriods > 0 else {
             return 0
         }
-        return Int(totalVolume) / totalPeriods
+        return totalVolume / totalPeriods
     }
     
-    var averageDailyPeriodVolume: Int {
-        let totalVolume = periods.reduce(0) {sum, curr in sum + curr.averageDailyFlow}
-        let totalPeriods = periods.reduce(0) {sum, curr in curr.averageDailyFlow > 0 ? sum + 1: sum}
+    var averageDailyPeriodVolume: Double {
+        let totalVolume = periods.reduce(0.0) {sum, curr in sum + curr.averageDailyFlow}
+        let totalPeriods = periods.reduce(0.0) {sum, curr in curr.averageDailyFlow > 0 ? sum + 1: sum}
         
         guard totalPeriods > 0 else {
             return 0
         }
-        return Int(totalVolume) / totalPeriods
+        return totalVolume / totalPeriods
     }
     
     var averagePeriodLength: Int {
@@ -131,7 +131,7 @@ class MenstrualDataManager: ObservableObject {
         return dateFormatter.string(from: date)
     }
     
-    func save(sample: MenstrualSample?, date: Date, newVolume: Int, flowSelection: SelectionState, _ completion: @escaping (MenstrualStoreResult<Bool>) -> Void) {
+    func save(sample: MenstrualSample?, date: Date, newVolume: Double, flowSelection: SelectionState, _ completion: @escaping (MenstrualStoreResult<Bool>) -> Void) {
         store.saveInHealthKit(sample: sample, date: date, newVolume: newVolume, flowSelection: flowSelection, completion)
     }
     
@@ -149,19 +149,19 @@ class MenstrualDataManager: ObservableObject {
     }
     
     var flowPickerOptions: [String] {
-        flowPickerNumbers.map { String($0) }
+        flowPickerNumbers.map { String(Int($0)) }
     }
     
-    var flowPickerNumbers: [Int] {
+    var flowPickerNumbers: [Double] {
         switch volumeUnit {
         case .mL:
-            return Array(0...120)
+            return Array(0...120).map { Double($0) }
         case .percentOfCup:
-            return Array(0...60).map { $0 * 5 }
+            return Array(0...60).map { Double($0 * 5) }
         }
     }
     
-    func closestNumberOnPicker(num: Int) -> Int {
-        return  flowPickerNumbers.reduce(flowPickerNumbers.first!) { abs($1 - num) < abs($0 - num) ? $1 : $0 }
+    func closestNumberOnPicker(num: Double) -> Double {
+        return flowPickerNumbers.reduce(flowPickerNumbers.first!) { abs($1 - num) < abs($0 - num) ? $1 : $0 }
     }
 }
