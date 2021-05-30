@@ -62,6 +62,7 @@
 		E9D7132225199F4000F56BB1 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = E9D7132025199F4000F56BB1 /* Localizable.strings */; };
 		E9DDBAAE2664158400594E0E /* MenstrualPredicates.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9DDBAAD2664158400594E0E /* MenstrualPredicates.swift */; };
 		E9DDBAAF266415D100594E0E /* MenstrualPredicates.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9DDBAAD2664158400594E0E /* MenstrualPredicates.swift */; };
+		E9DDBAB126641AF300594E0E /* FlowTile.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9DDBAB026641AF300594E0E /* FlowTile.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -158,6 +159,7 @@
 		E9D7132325199F7D00F56BB1 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
 		E9D7132425199F7D00F56BB1 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = "Localizable/en.xcloc/Source Contents/Nova/es.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		E9DDBAAD2664158400594E0E /* MenstrualPredicates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenstrualPredicates.swift; sourceTree = "<group>"; };
+		E9DDBAB026641AF300594E0E /* FlowTile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlowTile.swift; sourceTree = "<group>"; };
 		E9E51FC62512529E00D96B7C /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -204,15 +206,16 @@
 			path = Statistics;
 			sourceTree = "<group>";
 		};
-		E93AB012253751CD00A02F67 /* Shared */ = {
+		E93AB012253751CD00A02F67 /* Data Types */ = {
 			isa = PBXGroup;
 			children = (
-				E957BBFC251267CF00171FDC /* UserDefaults+Settings.swift */,
-				E995A51125071ACB009D52CF /* Calendar.swift */,
+				E9146976250D5F0D00D64A5A /* MenstrualPeriod.swift */,
+				E995A5262507289B009D52CF /* MenstrualSample.swift */,
+				E98BB0FD2542876700140BE0 /* RecordedMenstrualEventInfo.swift */,
 				E95656DE2537B307006CD2BA /* SelectionState.swift */,
 				E95656E42537B503006CD2BA /* VolumeType.swift */,
 			);
-			path = Shared;
+			path = "Data Types";
 			sourceTree = "<group>";
 		};
 		E976174D252EA6310011B715 /* NovaWatch */ = {
@@ -251,7 +254,6 @@
 			isa = PBXGroup;
 			children = (
 				E9761779252EA7710011B715 /* WatchDataManager.swift */,
-				E93AB000253672EC00A02F67 /* WatchDataCoordinator.swift */,
 			);
 			path = "Data Management";
 			sourceTree = "<group>";
@@ -260,6 +262,7 @@
 			isa = PBXGroup;
 			children = (
 				E976175C252EA6340011B715 /* WatchMainView.swift */,
+				E9DDBAB026641AF300594E0E /* FlowTile.swift */,
 				E95656D92537B014006CD2BA /* EventEditor.swift */,
 				E95657062537C866006CD2BA /* CircleButtonStyle.swift */,
 			);
@@ -295,7 +298,7 @@
 				E995A4FC2507145E009D52CF /* SceneDelegate.swift */,
 				E995A51725071B7F009D52CF /* Data Management */,
 				E995A51625071B39009D52CF /* Views */,
-				E93AB012253751CD00A02F67 /* Shared */,
+				E93AB012253751CD00A02F67 /* Data Types */,
 				E995A51325071AD6009D52CF /* Extensions */,
 				E995A50325071463009D52CF /* Assets.xcassets */,
 				E995A50825071463009D52CF /* LaunchScreen.storyboard */,
@@ -317,6 +320,8 @@
 		E995A51325071AD6009D52CF /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				E995A51125071ACB009D52CF /* Calendar.swift */,
+				E957BBFC251267CF00171FDC /* UserDefaults+Settings.swift */,
 				E995A51425071B01009D52CF /* DateFormatter.swift */,
 				E995A52C250750C7009D52CF /* HKCategorySample+MenstrualSample.swift */,
 			);
@@ -326,8 +331,8 @@
 		E995A51625071B39009D52CF /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				E90ED4C5250DB2B700F56679 /* Calendar View */,
 				E914695B250C1BD000D64A5A /* CoordinatorView.swift */,
+				E90ED4C5250DB2B700F56679 /* Calendar View */,
 				E9E51FC52512526300D96B7C /* Settings */,
 				E90ED4C6250DB2D600F56679 /* Statistics */,
 			);
@@ -337,12 +342,10 @@
 		E995A51725071B7F009D52CF /* Data Management */ = {
 			isa = PBXGroup;
 			children = (
+				E995A5242507237D009D52CF /* MenstrualDataManager.swift */,
 				E995A51E25071DC2009D52CF /* MenstrualStore.swift */,
 				E9DDBAAD2664158400594E0E /* MenstrualPredicates.swift */,
-				E995A5242507237D009D52CF /* MenstrualDataManager.swift */,
-				E995A5262507289B009D52CF /* MenstrualSample.swift */,
-				E9146976250D5F0D00D64A5A /* MenstrualPeriod.swift */,
-				E98BB0FD2542876700140BE0 /* RecordedMenstrualEventInfo.swift */,
+				E93AB000253672EC00A02F67 /* WatchDataCoordinator.swift */,
 			);
 			path = "Data Management";
 			sourceTree = "<group>";
@@ -501,6 +504,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E98BB0FF2542876700140BE0 /* RecordedMenstrualEventInfo.swift in Sources */,
+				E9DDBAB126641AF300594E0E /* FlowTile.swift in Sources */,
 				E9DDBAAF266415D100594E0E /* MenstrualPredicates.swift in Sources */,
 				E95657072537C866006CD2BA /* CircleButtonStyle.swift in Sources */,
 				E95656EE2537B53C006CD2BA /* MenstrualCupType.swift in Sources */,

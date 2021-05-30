@@ -42,8 +42,8 @@ class MenstrualDataManager: ObservableObject {
     
     // MARK: Data Management
     
-    // This function assumes samples are sorted with most-recent ones first
-    // The output menstrual periods are in sorted order
+    /// This function assumes samples are sorted with most-recent ones first
+    /// The output menstrual periods are in sorted order
     func processHealthKitQuerySamples(_ samples: [MenstrualSample]) -> [MenstrualPeriod] {
         guard samples.count > 0 else {
             return []

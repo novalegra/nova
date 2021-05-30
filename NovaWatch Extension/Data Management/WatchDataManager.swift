@@ -14,8 +14,29 @@ import HealthKit
 
 class WatchDataManager: NSObject, ObservableObject, WKExtensionDelegate {
     @Published var menstrualEvents: [MenstrualSample] = []
+    
     @Published var selection: SelectionState = .none
+    
     var store: MenstrualStore
+    
+    private let decoder: JSONDecoder = {
+        let decoder = JSONDecoder()
+        decoder.dateDecodingStrategy = .iso8601
+        return decoder
+    }()
+    
+    var volumeUnit: VolumeType = UserDefaults.app?.volumeType ?? .percentOfCup
+
+    var cupType: MenstrualCupType = UserDefaults.app?.menstrualCupType ?? .lenaSmall
+    
+    var flowPickerNumbers: [Int] {
+        switch volumeUnit {
+        case .mL:
+            return Array(0...120)
+        case .percentOfCup:
+            return Array(0...30).map { $0 * 10 }
+        }
+    }
     
     override init() {
         let healthStore = HKHealthStore()
@@ -33,13 +54,7 @@ class WatchDataManager: NSObject, ObservableObject, WKExtensionDelegate {
         let session = WCSession.default
         session.delegate = self
         session.activate()
-    }
-    
-    private let decoder: JSONDecoder = {
-        let decoder = JSONDecoder()
-        decoder.dateDecodingStrategy = .iso8601
-        return decoder
-    }()
+    }    
     
     private func updateMenstrualData(_ context: [String: Any]) throws {
         guard let codedEvents = context["events"] as? Data else {
@@ -61,19 +76,15 @@ class WatchDataManager: NSObject, ObservableObject, WKExtensionDelegate {
         return store.menstrualEventIfPresent(for: date)
     }
     
-    // MARK: Settings
-    var volumeUnit: VolumeType = UserDefaults.app?.volumeType ?? .percentOfCup
-    
-    var cupType: MenstrualCupType = UserDefaults.app?.menstrualCupType ?? .lenaSmall
-    
-    var flowPickerNumbers: [Int] {
-        switch volumeUnit {
-        case .mL:
-            return Array(0...120)
-        case .percentOfCup:
-            return Array(0...30).map { $0 * 10 }
-        }
+    func percentToVolume(_ percent: Double) -> Double {
+        return percent / 100 * cupType.maxVolume
     }
+
+    func volumeToPercent(_ volume: Double) -> Double {
+        return volume / cupType.maxVolume * 100
+    }
+    
+    // MARK: Settings
 
     func save(sample: MenstrualSample?, date: Date, newVolume: Double, _ completion: @escaping (Bool) -> Void) {
         let info = RecordedMenstrualEventInfo(sample: sample, date: date, volume: newVolume, selectionState: selection)

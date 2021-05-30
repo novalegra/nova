@@ -15,7 +15,7 @@ struct RecordedMenstrualEventInfo {
     let selectionState: SelectionState
 }
 
-
+/// RawRepresentable protocol conformance is needed so this class can be passed over a WCSession
 extension RecordedMenstrualEventInfo: RawRepresentable {
     typealias RawValue = [String: Any]
     
