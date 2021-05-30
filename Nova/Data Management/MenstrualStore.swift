@@ -29,7 +29,7 @@ class MenstrualStore {
     // MARK: HealthKit
     let healthStore: HKHealthStore
     
-    let onlyObserveSamplesFromCurrentApp = false
+    let onlyObserveSamplesFromCurrentApp = true
     
     var healthStoreUpdateCompletionHandler: (([MenstrualSample]) -> Void)?
     
