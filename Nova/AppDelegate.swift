@@ -28,6 +28,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         return true
     }
+    
+    func applicationShouldRequestHealthAuthorization(_ application: UIApplication) {
+        let healthStore = applicationViewModel.store.healthStore
+        healthStore.handleAuthorizationForExtension { (success, error) in
+            NSLog("Handled HK permission for watch, success: \(success) & error: \(String(describing: error))")
+        }
+    }
 
     // MARK: UISceneSession Lifecycle
 

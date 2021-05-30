@@ -32,5 +32,9 @@
 		<key>NSExtensionPointIdentifier</key>
 		<string>com.apple.watchkit</string>
 	</dict>
+	<key>NSHealthUpdateUsageDescription</key>
+	<string>Nova securely stores menstrual data that you enter into the app in Health.</string>
+	<key>NSHealthShareUsageDescription</key>
+	<string>Nova reads data from Health to generate visualizations about your cycles.</string>
 </dict>
 </plist>

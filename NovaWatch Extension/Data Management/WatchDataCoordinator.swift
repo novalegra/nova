@@ -53,7 +53,7 @@ class WatchDataCoordinator: NSObject {
         let encodedEvents = try encoder.encode(events)
         let eventsDict = ["events": encodedEvents]
         
-        NSLog("Updating watch data with", events.map { $0.volume })
+        NSLog("Updating watch data with \(events.map { $0.startDate })")
         try session.updateApplicationContext(eventsDict)
     }
 }

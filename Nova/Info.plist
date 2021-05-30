@@ -23,7 +23,7 @@
 	<key>NSHealthShareUsageDescription</key>
 	<string>Nova reads data from Health to generate visualizations about your cycles.</string>
 	<key>NSHealthUpdateUsageDescription</key>
-	<string>Nova securely stores menstrual data in Health that you enter into the app.</string>
+	<string>Nova securely stores menstrual data that you enter into the app in Health.</string>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>
