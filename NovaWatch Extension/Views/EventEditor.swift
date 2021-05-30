@@ -143,10 +143,10 @@ struct MenstrualEventEditor: View {
         let newVolume = percentToVolume(Int(selectedPercent))
         self.viewModel.save(sample: self.sample, date: self.date, newVolume: newVolume) { success in
             if success {
-                NSLog("Sent menstrual event")
+                NSLog("Saved menstrual event")
             } else {
                 // TODO: show error
-                NSLog("Could not send menstrual event")
+                NSLog("Could not save menstrual event")
             }
         }
     }

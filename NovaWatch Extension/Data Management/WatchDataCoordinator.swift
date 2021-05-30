@@ -66,7 +66,6 @@ extension WatchDataCoordinator: WCSessionDelegate {
                 NSLog("%{public}@", String(describing: error))
             } else {
                 NSLog("Activated session")
-                // TODO: send events
             }
         case .inactive, .notActivated:
             break
@@ -76,7 +75,6 @@ extension WatchDataCoordinator: WCSessionDelegate {
     }
     
     func session(_ session: WCSession, didReceiveMessage message: [String: Any], replyHandler: @escaping ([String: Any]) -> Void) {
-        NSLog("Got message from watch")
         switch message["name"] as? String {
         case RecordedMenstrualEventInfo.name?:
             if let data = RecordedMenstrualEventInfo(rawValue: message) {
@@ -95,6 +93,7 @@ extension WatchDataCoordinator: WCSessionDelegate {
                 }
             }
         default:
+            NSLog("Unable to respond to message from watch: unknown message type")
             replyHandler(["didSave": false])
         }
     }

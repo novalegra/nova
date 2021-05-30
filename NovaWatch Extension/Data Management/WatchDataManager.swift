@@ -15,19 +15,19 @@ import HealthKit
 class WatchDataManager: NSObject, ObservableObject, WKExtensionDelegate {
     @Published var menstrualEvents: [MenstrualSample] = []
     @Published var selection: SelectionState = .none
-    var menstrualStore: MenstrualStore
+    var store: MenstrualStore
     
     override init() {
         let healthStore = HKHealthStore()
-        menstrualStore = MenstrualStore(healthStore: healthStore)
+        store = MenstrualStore(healthStore: healthStore)
         
         super.init()
 
-        menstrualStore.healthStoreUpdateCompletionHandler = { [weak self] updatedEvents in
+        store.healthStoreUpdateCompletionHandler = { [weak self] updatedEvents in
             self?.menstrualEvents = updatedEvents
         }
         // TODO: only call this if needed
-        menstrualStore.authorize()
+        store.authorize()
         
         let session = WCSession.default
         session.delegate = self
@@ -49,18 +49,7 @@ class WatchDataManager: NSObject, ObservableObject, WKExtensionDelegate {
         DispatchQueue.main.async {
             self.menstrualEvents = events
         }
-//        scheduleSnapshot()
     }
-    
-//    private func scheduleSnapshot() {
-//        if WKExtension.shared().applicationState != .active {
-//            WKExtension.shared().scheduleSnapshotRefresh(withPreferredDate: Date(), userInfo: nil) { (error) in
-//                if let error = error {
-//                    NSLog("scheduleSnapshotRefresh error: %{public}@", String(describing: error))
-//                }
-//            }
-//        }
-//    }
     
     func hasMenstrualFlow(at date: Date) -> Bool {
         for event in menstrualEvents {
@@ -128,7 +117,7 @@ class WatchDataManager: NSObject, ObservableObject, WKExtensionDelegate {
             // If it didn't save on the phone, save it on the watch
             // This is the backup option since the watch health store is much slower to sync
             // TODO: handle case where HealthStore is locked (update current cache appropriately)
-            menstrualStore.saveInHealthKit(sample: sample, date: date, newVolume: newVolume, flowSelection: selection) { result in
+            store.saveInHealthKit(sample: sample, date: date, newVolume: newVolume, flowSelection: selection) { result in
                 switch result {
                 case .success:
                     NSLog("Successfully saved samples to HK on watch")
