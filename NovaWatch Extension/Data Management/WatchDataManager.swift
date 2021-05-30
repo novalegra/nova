@@ -124,15 +124,6 @@ class WatchDataManager: NSObject, ObservableObject, WKExtensionDelegate {
             switch result {
             case .success:
                 NSLog("Successfully saved samples to HK with watch")
-                self.menstrualStore.dataFetch.async {
-                    // BIG TODO: update menstrual events correctly
-                    self.menstrualStore.getRecentMenstrualSamples { samples in
-                        DispatchQueue.main.async {
-                            self.menstrualEvents = samples
-                        }
-                        completion(true)
-                    }
-                }
             case .failure(let error):
                 NSLog("Error saving samples in watch: \(error)")
                 completion(false)
