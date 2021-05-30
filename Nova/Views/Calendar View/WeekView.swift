@@ -33,10 +33,10 @@ struct WeekView<DateView>: View where DateView: View {
         HStack {
             ForEach(days, id: \.self) { date in
                 HStack {
-                    if self.calendar.isDate(self.week, equalTo: date, toGranularity: .month) {
-                        self.content(date)
+                    if calendar.isDate(week, equalTo: date, toGranularity: .month) {
+                        content(date)
                     } else {
-                        self.content(date).hidden()
+                        content(date).hidden()
                     }
                 }
             }

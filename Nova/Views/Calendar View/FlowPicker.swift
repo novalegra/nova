@@ -45,22 +45,22 @@ struct FlowPicker: View {
             }
             .padding(.vertical, 5)
             .frame(minWidth: 0, maxWidth: .infinity).onTapGesture {
-                self.pickerShouldExpand.toggle()
+                pickerShouldExpand.toggle()
             }
             .onAppear {
-                self.pickerIndex = self.initialPickerIndex
+                pickerIndex = initialPickerIndex
             }
             .onChange(of: selectionState) { _ in
                 if selectionState != .hadFlow {
-                    self.pickerIndex = 0
-                    self.pickerShouldExpand = false
+                    pickerIndex = 0
+                    pickerShouldExpand = false
                 }
             }
             if pickerShouldExpand && selectionState == .hadFlow {
                 HStack(alignment: .center) {
                     Picker(selection: $pickerIndex.onChange(onUpdate), label: Text("")) {
                         ForEach(0 ..< items.count) {
-                            Text(self.items[$0])
+                            Text(items[$0])
                        }
                     }
                     .pickerStyle(WheelPickerStyle())

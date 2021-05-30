@@ -30,7 +30,7 @@ struct CalendarView<DateView>: View where DateView: View {
         ScrollView(.vertical, showsIndicators: false) {
             VStack {
                 ForEach(months, id: \.self) { month in
-                    MonthView(month: month, content: self.content)
+                    MonthView(month: month, content: content)
                 }
             }
         }

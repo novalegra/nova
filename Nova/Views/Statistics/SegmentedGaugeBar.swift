@@ -237,7 +237,7 @@ class SegmentedGaugeBarLayer: CALayer {
     }
 
     private var presentationProgress: CGFloat {
-        return presentation()?.progress ?? self.progress
+        return presentation()?.progress ?? progress
     }
 
     private var leftmostSegmentSize: CGSize {

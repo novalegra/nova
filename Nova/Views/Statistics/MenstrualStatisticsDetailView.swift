@@ -40,7 +40,7 @@ struct MenstrualStatisticsDetailView: View {
         List {
             averageSection
             ForEach(viewModel.reverseOrderedPeriods, id: \.startDate) { period in
-                self.section(for: period)
+                section(for: period)
             }
         }
         .navigationBarTitle(Text(title), displayMode: .large)

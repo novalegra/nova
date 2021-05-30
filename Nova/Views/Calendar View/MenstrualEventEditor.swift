@@ -53,10 +53,10 @@ struct MenstrualEventEditor: View {
             flowPickerRow
         }
         .onAppear {
-            if let sample = self.sample {
-                self.selection = sample.flowLevel == .none ? .noFlow : .hadFlow
+            if let sample = sample {
+                selection = sample.flowLevel == .none ? .noFlow : .hadFlow
             } else {
-                self.selection = .none
+                selection = .none
             }
         }
         .navigationBarTitle(sample != nil ? "Edit Flow" : "Track Flow", displayMode: .inline)
@@ -68,6 +68,7 @@ struct MenstrualEventEditor: View {
         Button(sample != nil ? "Update" : "Save") {
             let selectedValue = viewModel.flowPickerNumbers[selectedIndex]
             let newVolume = viewModel.volumeUnit == .percentOfCup ? percentToVolume(selectedValue) : selectedValue
+            
             viewModel.save(sample: sample, date: date, newVolume: newVolume, flowSelection: selection) { result in
                 switch result {
                 case .success:
@@ -90,9 +91,9 @@ struct MenstrualEventEditor: View {
             .resizable()
             .frame(width: 20.0, height: 20.0)
             .onTapGesture {
-                self.selection = self.selection == .hadFlow ? .none : .hadFlow
-                if self.selection == .none {
-                    self.selectedIndex = 0 // reset value
+                selection = selection == .hadFlow ? .none : .hadFlow
+                if selection == .none {
+                    selectedIndex = 0 // reset value
                 }
             }
         }
@@ -106,8 +107,8 @@ struct MenstrualEventEditor: View {
             .resizable()
             .frame(width: 20.0, height: 20.0)
             .onTapGesture {
-                self.selection = self.selection == .noFlow ? .none : .noFlow
-                self.selectedIndex = 0 // reset value
+                selection = selection == .noFlow ? .none : .noFlow
+                selectedIndex = 0 // reset value
             }
         }
     }
@@ -121,11 +122,11 @@ struct MenstrualEventEditor: View {
             selectionState: $selection,
             with: viewModel.flowPickerOptions,
             onUpdate: { index in
-                self.selectedIndex = index
+                selectedIndex = index
             },
             label: NSLocalizedString("24-Hour Flow", comment: "Menstrual flow picker label"),
             unit: viewModel.volumeUnit.shortUnit,
-            initialPickerIndex: self.viewModel.flowPickerOptions.firstIndex(of: String(Int(pickerStart))) ?? 0
+            initialPickerIndex: viewModel.flowPickerOptions.firstIndex(of: String(Int(pickerStart))) ?? 0
         )
     }
     

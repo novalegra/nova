@@ -58,11 +58,11 @@ struct SettingsView: View {
         .navigationBarTitle("Settings", displayMode: .large)
         .onAppear {
             // FIXME: removed due to iOS 14 bug
-            self.selectedMenstrualCupType = self.viewModel.cupType
-            self.selectedVolumeType = .percentOfCup//self.viewModel.volumeUnit
+            selectedMenstrualCupType = viewModel.cupType
+            selectedVolumeType = .percentOfCup//viewModel.volumeUnit
         }
         .onDisappear {
-            self.saveSettingsToDataManager()
+            saveSettingsToDataManager()
         }
     }
     

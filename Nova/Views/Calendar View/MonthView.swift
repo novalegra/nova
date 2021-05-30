@@ -50,7 +50,7 @@ struct MonthView<DateView>: View where DateView: View {
             }
             
             ForEach(weeks, id: \.self) { week in
-                WeekView(week: week, content: self.content)
+                WeekView(week: week, content: content)
             }
         }
     }

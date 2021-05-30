@@ -66,31 +66,6 @@ class MenstrualStore {
     // MARK: Data Retrieval
     let dataFetch = DispatchQueue(label: "com.nova.MenstrualStoreQueue", qos: .utility)
     
-    let noFlowPredicate = HKQuery.predicateForCategorySamples(
-        with: .equalTo,
-        value: HKCategoryValueMenstrualFlow.none.rawValue
-    )
-    
-    let hadFlowPredicate = HKQuery.predicateForCategorySamples(
-        with: .equalTo,
-        value: HKCategoryValueMenstrualFlow.unspecified.rawValue
-    )
-    
-    let lightFlowPredicate = HKQuery.predicateForCategorySamples(
-        with: .equalTo,
-        value: HKCategoryValueMenstrualFlow.light.rawValue
-    )
-    
-    let mediumFlowPredicate = HKQuery.predicateForCategorySamples(
-        with: .equalTo,
-        value: HKCategoryValueMenstrualFlow.medium.rawValue
-    )
-    
-    let heavyFlowPredicate = HKQuery.predicateForCategorySamples(
-        with: .equalTo,
-        value: HKCategoryValueMenstrualFlow.heavy.rawValue
-    )
-    
     func manuallyUpdateMenstrualData(completion: (() -> Void)? = nil) {
         dataFetch.async { [unowned self] in
             getRecentMenstrualSamples() { samples in
@@ -101,7 +76,8 @@ class MenstrualStore {
         }
     }
     
-    func getRecentMenstrualSamples(days: Int = 90, _ completion: @escaping (_ result: [MenstrualSample]) -> Void) {
+    /// Fetch samples for all of the different menstrual data types (no flow, light, medium, and heavy)
+    fileprivate func getRecentMenstrualSamples(days: Int = 90, _ completion: @escaping (_ result: [MenstrualSample]) -> Void) {
         dispatchPrecondition(condition: .onQueue(dataFetch))
         // Go 'days' back
         let start = Calendar.current.date(byAdding: .day, value: -days, to: Date())!
@@ -109,7 +85,7 @@ class MenstrualStore {
         
         let updateGroup = DispatchGroup()
         updateGroup.enter()
-        getRecentMenstrualSamples(start: start, matching: makeCompoundPredicateIfNeeded(for: noFlowPredicate), sampleLimit: days) {
+        getSamples(start: start, matching: addCurrentAppFilterIfNeeded(to: MenstrualPredicates.noFlowPredicate), sampleLimit: days) {
             (result) in
             switch result {
             case .success(let samples):
@@ -121,7 +97,7 @@ class MenstrualStore {
         }
 
         updateGroup.enter()
-        getRecentMenstrualSamples(start: start, matching: makeCompoundPredicateIfNeeded(for: hadFlowPredicate), sampleLimit: days) {
+        getSamples(start: start, matching: addCurrentAppFilterIfNeeded(to: MenstrualPredicates.hadFlowPredicate), sampleLimit: days) {
             (result) in
             switch result {
             case .success(let samples):
@@ -133,7 +109,7 @@ class MenstrualStore {
         }
         
         updateGroup.enter()
-        getRecentMenstrualSamples(start: start, matching: makeCompoundPredicateIfNeeded(for: lightFlowPredicate), sampleLimit: days) {
+        getSamples(start: start, matching: addCurrentAppFilterIfNeeded(to: MenstrualPredicates.lightFlowPredicate), sampleLimit: days) {
             (result) in
             switch result {
             case .success(let samples):
@@ -145,7 +121,7 @@ class MenstrualStore {
         }
         
         updateGroup.enter()
-        getRecentMenstrualSamples(start: start, matching: makeCompoundPredicateIfNeeded(for: mediumFlowPredicate), sampleLimit: days) {
+        getSamples(start: start, matching: addCurrentAppFilterIfNeeded(to: MenstrualPredicates.mediumFlowPredicate), sampleLimit: days) {
             (result) in
             switch result {
             case .success(let samples):
@@ -157,7 +133,7 @@ class MenstrualStore {
         }
         
         updateGroup.enter()
-        getRecentMenstrualSamples(start: start, matching: makeCompoundPredicateIfNeeded(for: heavyFlowPredicate), sampleLimit: days) {
+        getSamples(start: start, matching: addCurrentAppFilterIfNeeded(to: MenstrualPredicates.heavyFlowPredicate), sampleLimit: days) {
             (result) in
             switch result {
             case .success(let samples):
@@ -172,7 +148,8 @@ class MenstrualStore {
         completion(newMenstrualEvents)
     }
 
-    fileprivate func getRecentMenstrualSamples(start: Date, end: Date = Date(), matching predicate: NSPredicate, sampleLimit: Int, _ completion: @escaping (_ result: MenstrualStoreResult<[HKCategorySample]>) -> Void) {
+    /// Get the samples from HealthKit that match the provided predicate
+    fileprivate func getSamples(start: Date, end: Date = Date(), matching predicate: NSPredicate, sampleLimit: Int, _ completion: @escaping (_ result: MenstrualStoreResult<[HKCategorySample]>) -> Void) {
         dispatchPrecondition(condition: .onQueue(dataFetch))
         
         // get more-recent values first
@@ -197,8 +174,8 @@ class MenstrualStore {
         healthStore.execute(query)
     }
     
-    // Make compound predicate to only read from current app if that's necessary
-    func makeCompoundPredicateIfNeeded(for predicate: NSPredicate) -> NSPredicate {
+    /// Make compound predicate to only read from current app if the settings specify that we should
+    fileprivate func addCurrentAppFilterIfNeeded(to predicate: NSPredicate) -> NSPredicate {
         guard onlyObserveSamplesFromCurrentApp else {
             return predicate
         }
@@ -278,30 +255,30 @@ extension MenstrualStore {
     }
     
     func saveSample(_ sample: MenstrualSample, _ completion: @escaping (MenstrualStoreResult<Bool>) -> ()) {
-        dataFetch.async {
-            self.save(sample) { result in
+        dataFetch.async { [unowned self] in
+            save(sample) { result in
                 completion(result)
             }
         }
     }
     
     func deleteSample(_ sample: MenstrualSample, _ completion: @escaping (MenstrualStoreResult<Bool>) -> ()) {
-        dataFetch.async {
-            self.delete(sample) { result in
+        dataFetch.async { [unowned self] in
+            delete(sample) { result in
                 completion(result)
             }
         }
     }
     
     func updateSample(_ sample: MenstrualSample,  _ completion: @escaping (MenstrualStoreResult<Bool>) -> ()) {
-        dataFetch.async {
-            self.replace(sample) { result in
+        dataFetch.async { [unowned self] in
+            replace(sample) { result in
                 completion(result)
             }
         }
     }
     
-    func save(_ entry: MenstrualSample, _ completion: @escaping (MenstrualStoreResult<Bool>) -> ()) {
+    fileprivate func save(_ entry: MenstrualSample, _ completion: @escaping (MenstrualStoreResult<Bool>) -> ()) {
         dispatchPrecondition(condition: .onQueue(dataFetch))
         
         let persistedSample = HKCategorySample(entry: entry)
@@ -317,14 +294,14 @@ extension MenstrualStore {
         }
     }
     
-    func replace(_ entry: MenstrualSample, _ completion: @escaping (MenstrualStoreResult<Bool>) -> ()) {
+    fileprivate func replace(_ entry: MenstrualSample, _ completion: @escaping (MenstrualStoreResult<Bool>) -> ()) {
         dispatchPrecondition(condition: .onQueue(dataFetch))
 
-        self.deleteSample(entry) { result in
+        deleteSample(entry) { [unowned self] result in
             switch result {
             case .success:
-                self.dataFetch.async {
-                    self.saveSample(entry) { saveResult in
+                dataFetch.async {
+                    saveSample(entry) { saveResult in
                         completion(saveResult)
                     }
                 }
@@ -334,7 +311,7 @@ extension MenstrualStore {
         }
     }
     
-    func delete(_ entry: MenstrualSample, _ completion: @escaping (MenstrualStoreResult<Bool>) -> ()) {
+    fileprivate func delete(_ entry: MenstrualSample, _ completion: @escaping (MenstrualStoreResult<Bool>) -> ()) {
         dispatchPrecondition(condition: .onQueue(dataFetch))
         
         let predicate = HKQuery.predicateForObject(with: entry.uuid)

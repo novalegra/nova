@@ -60,6 +60,8 @@
 		E995A52B250732CB009D52CF /* FlowPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = E995A52A250732CB009D52CF /* FlowPicker.swift */; };
 		E995A52D250750C8009D52CF /* HKCategorySample+MenstrualSample.swift in Sources */ = {isa = PBXBuildFile; fileRef = E995A52C250750C7009D52CF /* HKCategorySample+MenstrualSample.swift */; };
 		E9D7132225199F4000F56BB1 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = E9D7132025199F4000F56BB1 /* Localizable.strings */; };
+		E9DDBAAE2664158400594E0E /* MenstrualPredicates.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9DDBAAD2664158400594E0E /* MenstrualPredicates.swift */; };
+		E9DDBAAF266415D100594E0E /* MenstrualPredicates.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9DDBAAD2664158400594E0E /* MenstrualPredicates.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -155,6 +157,7 @@
 		E9D7132125199F4000F56BB1 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = "Nova/Localizable/en.xcloc/Source Contents/Nova/en.lproj/Localizable.strings"; sourceTree = SOURCE_ROOT; };
 		E9D7132325199F7D00F56BB1 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
 		E9D7132425199F7D00F56BB1 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = "Localizable/en.xcloc/Source Contents/Nova/es.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		E9DDBAAD2664158400594E0E /* MenstrualPredicates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenstrualPredicates.swift; sourceTree = "<group>"; };
 		E9E51FC62512529E00D96B7C /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -335,6 +338,7 @@
 			isa = PBXGroup;
 			children = (
 				E995A51E25071DC2009D52CF /* MenstrualStore.swift */,
+				E9DDBAAD2664158400594E0E /* MenstrualPredicates.swift */,
 				E995A5242507237D009D52CF /* MenstrualDataManager.swift */,
 				E995A5262507289B009D52CF /* MenstrualSample.swift */,
 				E9146976250D5F0D00D64A5A /* MenstrualPeriod.swift */,
@@ -497,6 +501,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E98BB0FF2542876700140BE0 /* RecordedMenstrualEventInfo.swift in Sources */,
+				E9DDBAAF266415D100594E0E /* MenstrualPredicates.swift in Sources */,
 				E95657072537C866006CD2BA /* CircleButtonStyle.swift in Sources */,
 				E95656EE2537B53C006CD2BA /* MenstrualCupType.swift in Sources */,
 				E976177A252EA7710011B715 /* WatchDataManager.swift in Sources */,
@@ -532,6 +537,7 @@
 				E995A5022507145E009D52CF /* MenstrualCalendarView.swift in Sources */,
 				E957BBFD251267CF00171FDC /* UserDefaults+Settings.swift in Sources */,
 				E995A51D25071BD0009D52CF /* WeekView.swift in Sources */,
+				E9DDBAAE2664158400594E0E /* MenstrualPredicates.swift in Sources */,
 				E90ED4C2250D73D100F56679 /* SegmentedGaugeBar.swift in Sources */,
 				E995A52D250750C8009D52CF /* HKCategorySample+MenstrualSample.swift in Sources */,
 				E995A5272507289B009D52CF /* MenstrualSample.swift in Sources */,

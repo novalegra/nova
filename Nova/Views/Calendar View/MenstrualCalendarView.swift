@@ -23,25 +23,25 @@ struct MenstrualCalendarView: View {
         NavigationView {
             CalendarView(interval: calendarDuration) { date in
                 NavigationLink(
-                    destination: MenstrualEventEditor(viewModel: self.viewModel, sample: self.viewModel.menstrualEventIfPresent(for: date), date: date)
+                    destination: MenstrualEventEditor(viewModel: viewModel, sample: viewModel.menstrualEventIfPresent(for: date), date: date)
                 ) {
                     Text("00") // Placeholder so circles are correct size
                         .hidden()
                         .padding(8)
-                        .background(self.buttonColor(for: date))
+                        .background(buttonColor(for: date))
                         .clipShape(Circle())
                         .padding(.vertical, 4)
                         .overlay(
-                            Text(String(self.calendar.component(.day, from: date)))
+                            Text(String(calendar.component(.day, from: date)))
                                 .foregroundColor(Color.black)
                         )
                 }
                 .disabled(date > Date())
             }
             .onAppear {
-                if self.viewModel.store.authorizationRequired {
-                    self.viewModel.store.authorize()
-                    self.viewModel.store.setUpBackgroundDelivery()
+                if viewModel.store.authorizationRequired {
+                    viewModel.store.authorize()
+                    viewModel.store.setUpBackgroundDelivery()
                 }
             }
             .navigationBarTitle("Cycle Overview", displayMode: .large)
@@ -52,7 +52,7 @@ struct MenstrualCalendarView: View {
         if date > Date() {
             return Color(UIColor.gray.withAlphaComponent(0.14))
         }
-        if self.viewModel.hasMenstrualFlow(at: date) {
+        if viewModel.hasMenstrualFlow(at: date) {
             return Color("DarkPink")
         }
         return Color("LightBrown")
