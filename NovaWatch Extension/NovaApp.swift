@@ -16,7 +16,5 @@ struct NovaApp: App {
                 WatchMainView()
             }
         }
-
-        WKNotificationScene(controller: NotificationController.self, category: "novaWatchApp")
     }
 }

@@ -31,8 +31,6 @@
 		E9761756252EA6340011B715 /* NovaWatch Extension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = E9761755252EA6340011B715 /* NovaWatch Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		E976175B252EA6340011B715 /* NovaApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E976175A252EA6340011B715 /* NovaApp.swift */; };
 		E976175D252EA6340011B715 /* WatchMainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E976175C252EA6340011B715 /* WatchMainView.swift */; };
-		E976175F252EA6340011B715 /* NotificationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E976175E252EA6340011B715 /* NotificationController.swift */; };
-		E9761761252EA6340011B715 /* NotificationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9761760252EA6340011B715 /* NotificationView.swift */; };
 		E9761763252EA6340011B715 /* ComplicationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9761762252EA6340011B715 /* ComplicationController.swift */; };
 		E9761765252EA6360011B715 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E9761764252EA6360011B715 /* Assets.xcassets */; };
 		E9761768252EA6360011B715 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E9761767252EA6360011B715 /* Preview Assets.xcassets */; };
@@ -128,13 +126,10 @@
 		E9761755252EA6340011B715 /* NovaWatch Extension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "NovaWatch Extension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E976175A252EA6340011B715 /* NovaApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NovaApp.swift; sourceTree = "<group>"; };
 		E976175C252EA6340011B715 /* WatchMainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchMainView.swift; sourceTree = "<group>"; };
-		E976175E252EA6340011B715 /* NotificationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationController.swift; sourceTree = "<group>"; };
-		E9761760252EA6340011B715 /* NotificationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationView.swift; sourceTree = "<group>"; };
 		E9761762252EA6340011B715 /* ComplicationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComplicationController.swift; sourceTree = "<group>"; };
 		E9761764252EA6360011B715 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E9761767252EA6360011B715 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		E9761769252EA6360011B715 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		E976176A252EA6360011B715 /* PushNotificationPayload.apns */ = {isa = PBXFileReference; lastKnownFileType = text; path = PushNotificationPayload.apns; sourceTree = "<group>"; };
 		E9761779252EA7710011B715 /* WatchDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchDataManager.swift; sourceTree = "<group>"; };
 		E98BB0FD2542876700140BE0 /* RecordedMenstrualEventInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordedMenstrualEventInfo.swift; sourceTree = "<group>"; };
 		E995A4F72507145E009D52CF /* Nova.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Nova.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -234,13 +229,10 @@
 				E9209497257C1425004D6192 /* NovaWatch Extension.entitlements */,
 				E976175A252EA6340011B715 /* NovaApp.swift */,
 				E976177F252EA78F0011B715 /* Views */,
-				E976175E252EA6340011B715 /* NotificationController.swift */,
 				E976177E252EA7770011B715 /* Data Management */,
-				E9761760252EA6340011B715 /* NotificationView.swift */,
 				E9761762252EA6340011B715 /* ComplicationController.swift */,
 				E9761764252EA6360011B715 /* Assets.xcassets */,
 				E9761769252EA6360011B715 /* Info.plist */,
-				E976176A252EA6360011B715 /* PushNotificationPayload.apns */,
 				E9761766252EA6360011B715 /* Preview Content */,
 			);
 			path = "NovaWatch Extension";
@@ -508,7 +500,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				E98BB0FF2542876700140BE0 /* RecordedMenstrualEventInfo.swift in Sources */,
-				E976175F252EA6340011B715 /* NotificationController.swift in Sources */,
 				E95657072537C866006CD2BA /* CircleButtonStyle.swift in Sources */,
 				E95656EE2537B53C006CD2BA /* MenstrualCupType.swift in Sources */,
 				E976177A252EA7710011B715 /* WatchDataManager.swift in Sources */,
@@ -522,7 +513,6 @@
 				E976175B252EA6340011B715 /* NovaApp.swift in Sources */,
 				E9209492257BFDB1004D6192 /* MenstrualStore.swift in Sources */,
 				E95656DA2537B014006CD2BA /* EventEditor.swift in Sources */,
-				E9761761252EA6340011B715 /* NotificationView.swift in Sources */,
 				E95656E62537B503006CD2BA /* VolumeType.swift in Sources */,
 				E93AB013253751DC00A02F67 /* Calendar.swift in Sources */,
 			);
