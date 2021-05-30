@@ -44,7 +44,7 @@ class MenstrualStore {
     func authorize() {
         healthStore.requestAuthorization(toShare: [sampleType], read: [sampleType]) { success, error in
             if let error = error {
-                print(error)
+                NSLog(error)
             } else if success {
                 self.setUpBackgroundDelivery()
             }
@@ -63,7 +63,7 @@ class MenstrualStore {
             }
             healthStore.execute(query)
             healthStore.enableBackgroundDelivery(for: sampleType, frequency: .immediate) { (enabled, error) in
-                print("enableBackgroundDeliveryForType handler called for \(self.sampleType) - success: \(enabled), error: \(String(describing: error))")
+                NSLog("enableBackgroundDeliveryForType handler called for \(self.sampleType) - success: \(enabled), error: \(String(describing: error))")
             }
         #endif
     }
@@ -176,7 +176,7 @@ class MenstrualStore {
         let query = HKSampleQuery(sampleType: sampleType, predicate: predicate, limit: sampleLimit, sortDescriptors: [sortByDate]) { (query, samples, error) in
 
             if let error = error {
-                print("Error fetching menstrual data: %{public}@", String(describing: error))
+                NSLog("Error fetching menstrual data: %{public}@", String(describing: error))
                 completion(.failure(MenstrualStoreError.queryError(error.localizedDescription)))
             } else if let samples = samples as? [HKCategorySample] {
                 guard !samples.isEmpty else {
@@ -302,11 +302,11 @@ extension MenstrualStore {
         let persistedSample = HKCategorySample(entry: entry)
         healthStore.save(persistedSample) { success, error in
             if let error = error {
-                print("Error: \(String(describing: error))")
+                NSLog("Error: \(String(describing: error))")
                 completion(.failure(.queryError(error.localizedDescription)))
             }
             if success {
-                print("Saved: \(success)")
+                NSLog("Saved: \(success)")
                 completion(.success(true))
             }
         }
@@ -335,11 +335,11 @@ extension MenstrualStore {
         let predicate = HKQuery.predicateForObject(with: entry.uuid)
         healthStore.deleteObjects(of: sampleType, predicate: predicate) { success, count, error in
             if let error = error {
-                print("Error: \(String(describing: error))")
+                NSLog("Error: \(String(describing: error))")
                 completion(.failure(.queryError(error.localizedDescription)))
             }
             if success {
-                print("Deleted \(count) samples: \(success)")
+                NSLog("Deleted \(count) samples: \(success)")
                 completion(.success(true))
             }
         }

@@ -36,12 +36,12 @@ class WatchDataCoordinator: NSObject {
     
     func updateWatch(with events: [MenstrualSample]) throws {
         guard let session = watchSession else {
-            print("Not sending events", events, "because there's no watch session")
+            NSLog("Not sending events", events, "because there's no watch session")
             return
         }
         
         guard session.isPaired, session.isWatchAppInstalled else {
-            print("Not sending events", events, "because session isn't paired or app isn't installed")
+            NSLog("Not sending events", events, "because session isn't paired or app isn't installed")
             return
         }
 
@@ -53,7 +53,7 @@ class WatchDataCoordinator: NSObject {
         let encodedEvents = try encoder.encode(events)
         let eventsDict = ["events": encodedEvents]
         
-        print("Updating watch data with", events.map { $0.volume })
+        NSLog("Updating watch data with", events.map { $0.volume })
         try session.updateApplicationContext(eventsDict)
     }
 }
@@ -63,9 +63,9 @@ extension WatchDataCoordinator: WCSessionDelegate {
         switch activationState {
         case .activated:
             if let error = error {
-                print("%{public}@", String(describing: error))
+                NSLog("%{public}@", String(describing: error))
             } else {
-                print("Activated session")
+                NSLog("Activated session")
                 // TODO: send events
             }
         case .inactive, .notActivated:
@@ -76,13 +76,12 @@ extension WatchDataCoordinator: WCSessionDelegate {
     }
     
     func session(_ session: WCSession, didReceiveMessage message: [String: Any], replyHandler: @escaping ([String: Any]) -> Void) {
-        print("Got message from watch")
+        NSLog("Got message from watch")
         switch message["name"] as? String {
         case RecordedMenstrualEventInfo.name?:
             if let data = RecordedMenstrualEventInfo(rawValue: message) {
                 dataStore.saveInHealthKit(sample: data.sample, date: data.date, newVolume: data.volume, flowSelection: data.selectionState) { result in
-                    // ANNA TODO: remove this print
-                    print(result)
+                    NSLog("HK save result: \(result)")
                     replyHandler([:])
                 }
             }

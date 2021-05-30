@@ -40,7 +40,7 @@ class WatchDataManager: NSObject, ObservableObject, WKExtensionDelegate {
     
     private func updateMenstrualData(_ context: [String: Any]) throws {
         guard let codedEvents = context["events"] as? Data else {
-            print("Couldn't get events")
+            NSLog("Couldn't get events")
             return
         }
         let events = try decoder.decode([MenstrualSample].self, from: codedEvents)
@@ -54,7 +54,7 @@ class WatchDataManager: NSObject, ObservableObject, WKExtensionDelegate {
         if WKExtension.shared().applicationState != .active {
             WKExtension.shared().scheduleSnapshotRefresh(withPreferredDate: Date(), userInfo: nil) { (error) in
                 if let error = error {
-                    print("scheduleSnapshotRefresh error: %{public}@", String(describing: error))
+                    NSLog("scheduleSnapshotRefresh error: %{public}@", String(describing: error))
                 }
             }
         }
@@ -131,7 +131,7 @@ class WatchDataManager: NSObject, ObservableObject, WKExtensionDelegate {
                     }
                 }
             case .failure(let error):
-                print("Error saving samples in watch", error)
+                NSLog("Error saving samples in watch", error)
                 completion(false)
             }
         }
@@ -141,22 +141,22 @@ class WatchDataManager: NSObject, ObservableObject, WKExtensionDelegate {
 extension WatchDataManager: WCSessionDelegate {
     func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) {
         if activationState == .activated {
-            print("Watch received data")
+            NSLog("Watch received data")
             do {
                 try updateMenstrualData(session.receivedApplicationContext)
             } catch let error {
-                print(error)
+                NSLog(error)
             }
             
         }
     }
     
     func session(_ session: WCSession, didReceiveApplicationContext applicationContext: [String : Any]) {
-        print("Watch received data")
+        NSLog("Watch received data")
         do {
             try updateMenstrualData(applicationContext)
         } catch let error {
-            print(error)
+            NSLog(error)
         }
     }
 }
@@ -164,19 +164,19 @@ extension WatchDataManager: WCSessionDelegate {
 extension WCSession {
     func sendMenstrualEvent(_ userInfo: RecordedMenstrualEventInfo, completion: @escaping (Bool) -> Void) {
         guard activationState == .activated, isReachable else {
-            print("Not activated or not reachable")
+            NSLog("Not activated or not reachable")
             completion(false)
             return
         }
         
-        print("Sending", String(describing: userInfo.sample), "to phone")
+        NSLog("Sending", String(describing: userInfo.sample), "to phone")
 
         sendMessage(userInfo.rawValue,
             replyHandler: { reply in
                 completion(true)
             },
             errorHandler: { error in
-                print(error)
+                NSLog(error)
                 completion(false)
             }
         )
