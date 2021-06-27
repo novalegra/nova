@@ -131,7 +131,7 @@ class MenstrualDataManager: ObservableObject {
         return dateFormatter.string(from: date)
     }
     
-    func save(sample: MenstrualSample?, date: Date, newVolume: Double, flowSelection: SelectionState, _ completion: @escaping (MenstrualStoreResult<Bool>) -> Void) {
+    func save(sample: MenstrualSample?, date: Date, newVolume: Double, flowSelection: SelectionState, _ completion: @escaping (MenstrualStoreResult<MenstrualSample?>) -> Void) {
         store.saveInHealthKit(sample: sample, date: date, newVolume: newVolume, flowSelection: flowSelection, completion)
     }
     

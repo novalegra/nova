@@ -235,22 +235,44 @@ class MenstrualStore {
 
 // MARK: Data Management
 extension MenstrualStore {
-    func saveInHealthKit(sample: MenstrualSample?, date: Date, newVolume: Double, flowSelection: SelectionState, _ completion: @escaping (MenstrualStoreResult<Bool>) -> Void) {
-        let saveCompletion: (MenstrualStoreResult<Bool>) -> () = { result in
-            completion(result)
-        }
-        
+    // completion: success value be contain nil if sample was deleted or non-nil if item was updated/cancelled
+    func saveInHealthKit(sample: MenstrualSample?, date: Date, newVolume: Double, flowSelection: SelectionState, _ completion: @escaping (MenstrualStoreResult<MenstrualSample?>) -> Void) {
+        // A sample existed previously, so we're modifying an existing one
         if let sample = sample {
+            // The sample has no flow, so delete it
             if flowSelection == .none {
-                deleteSample(sample, saveCompletion)
+                deleteSample(sample) { result in
+                    switch result {
+                    case .success:
+                        completion(.success(nil))
+                    case .failure(let error):
+                        completion(.failure(error))
+                    }
+                }
+            // The sample has an updated volume, so update the volume
             } else {
                 sample.volume = newVolume
                 sample.flowLevel = flowLevel(for: flowSelection, with: newVolume)
-                updateSample(sample, saveCompletion)
+                updateSample(sample) { result in
+                    switch result {
+                    case .success:
+                        completion(.success(sample))
+                    case .failure(let error):
+                        completion(.failure(error))
+                    }
+                }
             }
+        // Add a new menstrual event
         } else if flowSelection != .none {
             let sample = MenstrualSample(startDate: date, endDate: date, flowLevel: flowLevel(for: flowSelection, with: newVolume), volume: newVolume)
-            saveSample(sample, saveCompletion)
+            saveSample(sample) { result in
+                switch result {
+                case .success:
+                    completion(.success(sample))
+                case .failure(let error):
+                    completion(.failure(error))
+                }
+            }
         }
     }
     

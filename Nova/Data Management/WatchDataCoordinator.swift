@@ -7,6 +7,7 @@
 //
 
 import WatchConnectivity
+import UIKit
 
 // iOS app manager of watch data & data sending
 class WatchDataCoordinator: NSObject {
@@ -35,6 +36,11 @@ class WatchDataCoordinator: NSObject {
     }()
     
     func updateWatch(with events: [MenstrualSample]) throws {
+        guard UIApplication.shared.isProtectedDataAvailable else {
+            NSLog("Not sending events because phone is locked")
+            return
+        }
+        
         guard let session = watchSession else {
             NSLog("Not sending events", events, "because there's no watch session")
             return
@@ -77,6 +83,12 @@ extension WatchDataCoordinator: WCSessionDelegate {
     func session(_ session: WCSession, didReceiveMessage message: [String: Any], replyHandler: @escaping ([String: Any]) -> Void) {
         switch message["name"] as? String {
         case RecordedMenstrualEventInfo.name?:
+            guard UIApplication.shared.isProtectedDataAvailable else {
+                // Kick it back to the watch to save if the HK stores are locked
+                replyHandler(["didSave": false])
+                return
+            }
+            
             if let data = RecordedMenstrualEventInfo(rawValue: message) {
                 NSLog("Reacting to message for RecordedMenstrualEventInfo")
 

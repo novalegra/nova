@@ -97,18 +97,46 @@ class WatchDataManager: NSObject, ObservableObject, WKExtensionDelegate {
             
             // If it didn't save on the phone, save it on the watch
             // This is the backup option since the watch health store is much slower to sync
-            // TODO: handle case where HealthStore is locked (update current cache appropriately)
             store.saveInHealthKit(sample: sample, date: date, newVolume: newVolume, flowSelection: selection) { result in
                 switch result {
-                case .success:
+                case .success(let savedSample):
                     NSLog("Successfully saved samples to HK on watch")
-                    completion(true)
+                    DispatchQueue.main.async {
+                        if let savedSample = savedSample {
+                            addSampleToMenstrualEvents(savedSample)
+                        } else {
+                            deleteSampleFromMenstrualEvents(with: sample!.uuid)
+                        }
+                       
+                        completion(true)
+                    }
                 case .failure(let error):
                     NSLog("Error saving samples in watch: \(error)")
                     completion(false)
                 }
             }
         }
+    }
+    
+    func addSampleToMenstrualEvents(_ sample: MenstrualSample) {
+        guard let index = menstrualEvents.firstIndex(where: { $0.uuid == sample.uuid }) else {
+            // Sample doesn't exist, so add to items
+            menstrualEvents.append(sample)
+            store.menstrualEvents.append(sample)
+            return
+        }
+        
+        // The sample is already in the list, so update it
+        menstrualEvents[index] = sample
+        store.menstrualEvents[index] = sample
+    }
+    
+    func deleteSampleFromMenstrualEvents(with uuid: UUID) {
+        guard let index = menstrualEvents.firstIndex(where: { $0.uuid == uuid }) else {
+            fatalError("Passed in unique ID to delete, but no item has that ID")
+        }
+        menstrualEvents.remove(at: index)
+        store.menstrualEvents.remove(at: index)
     }
 }
 
