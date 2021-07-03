@@ -318,6 +318,8 @@ extension MenstrualStore {
     
     fileprivate func replace(_ entry: MenstrualSample, _ completion: @escaping (MenstrualStoreResult<Bool>) -> ()) {
         dispatchPrecondition(condition: .onQueue(dataFetch))
+        // Bump the version so we can disambiguate
+        entry.syncVersion += 1
 
         deleteSample(entry) { [unowned self] result in
             switch result {

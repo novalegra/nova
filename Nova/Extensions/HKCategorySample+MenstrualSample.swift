@@ -10,12 +10,18 @@ import HealthKit
 
 let MetadataKeyMenstrualVolume = "com.nova.HKMetadataKey.MenstrualVolume"
 let MetadataKeyUUID = "com.nova.HKMetadataKey.UUID"
+let MetadataKeySyncIDBase = "com.Nova.HkMetadataKey.SyncId."
 
 extension HKCategorySample {
     convenience init(entry: MenstrualSample) {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd"
+        
         let metadata: [String: Any] = [
             MetadataKeyMenstrualVolume: entry.volume ?? -1,
-            HKMetadataKeyMenstrualCycleStart: 0
+            HKMetadataKeyMenstrualCycleStart: 0,
+            HKMetadataKeySyncIdentifier: MetadataKeySyncIDBase + formatter.string(from: entry.startDate),
+            HKMetadataKeySyncVersion: entry.syncVersion
         ]
         let type = HKObjectType.categoryType(forIdentifier: .menstrualFlow)!
     
@@ -29,9 +35,10 @@ extension HKCategorySample {
     }
 
     var volume: Double? {
-        guard let volume = metadata?[MetadataKeyMenstrualVolume] as? Double else {
-            return nil
-        }
-        return volume
+        return metadata?[MetadataKeyMenstrualVolume] as? Double
+    }
+    
+    var version: Int {
+        return metadata?[HKMetadataKeySyncVersion] as? Int ?? 1
     }
 }

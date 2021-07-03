@@ -16,8 +16,9 @@ class MenstrualSample: Codable, RawRepresentable {
     var flowLevel: HKCategoryValueMenstrualFlow
     var volume: Double? // in mL
     let uuid: UUID
+    var syncVersion: Int
     
-    init(startDate: Date, endDate: Date, flowLevel: HKCategoryValueMenstrualFlow, volume: Double? = nil, uuid: UUID = UUID()) {
+    init(startDate: Date, endDate: Date, flowLevel: HKCategoryValueMenstrualFlow, volume: Double? = nil, uuid: UUID = UUID(), version: Int = 1) {
         guard startDate <= endDate else {
             fatalError("Can't create menstrual event where start is less than end")
         }
@@ -27,6 +28,7 @@ class MenstrualSample: Codable, RawRepresentable {
         self.flowLevel = flowLevel
         self.volume = volume
         self.uuid = uuid
+        self.syncVersion = version
     }
     
     required convenience init?(rawValue: RawValue) {
@@ -34,7 +36,8 @@ class MenstrualSample: Codable, RawRepresentable {
             let startDate = rawValue["startDate"] as? Date,
             let endDate = rawValue["endDate"] as? Date,
             let flow = (rawValue["flow"] as? HKCategoryValueMenstrualFlow.RawValue).flatMap(HKCategoryValueMenstrualFlow.init(rawValue:)),
-            let uuid = (rawValue["uuid"] as? UUID.RawValue).flatMap(UUID.init(rawValue:))
+            let uuid = (rawValue["uuid"] as? UUID.RawValue).flatMap(UUID.init(rawValue:)),
+            let version = rawValue["version"] as? Int
         else {
             return nil
         }
@@ -44,7 +47,8 @@ class MenstrualSample: Codable, RawRepresentable {
             endDate: endDate,
             flowLevel: flow,
             volume: rawValue["volume"] as? Double,
-            uuid: uuid
+            uuid: uuid,
+            version: version
         )
     }
 
@@ -53,7 +57,8 @@ class MenstrualSample: Codable, RawRepresentable {
             "startDate": startDate,
             "endDate": endDate,
             "flow": flowLevel.rawValue,
-            "uuid": uuid.rawValue
+            "uuid": uuid.rawValue,
+            "version": syncVersion
         ]
         
         rawValue["volume"] = volume
@@ -62,7 +67,7 @@ class MenstrualSample: Codable, RawRepresentable {
     }
     
     convenience init(sample: HKCategorySample, flowLevel: HKCategoryValueMenstrualFlow) {
-        self.init(startDate: sample.startDate, endDate: sample.endDate, flowLevel: flowLevel, volume: sample.volume, uuid: sample.uuid)
+        self.init(startDate: sample.startDate, endDate: sample.endDate, flowLevel: flowLevel, volume: sample.volume, uuid: sample.uuid, version: sample.version)
     }
     
     enum CodingKeys: String, CodingKey {
@@ -71,6 +76,7 @@ class MenstrualSample: Codable, RawRepresentable {
         case flow
         case volume
         case id
+        case version
     }
 
     required convenience init(from decoder: Decoder) throws {
@@ -80,8 +86,9 @@ class MenstrualSample: Codable, RawRepresentable {
         let flowLevel: HKCategoryValueMenstrualFlow = try container.decode(HKCategoryValueMenstrualFlow.self, forKey: .flow)
         let volume: Double? = try container.decodeIfPresent(Double.self, forKey: .volume)
         let uuid: UUID = try container.decode(UUID.self, forKey: .id)
+        let version: Int = try container.decode(Int.self, forKey: .version)
         
-        self.init(startDate: startDate, endDate: endDate, flowLevel: flowLevel, volume: volume, uuid: uuid)
+        self.init(startDate: startDate, endDate: endDate, flowLevel: flowLevel, volume: volume, uuid: uuid, version: version)
     }
 
     func encode(to encoder: Encoder) throws {
@@ -91,6 +98,7 @@ class MenstrualSample: Codable, RawRepresentable {
         try container.encode(flowLevel, forKey: .flow)
         try container.encodeIfPresent(volume, forKey: .volume)
         try container.encode(uuid, forKey: .id)
+        try container.encode(syncVersion, forKey: .version)
     }
 }
 
