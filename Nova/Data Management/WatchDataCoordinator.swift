@@ -12,6 +12,8 @@ import UIKit
 // iOS app manager of watch data & data sending
 class WatchDataCoordinator: NSObject {
     unowned let dataStore: MenstrualStore
+    /// Used to coordinate access UIApplication.shared properties from non-main threads
+    let mainThreadAccessGroup = DispatchGroup()
     
     init(dataStore: MenstrualStore) {
         self.dataStore = dataStore
@@ -36,7 +38,15 @@ class WatchDataCoordinator: NSObject {
     }()
     
     func updateWatch(with events: [MenstrualSample]) throws {
-        guard UIApplication.shared.isProtectedDataAvailable else {
+        mainThreadAccessGroup.enter()
+        var protectedDataAvailable: Bool!
+        DispatchQueue.main.async { [unowned self] in
+            protectedDataAvailable = UIApplication.shared.isProtectedDataAvailable
+            mainThreadAccessGroup.leave()
+        }
+        mainThreadAccessGroup.wait()
+        
+        guard protectedDataAvailable else {
             NSLog("Not sending events because phone is locked")
             return
         }
