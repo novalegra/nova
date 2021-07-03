@@ -91,7 +91,7 @@ struct MenstrualStatisticsDetailView: View {
             // FIXME: VStack is a hack to fix spacing in iOS 14.1
             VStack(spacing: 10) {
                 HStack {
-                    Text(viewModel.monthFormattedDate(for: period.startDate) + " - " + viewModel.monthFormattedDate(for: period.endDate))
+                    Text(viewModel.monthFormattedDate(for: period.startDate) + " - " + viewModel.monthFormattedDate(for: period.endDate) + ", " + viewModel.year(from: period.startDate))
                     .foregroundColor(Color("DarkBlue"))
                     Spacer()
                 }
@@ -112,24 +112,6 @@ struct MenstrualStatisticsDetailView: View {
             .padding(5)
         }
     }
-    
-//    func visualRepresentation(for period: MenstrualPeriod) -> some View {
-//        return Group {
-//            if !dataIsMissing(for: period) {
-//                HStack {
-//                    SegmentedGaugeBar(scaler: scaler(for: period))
-//                    .frame(minHeight: 20, maxHeight: 20)
-//                    Text(description(of: period))
-//                    .font(.callout)
-//                }
-//            } else {
-//                HStack {
-//                    Text("No data")
-//                    Spacer()
-//                }
-//            }
-//        }
-//    }
     
     func description(of period: MenstrualPeriod) -> String {
         switch mode {
