@@ -9,6 +9,11 @@
 			<key>orderHint</key>
 			<integer>0</integer>
 		</dict>
+		<key>NovaTests.xcscheme_^#shared#^_</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>2</integer>
+		</dict>
 		<key>NovaWatch.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
@@ -17,6 +22,11 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
+		<key>E922153E276E88F60060FDB1</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>E976174B252EA6310011B715</key>
 		<dict>
 			<key>primary</key>

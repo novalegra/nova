@@ -46,7 +46,7 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "E98783642689186000CCC908"
+               BlueprintIdentifier = "E922153E276E88F60060FDB1"
                BuildableName = "NovaTests.xctest"
                BlueprintName = "NovaTests"
                ReferencedContainer = "container:Nova.xcodeproj">
@@ -64,8 +64,10 @@
       debugDocumentVersioning = "YES"
       debugServiceExtension = "internal"
       allowLocationSimulation = "YES">
-      <BuildableProductRunnable
-         runnableDebuggingMode = "0">
+      <RemoteRunnable
+         runnableDebuggingMode = "2"
+         BundleIdentifier = "com.apple.Carousel"
+         RemotePath = "/Nova">
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "E976174B252EA6310011B715"
@@ -73,7 +75,7 @@
             BlueprintName = "NovaWatch"
             ReferencedContainer = "container:Nova.xcodeproj">
          </BuildableReference>
-      </BuildableProductRunnable>
+      </RemoteRunnable>
    </LaunchAction>
    <ProfileAction
       buildConfiguration = "Release"
@@ -81,8 +83,10 @@
       savedToolIdentifier = ""
       useCustomWorkingDirectory = "NO"
       debugDocumentVersioning = "YES">
-      <BuildableProductRunnable
-         runnableDebuggingMode = "0">
+      <RemoteRunnable
+         runnableDebuggingMode = "2"
+         BundleIdentifier = "com.apple.Carousel"
+         RemotePath = "/Nova">
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "E976174B252EA6310011B715"
@@ -90,7 +94,16 @@
             BlueprintName = "NovaWatch"
             ReferencedContainer = "container:Nova.xcodeproj">
          </BuildableReference>
-      </BuildableProductRunnable>
+      </RemoteRunnable>
+      <MacroExpansion>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "E976174B252EA6310011B715"
+            BuildableName = "NovaWatch.app"
+            BlueprintName = "NovaWatch"
+            ReferencedContainer = "container:Nova.xcodeproj">
+         </BuildableReference>
+      </MacroExpansion>
    </ProfileAction>
    <AnalyzeAction
       buildConfiguration = "Debug">
