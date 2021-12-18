@@ -354,3 +354,46 @@ extension MenstrualStore {
         }
     }
 }
+
+// MARK: Async/Await Bridges
+extension MenstrualStore {
+    func authorize() async throws -> Void {
+        return try await withCheckedThrowingContinuation({
+            (continuation: CheckedContinuation<Void, Error>) in
+            authorize() { error in
+                if let error = error {
+                    continuation.resume(throwing: error)
+                } else {
+                    continuation.resume()
+                }
+            }
+        })
+    }
+    
+    func saveInHealthKit(sample: MenstrualSample?, date: Date, newVolume: Double, flowSelection: SelectionState) async -> MenstrualStoreResult<MenstrualSample?> {
+        return await withCheckedContinuation({
+            (continuation: CheckedContinuation<MenstrualStoreResult<MenstrualSample?>, Never>) in
+            saveInHealthKit(sample: sample, date: date, newVolume: newVolume, flowSelection: flowSelection) { result in
+                continuation.resume(returning: result)
+            }
+        })
+    }
+    
+    func saveSample(_ sample: MenstrualSample) async -> MenstrualStoreResult<Bool> {
+        return await withCheckedContinuation({
+            (continuation: CheckedContinuation<MenstrualStoreResult<Bool>, Never>) in
+            saveSample(sample) { result in
+                continuation.resume(returning: result)
+            }
+        })
+    }
+    
+    func manuallyUpdateMenstrualData() async {
+        return await withCheckedContinuation({
+            (continuation: CheckedContinuation<Void, Never>) in
+            manuallyUpdateMenstrualData {
+                continuation.resume()
+            }
+        })
+    }
+}
