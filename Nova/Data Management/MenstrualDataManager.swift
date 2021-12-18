@@ -163,7 +163,7 @@ class MenstrualDataManager: ObservableObject {
     var flowPickerNumbers: [Double] {
         switch volumeUnit {
         case .mL:
-            return Array(0...120).map { Double($0) }
+            return Array(0...240).map { Double($0) }
         case .percentOfCup:
             return Array(0...120).map { Double($0 * 5) }
         }
