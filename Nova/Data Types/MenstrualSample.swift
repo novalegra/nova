@@ -102,6 +102,12 @@ class MenstrualSample: Codable, RawRepresentable {
     }
 }
 
+extension MenstrualSample: Equatable {
+    static func == (lhs: MenstrualSample, rhs: MenstrualSample) -> Bool {
+        return lhs.uuid == rhs.uuid
+    }
+}
+
 extension HKCategoryValueMenstrualFlow: Codable { }
 
 extension UUID: RawRepresentable {
