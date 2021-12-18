@@ -148,7 +148,11 @@ class MenstrualStore {
         completion(newMenstrualEvents)
     }
 
-    /// Get the samples from HealthKit that match the provided predicate
+    /// Get the samples from HealthKit that match the provided predicate. Must be called on the `dataFetch` queue.
+    /// @param start is the earliest start time that samples can have
+    /// @param end is the latest start time that samples can have; defaults to current time
+    /// @param predicate is the filter to apply to the samples
+    /// @param completion is the block that's called with the retrieved samples
     fileprivate func getSamples(start: Date, end: Date = Date(), matching predicate: NSPredicate, sampleLimit: Int, _ completion: @escaping (_ result: MenstrualStoreResult<[HKCategorySample]>) -> Void) {
         dispatchPrecondition(condition: .onQueue(dataFetch))
         
