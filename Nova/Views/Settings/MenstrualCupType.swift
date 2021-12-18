@@ -24,6 +24,11 @@ enum MenstrualCupType: String, Equatable, CaseIterable {
     case honeyPotSmall = "Honey Pot (S)"
     case honeyPotLarge = "Honey Pot (L)"
     
+    case juneExtraSmall = "June (XS)"
+    case juneSmall = "June (S)"
+    case juneLarge = "June (L)"
+    case juneXL = "June (XL)"
+    
     case lunetteSmall = "Lunette (S)"
     case lunetteLarge = "Lunette (L)"
     
@@ -64,7 +69,7 @@ enum MenstrualCupType: String, Equatable, CaseIterable {
             return 16
         case .divaXsmall:
             return 17
-        case .femmyCycleSmall:
+        case .femmyCycleSmall, .juneExtraSmall:
             return 18
         case .melunaMedium:
             return 20
@@ -72,14 +77,16 @@ enum MenstrualCupType: String, Equatable, CaseIterable {
             return 22
         case .divaSmall, .melunaLarge:
             return 24
-        case .lenaSmall, .saaltSmall, .blossomSmall, .lunetteSmall, .honeyPotSmall, .lilySmall:
+        case .lenaSmall, .saaltSmall, .blossomSmall, .lunetteSmall, .honeyPotSmall, .lilySmall, .juneSmall:
             return 25
         case .divaLarge, .lilyLarge, .melunaXL:
             return 28
-        case .lenaLarge, .saaltLarge, .blossomLarge, .lunetteLarge, .honeyPotLarge, .flexLarge, .femmyCycleLarge:
+        case .lenaLarge, .saaltLarge, .blossomLarge, .lunetteLarge, .honeyPotLarge, .flexLarge, .femmyCycleLarge, .juneLarge:
             return 30
         case .superJennieSmall:
             return 32
+        case .juneXL:
+            return 36
         case .superJennieLarge:
             return 41
         }
