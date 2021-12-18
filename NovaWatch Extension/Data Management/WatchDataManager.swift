@@ -34,7 +34,7 @@ class WatchDataManager: NSObject, ObservableObject, WKExtensionDelegate {
         case .mL:
             return Array(0...120)
         case .percentOfCup:
-            return Array(0...30).map { $0 * 10 }
+            return Array(0...50).map { $0 * 10 }
         }
     }
     

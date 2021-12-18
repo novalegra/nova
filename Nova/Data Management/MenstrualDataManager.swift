@@ -165,7 +165,7 @@ class MenstrualDataManager: ObservableObject {
         case .mL:
             return Array(0...120).map { Double($0) }
         case .percentOfCup:
-            return Array(0...60).map { Double($0 * 5) }
+            return Array(0...120).map { Double($0 * 5) }
         }
     }
     
