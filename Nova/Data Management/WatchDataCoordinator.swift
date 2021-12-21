@@ -92,7 +92,15 @@ extension WatchDataCoordinator: WCSessionDelegate {
     func session(_ session: WCSession, didReceiveMessage message: [String: Any], replyHandler: @escaping ([String: Any]) -> Void) {
         switch message["name"] as? String {
         case RecordedMenstrualEventInfo.name?:
-            guard UIApplication.shared.isProtectedDataAvailable else {
+            mainThreadAccessGroup.enter()
+            var protectedDataAvailable: Bool!
+            DispatchQueue.main.async { [unowned self] in
+                protectedDataAvailable = UIApplication.shared.isProtectedDataAvailable
+                mainThreadAccessGroup.leave()
+            }
+            mainThreadAccessGroup.wait()
+            
+            guard protectedDataAvailable else {
                 // Kick it back to the watch to save if the HK stores are locked
                 replyHandler(["didSave": false])
                 return
