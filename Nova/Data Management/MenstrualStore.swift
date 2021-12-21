@@ -287,7 +287,7 @@ extension MenstrualStore {
                 }
             }
         case .unknown:
-            fatalError("Called with incorrect parameters")
+            NSLog("Not doing anything to sample")
         }
     }
     
