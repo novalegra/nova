@@ -65,6 +65,11 @@ class WatchDataManager: NSObject, ObservableObject, WKExtensionDelegate {
         DispatchQueue.main.async { [unowned self] in
             menstrualEvents = events
             store.menstrualEvents = events
+            
+            if let cupTypeRawValue = context["cupType"] as? String, let receivedCupType = MenstrualCupType(rawValue: cupTypeRawValue)  {
+                UserDefaults.app?.menstrualCupType = receivedCupType
+                cupType = receivedCupType
+            }
         }
     }
     
