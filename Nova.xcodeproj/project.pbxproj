@@ -377,8 +377,8 @@
 			children = (
 				E995A5242507237D009D52CF /* MenstrualDataManager.swift */,
 				E995A51E25071DC2009D52CF /* MenstrualStore.swift */,
-				E9DDBAAD2664158400594E0E /* MenstrualPredicates.swift */,
 				E93AB000253672EC00A02F67 /* WatchDataCoordinator.swift */,
+				E9DDBAAD2664158400594E0E /* MenstrualPredicates.swift */,
 			);
 			path = "Data Management";
 			sourceTree = "<group>";

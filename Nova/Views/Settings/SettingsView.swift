@@ -97,6 +97,8 @@ struct SettingsView: View {
             }
         }
         .pickerStyle(WheelPickerStyle())
+        // Hack to center the picker in the screen
+        .frame(minWidth: 0, maxWidth: .infinity, alignment: .center)
     }
     
     private func saveSettingsToDataManager() {

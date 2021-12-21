@@ -57,14 +57,14 @@ struct FlowPicker: View {
                 }
             }
             if pickerShouldExpand && selectionState == .hadFlow {
-                HStack(alignment: .center) {
-                    Picker(selection: $pickerIndex.onChange(onUpdate), label: Text("")) {
-                        ForEach(0 ..< items.count) {
-                            Text(items[$0])
-                       }
-                    }
-                    .pickerStyle(WheelPickerStyle())
+                Picker(selection: $pickerIndex.onChange(onUpdate), label: Text("")) {
+                    ForEach(0 ..< items.count) {
+                        Text(items[$0])
+                   }
                 }
+                .pickerStyle(WheelPickerStyle())
+                // Hack to center the picker in the screen
+                .frame(minWidth: 0, maxWidth: .infinity, alignment: .center)
             }
         }
     }
