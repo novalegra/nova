@@ -46,7 +46,7 @@ struct MenstrualEventEditor: View {
         .digitalCrownRotation(
             $selectedPercent,
             from: 0,
-            through: 100,
+            through: 600,
             by: 5,
             sensitivity: .low,
             isContinuous: false,
