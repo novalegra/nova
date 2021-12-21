@@ -12,6 +12,7 @@ import HealthKit
 
 class MenstrualStoreTests: XCTestCase {
     let testDate = Date(timeIntervalSince1970: TimeInterval(30))
+    let expectedVolume: Double = 5
     
     var menstrualStore: MenstrualStore!
     var healthStore: HKHealthStoreMock!
@@ -164,8 +165,8 @@ class MenstrualStoreTests: XCTestCase {
         XCTAssertEqual(result, .deleteSample)
     }
     
-    // MARK: saveInHealthKit
-    func testSaveInHealthKit() async {
+    // MARK: sample update functions
+    func testSaveSample() async {
         let saveHealthStoreHandler = expectation(description: "Add health store handler")
         
         healthStore.setSaveHandler({[unowned self] (objects, success, error) in
@@ -183,7 +184,7 @@ class MenstrualStoreTests: XCTestCase {
         wait(for: [saveHealthStoreHandler], timeout: 10, enforceOrder: true)
     }
     
-    func testDeleteInHealthKit() async {
+    func testDeleteSample() async {
         let deleteHealthStoreHandler = expectation(description: "Delete health store handler")
         
         healthStore.setDeletedObjectsHandler({[unowned self] (objectType, predicate, success, count, error) in
@@ -198,7 +199,7 @@ class MenstrualStoreTests: XCTestCase {
         wait(for: [deleteHealthStoreHandler], timeout: 10, enforceOrder: true)
     }
     
-    func testUpdateInHealthKit() async {
+    func testUpdateSample() async {
         let deleteHealthStoreHandler = expectation(description: "Delete health store handler")
         let saveHealthStoreHandler = expectation(description: "Save health store handler")
         
@@ -223,5 +224,59 @@ class MenstrualStoreTests: XCTestCase {
         _ = await menstrualStore.updateSample(mockSample1)
         
         wait(for: [deleteHealthStoreHandler, saveHealthStoreHandler], timeout: 10, enforceOrder: true)
+    }
+    
+    // MARK: saveInHealthKit
+    func testSaveInHealthKitSavesSample() async {
+        let saveHealthStoreHandler = expectation(description: "Add health store handler")
+        
+        healthStore.setSaveHandler({[unowned self] (objects, success, error) in
+            XCTAssertEqual(1, objects.count)
+
+            let sample = objects.first as! HKCategorySample
+
+            XCTAssertEqual(sample.startDate, mockSample1.startDate)
+
+            saveHealthStoreHandler.fulfill()
+        })
+        
+        _ = await menstrualStore.saveInHealthKit(existingSample: nil, date: mockSample1.startDate, newVolume: 5, flowSelection: .hadFlow)
+        
+        wait(for: [saveHealthStoreHandler], timeout: 10, enforceOrder: true)
+    }
+    
+    func testSaveInHealthKitUpdatesSample() async {
+        let saveHealthStoreHandler = expectation(description: "Save health store handler")
+        
+        healthStore.setSaveHandler({[unowned self] (objects, success, error) in
+            XCTAssertEqual(1, objects.count)
+
+            let sample = objects.first as! HKCategorySample
+
+            XCTAssertEqual(sample.startDate, mockSample1.startDate)
+            XCTAssertEqual(sample.volume, expectedVolume)
+            XCTAssertEqual(sample.version, 2)
+
+            saveHealthStoreHandler.fulfill()
+        })
+        
+        _ = await menstrualStore.saveInHealthKit(existingSample: mockSample1, date: mockSample1.startDate, newVolume: expectedVolume, flowSelection: .hadFlow)
+        
+        wait(for: [saveHealthStoreHandler], timeout: 10, enforceOrder: true)
+    }
+    
+    func testSaveInHealthKitDeletesSample() async {
+        let deleteHealthStoreHandler = expectation(description: "Delete health store handler")
+        
+        healthStore.setDeletedObjectsHandler({[unowned self] (objectType, predicate, success, count, error) in
+            XCTAssertEqual(objectType, HKObjectType.categoryType(forIdentifier: .menstrualFlow))
+            XCTAssertEqual(predicate.predicateFormat, "UUID == \(mockSample1.uuid)")
+
+            deleteHealthStoreHandler.fulfill()
+        })
+        
+        _ = await menstrualStore.saveInHealthKit(existingSample: mockSample1, date: mockSample1.startDate, newVolume: expectedVolume, flowSelection: .none)
+        
+        wait(for: [deleteHealthStoreHandler], timeout: 10, enforceOrder: true)
     }
 }

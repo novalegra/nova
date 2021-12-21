@@ -399,10 +399,10 @@ extension MenstrualStore {
         })
     }
     
-    func saveInHealthKit(sample: MenstrualSample?, date: Date, newVolume: Double, flowSelection: SelectionState) async -> MenstrualStoreResult<MenstrualSample?> {
+    func saveInHealthKit(existingSample: MenstrualSample?, date: Date, newVolume: Double, flowSelection: SelectionState) async -> MenstrualStoreResult<MenstrualSample?> {
         return await withCheckedContinuation({
             (continuation: CheckedContinuation<MenstrualStoreResult<MenstrualSample?>, Never>) in
-            saveInHealthKit(existingSample: sample, date: date, newVolume: newVolume, flowSelection: flowSelection) { result in
+            saveInHealthKit(existingSample: existingSample, date: date, newVolume: newVolume, flowSelection: flowSelection) { result in
                 continuation.resume(returning: result)
             }
         })
