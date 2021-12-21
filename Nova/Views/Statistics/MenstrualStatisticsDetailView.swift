@@ -34,16 +34,16 @@ struct MenstrualStatisticsDetailView: View {
         VStack(spacing: 10) {
             HStack {
                 Text("Average")
-                .bold()
+                    .bold()
                 Spacer()
             }
             if !averageDataIsMissing {
                 HStack {
                     SegmentedGaugeBar(scaler: 1)
-                    .frame(minHeight: 20, maxHeight: 20)
+                        .frame(minHeight: 20, maxHeight: 20)
                     Text(averageMeasurementLabel)
-                    .bold()
-                    .font(.callout)
+                        .bold()
+                        .font(.callout)
                 }
             } else {
                 HStack {
@@ -71,15 +71,15 @@ struct MenstrualStatisticsDetailView: View {
             VStack(spacing: 10) {
                 HStack {
                     Text(viewModel.monthFormattedDate(for: period.startDate) + " - " + viewModel.monthFormattedDate(for: period.endDate) + ", " + viewModel.year(from: period.startDate))
-                    .foregroundColor(Color("DarkBlue"))
+                        .foregroundColor(Color("DarkBlue"))
                     Spacer()
                 }
                 if !dataIsMissing(for: period) {
                     HStack {
                         SegmentedGaugeBar(scaler: scaler(for: period))
-                        .frame(minHeight: 20, maxHeight: 20)
+                            .frame(minHeight: 20, maxHeight: 20)
                         Text(description(of: period))
-                        .font(.callout)
+                            .font(.callout)
                     }
                 } else {
                     HStack {
