@@ -31,7 +31,6 @@ struct MenstrualStatisticsDetailView: View {
     }
     
     var averageSection: some View {
-        // FIXME: VStack is a hack to fix spacing in iOS 14.1
         VStack(spacing: 10) {
             HStack {
                 Text("Average")
@@ -69,7 +68,6 @@ struct MenstrualStatisticsDetailView: View {
     
     func section(for period: MenstrualPeriod) -> some View {
         Section {
-            // FIXME: VStack is a hack to fix spacing in iOS 14.1
             VStack(spacing: 10) {
                 HStack {
                     Text(viewModel.monthFormattedDate(for: period.startDate) + " - " + viewModel.monthFormattedDate(for: period.endDate) + ", " + viewModel.year(from: period.startDate))
