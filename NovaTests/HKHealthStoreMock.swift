@@ -12,7 +12,6 @@ import Foundation
 class HKHealthStoreMock: HKHealthStore {
     var saveError: Error?
     var deleteError: Error?
-    var queryResults: (samples: [HKSample]?, error: Error?)?
     var lastQuery: HKQuery?
     var authorizationStatus: HKAuthorizationStatus?
 
