@@ -417,10 +417,28 @@ extension MenstrualStore {
         })
     }
     
-    func manuallyUpdateMenstrualData() async {
+    func deleteSample(_ sample: MenstrualSample) async -> MenstrualStoreResult<Bool> {
+        return await withCheckedContinuation({
+            (continuation: CheckedContinuation<MenstrualStoreResult<Bool>, Never>) in
+            deleteSample(sample) { result in
+                continuation.resume(returning: result)
+            }
+        })
+    }
+    
+    func updateSample(_ sample: MenstrualSample) async -> MenstrualStoreResult<Bool> {
+        return await withCheckedContinuation({
+            (continuation: CheckedContinuation<MenstrualStoreResult<Bool>, Never>) in
+            updateSample(sample) { result in
+                continuation.resume(returning: result)
+            }
+        })
+    }
+    
+    func fetchAndUpdateMenstrualData() async {
         return await withCheckedContinuation({
             (continuation: CheckedContinuation<Void, Never>) in
-            manuallyUpdateMenstrualData {
+            fetchAndUpdateMenstrualData {
                 continuation.resume()
             }
         })
