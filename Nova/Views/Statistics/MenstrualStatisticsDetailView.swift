@@ -31,32 +31,29 @@ struct MenstrualStatisticsDetailView: View {
     }
     
     var averageSection: some View {
-        // FIXME: empty header is hack to fix SwiftUI jumping with GroupedListStyle
-        Section(header: Text("")) {
-            // FIXME: VStack is a hack to fix spacing in iOS 14.1
-            VStack(spacing: 10) {
+        // FIXME: VStack is a hack to fix spacing in iOS 14.1
+        VStack(spacing: 10) {
+            HStack {
+                Text("Average")
+                .bold()
+                Spacer()
+            }
+            if !averageDataIsMissing {
                 HStack {
-                    Text("Average")
+                    SegmentedGaugeBar(scaler: 1)
+                    .frame(minHeight: 20, maxHeight: 20)
+                    Text(averageMeasurementLabel)
                     .bold()
+                    .font(.callout)
+                }
+            } else {
+                HStack {
+                    Text("No data")
                     Spacer()
                 }
-                if !averageDataIsMissing {
-                    HStack {
-                        SegmentedGaugeBar(scaler: 1)
-                        .frame(minHeight: 20, maxHeight: 20)
-                        Text(averageMeasurementLabel)
-                        .bold()
-                        .font(.callout)
-                    }
-                } else {
-                    HStack {
-                        Text("No data")
-                        Spacer()
-                    }
-                }
             }
-            .padding(5)
         }
+        .padding(5)
     }
     
     var averageMeasurementLabel: String {
