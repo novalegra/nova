@@ -97,7 +97,7 @@ class WatchDataManager: NSObject, ObservableObject, WKExtensionDelegate {
             
             // If it didn't save on the phone, save it on the watch
             // This is the backup option since the watch health store is much slower to sync
-            store.saveInHealthKit(sample: sample, date: date, newVolume: newVolume, flowSelection: selection) { result in
+            store.saveInHealthKit(existingSample: sample, date: date, newVolume: newVolume, flowSelection: selection) { result in
                 switch result {
                 case .success(let savedSample):
                     NSLog("Successfully saved samples to HK on watch")

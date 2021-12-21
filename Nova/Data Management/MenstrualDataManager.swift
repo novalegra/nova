@@ -140,7 +140,7 @@ class MenstrualDataManager: ObservableObject {
     }
     
     func save(sample: MenstrualSample?, date: Date, newVolume: Double, flowSelection: SelectionState, _ completion: @escaping (MenstrualStoreResult<MenstrualSample?>) -> Void) {
-        store.saveInHealthKit(sample: sample, date: date, newVolume: newVolume, flowSelection: flowSelection, completion)
+        store.saveInHealthKit(existingSample: sample, date: date, newVolume: newVolume, flowSelection: flowSelection, completion)
     }
     
     // MARK: Settings

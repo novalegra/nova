@@ -101,11 +101,11 @@ extension WatchDataCoordinator: WCSessionDelegate {
             if let data = RecordedMenstrualEventInfo(rawValue: message) {
                 NSLog("Reacting to message for RecordedMenstrualEventInfo")
 
-                dataStore.saveInHealthKit(sample: data.sample, date: data.date, newVolume: data.volume, flowSelection: data.selectionState) { [unowned self] result in
+                dataStore.saveInHealthKit(existingSample: data.sample, date: data.date, newVolume: data.volume, flowSelection: data.selectionState) { [unowned self] result in
                     switch result {
                     case .success:
                         NSLog("Successfully saved to HK on phone in response to watch request")
-                        dataStore.manuallyUpdateMenstrualData()
+                        dataStore.fetchAndUpdateMenstrualData()
                         replyHandler(["didSave": true])
                     case .failure(let error):
                         NSLog("Error saving to HK on phone in response to watch request: \(error.localizedDescription)")

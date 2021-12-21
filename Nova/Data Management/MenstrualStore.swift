@@ -19,6 +19,13 @@ enum MenstrualStoreError: Error {
     case queryError(String) // String is description of error
 }
 
+enum MenstrualSaveAction {
+    case saveNewSample
+    case deleteSample
+    case updateSample
+    case unknown
+}
+
 class MenstrualStore {
     public init(healthStore: HKHealthStore) {
         self.healthStore = healthStore
@@ -53,7 +60,7 @@ class MenstrualStore {
     func setUpBackgroundDelivery() {
         #if os(iOS)
             let query = HKObserverQuery(sampleType: sampleType, predicate: nil) { [weak self] (query, completionHandler, error) in
-                self?.manuallyUpdateMenstrualData(completion: completionHandler)
+                self?.fetchAndUpdateMenstrualData(completion: completionHandler)
             }
             healthStore.execute(query)
             healthStore.enableBackgroundDelivery(for: sampleType, frequency: .immediate) { (enabled, error) in
@@ -65,7 +72,7 @@ class MenstrualStore {
     // MARK: Data Retrieval
     let dataFetch = DispatchQueue(label: "com.nova.MenstrualStoreQueue", qos: .utility)
     
-    func manuallyUpdateMenstrualData(completion: (() -> Void)? = nil) {
+    func fetchAndUpdateMenstrualData(completion: (() -> Void)? = nil) {
         dataFetch.async { [unowned self] in
             getRecentMenstrualSamples() { samples in
                 NSLog("Wooho - got \(samples.count) updated samples from HealthKit; \(samples.filter { $0.flowLevel == .heavy }.count) heavy, \(samples.filter { $0.flowLevel == .medium }.count) medium, \(samples.filter { $0.flowLevel == .light }.count) light, \(samples.filter { $0.flowLevel == .unspecified }.count) unspecified")
@@ -238,35 +245,10 @@ class MenstrualStore {
 
 // MARK: Data Management
 extension MenstrualStore {
-    // completion: success value be contain nil if sample was deleted or non-nil if item was updated/cancelled
-    func saveInHealthKit(sample: MenstrualSample?, date: Date, newVolume: Double, flowSelection: SelectionState, _ completion: @escaping (MenstrualStoreResult<MenstrualSample?>) -> Void) {
-        // A sample existed previously, so we're modifying an existing one
-        if let sample = sample {
-            // The sample has no flow, so delete it
-            if flowSelection == .none {
-                deleteSample(sample) { result in
-                    switch result {
-                    case .success:
-                        completion(.success(nil))
-                    case .failure(let error):
-                        completion(.failure(error))
-                    }
-                }
-            // The sample has an updated volume, so update the volume
-            } else {
-                sample.volume = newVolume
-                sample.flowLevel = flowLevel(for: flowSelection, with: newVolume)
-                updateSample(sample) { result in
-                    switch result {
-                    case .success:
-                        completion(.success(sample))
-                    case .failure(let error):
-                        completion(.failure(error))
-                    }
-                }
-            }
-        // Add a new menstrual event
-        } else if flowSelection != .none {
+    // completion: success value contains nil if sample was deleted or non-nil if item was updated/cancelled
+    func saveInHealthKit(existingSample: MenstrualSample?, date: Date, newVolume: Double, flowSelection: SelectionState, _ completion: @escaping (MenstrualStoreResult<MenstrualSample?>) -> Void) {
+        switch action(existingSample: existingSample, date: date, newVolume: newVolume, flowSelection: flowSelection) {
+        case .saveNewSample:
             let sample = MenstrualSample(startDate: date, endDate: date, flowLevel: flowLevel(for: flowSelection, with: newVolume), volume: newVolume)
             saveSample(sample) { result in
                 switch result {
@@ -276,7 +258,54 @@ extension MenstrualStore {
                     completion(.failure(error))
                 }
             }
+        case .updateSample:
+            guard let sample = existingSample else {
+                break
+            }
+            
+            sample.volume = newVolume
+            sample.flowLevel = flowLevel(for: flowSelection, with: newVolume)
+            updateSample(sample) { result in
+                switch result {
+                case .success:
+                    completion(.success(sample))
+                case .failure(let error):
+                    completion(.failure(error))
+                }
+            }
+        case .deleteSample:
+            guard let sample = existingSample else {
+                break
+            }
+            
+            deleteSample(sample) { result in
+                switch result {
+                case .success:
+                    completion(.success(nil))
+                case .failure(let error):
+                    completion(.failure(error))
+                }
+            }
+        case .unknown:
+            fatalError("Called with incorrect parameters")
         }
+    }
+    
+    func action(existingSample: MenstrualSample?, date: Date, newVolume: Double, flowSelection: SelectionState) -> MenstrualSaveAction {
+        if existingSample != nil {
+            // The sample has no flow, so delete it
+            if flowSelection == .none {
+                return .deleteSample
+            // The sample has an updated volume, so update the volume
+            } else {
+                return .updateSample
+            }
+        // Add a new menstrual event
+        } else if flowSelection != .none {
+            return .saveNewSample
+        }
+        
+        return .unknown
     }
     
     func saveSample(_ sample: MenstrualSample, _ completion: @escaping (MenstrualStoreResult<Bool>) -> ()) {
@@ -373,7 +402,7 @@ extension MenstrualStore {
     func saveInHealthKit(sample: MenstrualSample?, date: Date, newVolume: Double, flowSelection: SelectionState) async -> MenstrualStoreResult<MenstrualSample?> {
         return await withCheckedContinuation({
             (continuation: CheckedContinuation<MenstrualStoreResult<MenstrualSample?>, Never>) in
-            saveInHealthKit(sample: sample, date: date, newVolume: newVolume, flowSelection: flowSelection) { result in
+            saveInHealthKit(existingSample: sample, date: date, newVolume: newVolume, flowSelection: flowSelection) { result in
                 continuation.resume(returning: result)
             }
         })
