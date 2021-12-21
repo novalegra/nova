@@ -28,23 +28,6 @@ struct MenstrualEventEditor: View {
     }
     
     var body: some View {
-        #if swift(>=5.2)
-            if #available(iOS 14.0, *) {
-                mainBody
-                .listStyle(InsetGroupedListStyle())
-            } else {
-                mainBody
-                    .listStyle(GroupedListStyle())
-                    .environment(\.horizontalSizeClass, .regular)
-            }
-        #else
-            mainBody
-            .listStyle(GroupedListStyle())
-            .environment(\.horizontalSizeClass, .regular)
-        #endif
-    }
-    
-    var mainBody: some View {
         List {
             Section {
                 hadFlowRow
@@ -52,16 +35,17 @@ struct MenstrualEventEditor: View {
             }
             flowPickerRow
         }
-        .onAppear {
-            if let sample = sample {
-                selection = sample.flowLevel == .none ? .noFlow : .hadFlow
-            } else {
-                selection = .none
+            .listStyle(InsetGroupedListStyle())
+            .onAppear {
+                if let sample = sample {
+                    selection = sample.flowLevel == .none ? .noFlow : .hadFlow
+                } else {
+                    selection = .none
+                }
             }
-        }
-        .navigationBarTitle(sample != nil ? "Edit Flow" : "Track Flow", displayMode: .inline)
-        .navigationBarItems(trailing: saveButton)
-        .alert(isPresented: $showingAuthorizationAlert, content: alert)
+            .navigationBarTitle(sample != nil ? "Edit Flow" : "Track Flow", displayMode: .inline)
+            .navigationBarItems(trailing: saveButton)
+            .alert(isPresented: $showingAuthorizationAlert, content: alert)
     }
     
     var saveButton: some View {

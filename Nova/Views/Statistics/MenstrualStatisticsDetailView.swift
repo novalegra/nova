@@ -20,30 +20,14 @@ struct MenstrualStatisticsDetailView: View {
     let mode: MenstrualStatistic
     
     var body: some View {
-        #if swift(>=5.2)
-            if #available(iOS 14.0, *) {
-                mainBody
-                .listStyle(InsetGroupedListStyle())
-            } else {
-                mainBody
-                    .listStyle(GroupedListStyle())
-                    .environment(\.horizontalSizeClass, .regular)
-            }
-        #else
-            mainBody
-            .listStyle(GroupedListStyle())
-            .environment(\.horizontalSizeClass, .regular)
-        #endif
-    }
-    
-    var mainBody: some View {
         List {
             averageSection
             ForEach(viewModel.reverseOrderedPeriods, id: \.startDate) { period in
                 section(for: period)
             }
         }
-        .navigationBarTitle(Text(title), displayMode: .large)
+            .listStyle(InsetGroupedListStyle())
+            .navigationBarTitle(Text(title), displayMode: .large)
     }
     
     var averageSection: some View {

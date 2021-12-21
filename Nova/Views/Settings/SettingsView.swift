@@ -29,40 +29,24 @@ struct SettingsView: View {
 
     var body: some View {
         NavigationView {
-            #if swift(>=5.2)
-                if #available(iOS 14.0, *) {
-                    mainBody
-                    .listStyle(InsetGroupedListStyle())
-                } else {
-                    mainBody
-                        .listStyle(GroupedListStyle())
-                        .environment(\.horizontalSizeClass, .regular)
-                }
-            #else
-                mainBody
-                .listStyle(GroupedListStyle())
-                .environment(\.horizontalSizeClass, .regular)
-            #endif
-        }
-    }
-    
-    var mainBody: some View {
-        List {
-            // FIXME: removed due to iOS 14 bug
-//            volumeTypeSection
-//            if selectedVolumeType == .percentOfCup {
-//                cupPickerSection
-//            }
-            cupPickerSection
-        }
-        .navigationBarTitle("Settings", displayMode: .large)
-        .onAppear {
-            // FIXME: removed due to iOS 14 bug
-            selectedMenstrualCupType = viewModel.cupType
-            selectedVolumeType = .percentOfCup//viewModel.volumeUnit
-        }
-        .onDisappear {
-            saveSettingsToDataManager()
+            List {
+                // FIXME: removed due to iOS 14 bug
+    //            volumeTypeSection
+    //            if selectedVolumeType == .percentOfCup {
+    //                cupPickerSection
+    //            }
+                cupPickerSection
+            }
+            .listStyle(InsetGroupedListStyle())
+            .navigationBarTitle("Settings", displayMode: .large)
+            .onAppear {
+                // FIXME: removed due to iOS 14 bug
+                selectedMenstrualCupType = viewModel.cupType
+                selectedVolumeType = .percentOfCup//viewModel.volumeUnit
+            }
+            .onDisappear {
+                saveSettingsToDataManager()
+            }
         }
     }
     
