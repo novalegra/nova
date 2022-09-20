@@ -31,7 +31,7 @@ struct StatisticsView: View {
             Text("Last Period")
             Spacer()
             Text(viewModel.lastPeriodDate)
-            .bold()
+                .bold()
         }
     }
     
@@ -43,7 +43,7 @@ struct StatisticsView: View {
                 Text("Typical Daily Volume")
                 Spacer()
                 Text("\(Int(viewModel.averageDailyPeriodVolume)) mL")
-                .bold()
+                    .bold()
             }
         }
         .disabled(viewModel.periods.count < 1)
@@ -57,7 +57,7 @@ struct StatisticsView: View {
                 Text("Typical Period Volume")
                 Spacer()
                 Text("\(Int(viewModel.averageTotalPeriodVolume)) mL")
-                .bold()
+                    .bold()
             }
         }
         .disabled(viewModel.periods.count < 1)
@@ -71,7 +71,7 @@ struct StatisticsView: View {
                 Text("Typical Period Length")
                 Spacer()
                 Text(viewModel.averagePeriodLength != 1 ? "\(viewModel.averagePeriodLength) days" :  "\(viewModel.averagePeriodLength) day")
-                .bold()
+                    .bold()
             }
         }
         .disabled(viewModel.periods.count < 1)

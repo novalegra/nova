@@ -43,19 +43,20 @@ struct FlowPicker: View {
                 Spacer()
                 Text(items[pickerIndex] + " " + unit)                
             }
-            .padding(.vertical, 5)
-            .frame(minWidth: 0, maxWidth: .infinity).onTapGesture {
-                pickerShouldExpand.toggle()
-            }
-            .onAppear {
-                pickerIndex = initialPickerIndex
-            }
-            .onChange(of: selectionState) { _ in
-                if selectionState != .hadFlow {
-                    pickerIndex = 0
-                    pickerShouldExpand = false
+                .padding(.vertical, 5)
+                .frame(minWidth: 0, maxWidth: .infinity)
+                .onTapGesture {
+                    pickerShouldExpand.toggle()
                 }
-            }
+                .onAppear {
+                    pickerIndex = initialPickerIndex
+                }
+                .onChange(of: selectionState) { _ in
+                    if selectionState != .hadFlow {
+                        pickerIndex = 0
+                        pickerShouldExpand = false
+                    }
+                }
             if pickerShouldExpand && selectionState == .hadFlow {
                 Picker(selection: $pickerIndex.onChange(onUpdate), label: Text("")) {
                     ForEach(0 ..< items.count) {

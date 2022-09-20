@@ -74,9 +74,9 @@ class MenstrualStore {
     
     func fetchAndUpdateMenstrualData(completion: (() -> Void)? = nil) {
         dataFetch.async { [unowned self] in
-            getRecentMenstrualSamples() { samples in
+            getRecentMenstrualSamples() { [unowned self] samples in
                 NSLog("Wooho - got \(samples.count) updated samples from HealthKit; \(samples.filter { $0.flowLevel == .heavy }.count) heavy, \(samples.filter { $0.flowLevel == .medium }.count) medium, \(samples.filter { $0.flowLevel == .light }.count) light, \(samples.filter { $0.flowLevel == .unspecified }.count) unspecified")
-                healthStoreUpdateCompletionHandler?(samples)
+                self.healthStoreUpdateCompletionHandler?(samples)
                 completion?()
             }
         }
@@ -356,8 +356,8 @@ extension MenstrualStore {
         deleteSample(entry) { [unowned self] result in
             switch result {
             case .success:
-                dataFetch.async {
-                    saveSample(entry) { saveResult in
+                dataFetch.async { [unowned self] in
+                    self.saveSample(entry) { saveResult in
                         completion(saveResult)
                     }
                 }
