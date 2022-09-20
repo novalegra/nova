@@ -33,4 +33,17 @@ class MenstrualPredicates {
         with: .equalTo,
         value: HKCategoryValueMenstrualFlow.heavy.rawValue
     )
+    
+    /// Make compound predicate to find all the menstrual flow types
+    static func makePredicateForAllFlowTypes() -> NSPredicate {
+        return NSCompoundPredicate(
+            orPredicateWithSubpredicates: [
+                Self.noFlowPredicate,
+                Self.hadFlowPredicate,
+                Self.lightFlowPredicate,
+                Self.mediumFlowPredicate,
+                Self.heavyFlowPredicate
+            ]
+        )
+    }
 }

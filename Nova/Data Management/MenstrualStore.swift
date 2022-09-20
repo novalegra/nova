@@ -89,67 +89,27 @@ class MenstrualStore {
         let start = Calendar.current.date(byAdding: .day, value: -days, to: Date())!
         var newMenstrualEvents: [MenstrualSample] = []
         
+        let predicate = MenstrualPredicates.makePredicateForAllFlowTypes()
+        
         let updateGroup = DispatchGroup()
         updateGroup.enter()
-        getSamples(start: start, matching: addCurrentAppFilterIfNeeded(to: MenstrualPredicates.noFlowPredicate), sampleLimit: days) {
+        getSamples(start: start, matching: addCurrentAppFilterIfNeeded(to: predicate), sampleLimit: days) {
             (result) in
             switch result {
             case .success(let samples):
-                newMenstrualEvents = newMenstrualEvents + samples.map { MenstrualSample(sample: $0, flowLevel: HKCategoryValueMenstrualFlow.none) }
-            default:
-                break
-            }
-            updateGroup.leave()
-        }
-
-        updateGroup.enter()
-        getSamples(start: start, matching: addCurrentAppFilterIfNeeded(to: MenstrualPredicates.hadFlowPredicate), sampleLimit: days) {
-            (result) in
-            switch result {
-            case .success(let samples):
-                newMenstrualEvents = newMenstrualEvents + samples.map { MenstrualSample(sample: $0, flowLevel: HKCategoryValueMenstrualFlow.unspecified) }
-            default:
-                break
-            }
-            updateGroup.leave()
-        }
-        
-        updateGroup.enter()
-        getSamples(start: start, matching: addCurrentAppFilterIfNeeded(to: MenstrualPredicates.lightFlowPredicate), sampleLimit: days) {
-            (result) in
-            switch result {
-            case .success(let samples):
-                newMenstrualEvents = newMenstrualEvents + samples.map { MenstrualSample(sample: $0, flowLevel: HKCategoryValueMenstrualFlow.light) }
-            default:
-                break
-            }
-            updateGroup.leave()
-        }
-        
-        updateGroup.enter()
-        getSamples(start: start, matching: addCurrentAppFilterIfNeeded(to: MenstrualPredicates.mediumFlowPredicate), sampleLimit: days) {
-            (result) in
-            switch result {
-            case .success(let samples):
-                newMenstrualEvents = newMenstrualEvents + samples.map { MenstrualSample(sample: $0, flowLevel: HKCategoryValueMenstrualFlow.medium) }
-            default:
-                break
-            }
-            updateGroup.leave()
-        }
-        
-        updateGroup.enter()
-        getSamples(start: start, matching: addCurrentAppFilterIfNeeded(to: MenstrualPredicates.heavyFlowPredicate), sampleLimit: days) {
-            (result) in
-            switch result {
-            case .success(let samples):
-                newMenstrualEvents = newMenstrualEvents + samples.map { MenstrualSample(sample: $0, flowLevel: HKCategoryValueMenstrualFlow.heavy) }
+                newMenstrualEvents = samples.map {
+                    MenstrualSample(
+                        sample: $0,
+                        flowLevel: HKCategoryValueMenstrualFlow(rawValue: $0.value) ?? HKCategoryValueMenstrualFlow.none
+                    )
+                }
             default:
                 break
             }
             updateGroup.leave()
         }
         updateGroup.wait()
+        
         self.menstrualEvents = newMenstrualEvents
         completion(newMenstrualEvents)
     }
