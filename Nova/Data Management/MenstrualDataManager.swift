@@ -20,8 +20,6 @@ class MenstrualDataManager: ObservableObject {
         return periods.reversed()
     }
     
-    let dateFormatter = DateFormatter()
-    
     init(store: MenstrualStore) {
         self.store = store
         self.watchManager = WatchDataCoordinator(dataStore: store)
@@ -119,24 +117,34 @@ class MenstrualDataManager: ObservableObject {
         guard let date = date else {
             return "None"
         }
-        dateFormatter.dateFormat = "MM-dd-yyyy"
-        return dateFormatter.string(from: date)
+
+        return date.formatted(
+            .dateTime
+            .month(.twoDigits).day().year()
+        )
     }
+    
     
     func monthFormattedDate(for date: Date?) -> String {
         guard let date = date else {
             return "None"
         }
-        dateFormatter.dateFormat = "MMM dd"
-        return dateFormatter.string(from: date)
+
+        return date.formatted(
+            .dateTime
+            .month().day()
+        )
     }
     
     func year(from date: Date?) -> String {
         guard let date = date else {
             return "None"
         }
-        dateFormatter.dateFormat = "yyyy"
-        return dateFormatter.string(from: date)
+        
+        return date.formatted(
+            .dateTime
+            .year()
+        )
     }
     
     func save(sample: MenstrualSample?, date: Date, newVolume: Double, flowSelection: SelectionState, _ completion: @escaping (MenstrualStoreResult<MenstrualSample?>) -> Void) {
