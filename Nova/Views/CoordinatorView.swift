@@ -26,7 +26,6 @@ struct CoordinatorView: View {
             }
             SettingsView(viewModel: viewModel)
             .tabItem {
-                
                 Image(systemName: "gear")
                 Text("Settings", comment: "Label for settings menu item")
             }

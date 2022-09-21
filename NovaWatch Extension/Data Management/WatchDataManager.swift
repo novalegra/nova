@@ -106,11 +106,11 @@ class WatchDataManager: NSObject, ObservableObject, WKExtensionDelegate {
                 switch result {
                 case .success(let savedSample):
                     NSLog("Successfully saved samples to HK on watch")
-                    DispatchQueue.main.async {
+                    DispatchQueue.main.async { [weak self] in
                         if let savedSample = savedSample {
-                            addSampleToMenstrualEvents(savedSample)
+                            self?.addSampleToMenstrualEvents(savedSample)
                         } else {
-                            deleteSampleFromMenstrualEvents(with: sample!.uuid)
+                            self?.deleteSampleFromMenstrualEvents(with: sample!.uuid)
                         }
                        
                         completion(true)

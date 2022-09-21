@@ -74,9 +74,9 @@ class MenstrualStore {
     
     func fetchAndUpdateMenstrualData(completion: (() -> Void)? = nil) {
         dataFetch.async { [unowned self] in
-            getRecentMenstrualSamples() { samples in
+            getRecentMenstrualSamples() { [unowned self] samples in
                 NSLog("Wooho - got \(samples.count) updated samples from HealthKit; \(samples.filter { $0.flowLevel == .heavy }.count) heavy, \(samples.filter { $0.flowLevel == .medium }.count) medium, \(samples.filter { $0.flowLevel == .light }.count) light, \(samples.filter { $0.flowLevel == .unspecified }.count) unspecified")
-                healthStoreUpdateCompletionHandler?(samples)
+                self.healthStoreUpdateCompletionHandler?(samples)
                 completion?()
             }
         }
@@ -89,67 +89,27 @@ class MenstrualStore {
         let start = Calendar.current.date(byAdding: .day, value: -days, to: Date())!
         var newMenstrualEvents: [MenstrualSample] = []
         
+        let predicate = MenstrualPredicates.makePredicateForAllFlowTypes()
+        
         let updateGroup = DispatchGroup()
         updateGroup.enter()
-        getSamples(start: start, matching: addCurrentAppFilterIfNeeded(to: MenstrualPredicates.noFlowPredicate), sampleLimit: days) {
+        getSamples(start: start, matching: addCurrentAppFilterIfNeeded(to: predicate), sampleLimit: days) {
             (result) in
             switch result {
             case .success(let samples):
-                newMenstrualEvents = newMenstrualEvents + samples.map { MenstrualSample(sample: $0, flowLevel: HKCategoryValueMenstrualFlow.none) }
-            default:
-                break
-            }
-            updateGroup.leave()
-        }
-
-        updateGroup.enter()
-        getSamples(start: start, matching: addCurrentAppFilterIfNeeded(to: MenstrualPredicates.hadFlowPredicate), sampleLimit: days) {
-            (result) in
-            switch result {
-            case .success(let samples):
-                newMenstrualEvents = newMenstrualEvents + samples.map { MenstrualSample(sample: $0, flowLevel: HKCategoryValueMenstrualFlow.unspecified) }
-            default:
-                break
-            }
-            updateGroup.leave()
-        }
-        
-        updateGroup.enter()
-        getSamples(start: start, matching: addCurrentAppFilterIfNeeded(to: MenstrualPredicates.lightFlowPredicate), sampleLimit: days) {
-            (result) in
-            switch result {
-            case .success(let samples):
-                newMenstrualEvents = newMenstrualEvents + samples.map { MenstrualSample(sample: $0, flowLevel: HKCategoryValueMenstrualFlow.light) }
-            default:
-                break
-            }
-            updateGroup.leave()
-        }
-        
-        updateGroup.enter()
-        getSamples(start: start, matching: addCurrentAppFilterIfNeeded(to: MenstrualPredicates.mediumFlowPredicate), sampleLimit: days) {
-            (result) in
-            switch result {
-            case .success(let samples):
-                newMenstrualEvents = newMenstrualEvents + samples.map { MenstrualSample(sample: $0, flowLevel: HKCategoryValueMenstrualFlow.medium) }
-            default:
-                break
-            }
-            updateGroup.leave()
-        }
-        
-        updateGroup.enter()
-        getSamples(start: start, matching: addCurrentAppFilterIfNeeded(to: MenstrualPredicates.heavyFlowPredicate), sampleLimit: days) {
-            (result) in
-            switch result {
-            case .success(let samples):
-                newMenstrualEvents = newMenstrualEvents + samples.map { MenstrualSample(sample: $0, flowLevel: HKCategoryValueMenstrualFlow.heavy) }
+                newMenstrualEvents = samples.map {
+                    MenstrualSample(
+                        sample: $0,
+                        flowLevel: HKCategoryValueMenstrualFlow(rawValue: $0.value) ?? HKCategoryValueMenstrualFlow.none
+                    )
+                }
             default:
                 break
             }
             updateGroup.leave()
         }
         updateGroup.wait()
+        
         self.menstrualEvents = newMenstrualEvents
         completion(newMenstrualEvents)
     }
@@ -356,8 +316,8 @@ extension MenstrualStore {
         deleteSample(entry) { [unowned self] result in
             switch result {
             case .success:
-                dataFetch.async {
-                    saveSample(entry) { saveResult in
+                dataFetch.async { [unowned self] in
+                    self.saveSample(entry) { saveResult in
                         completion(saveResult)
                     }
                 }
