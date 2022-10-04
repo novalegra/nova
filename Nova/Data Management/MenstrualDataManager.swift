@@ -148,7 +148,14 @@ class MenstrualDataManager: ObservableObject {
     }
     
     func save(sample: MenstrualSample?, date: Date, newVolume: Double, flowSelection: SelectionState, _ completion: @escaping (MenstrualStoreResult<MenstrualSample?>) -> Void) {
-        store.saveInHealthKit(existingSample: sample, date: date, newVolume: newVolume, flowSelection: flowSelection, completion)
+        store.saveInHealthKit(existingSample: sample, date: date, newVolume: newVolume, flowSelection: flowSelection) { result in
+            // We saved and/or updated a sample, so schedule a change notification
+            if case .success(let sample) = result, sample != nil {
+                NotificationManager.scheduleCupChangeNotification()
+            }
+            
+            completion(result)
+        }
     }
     
     // MARK: Settings

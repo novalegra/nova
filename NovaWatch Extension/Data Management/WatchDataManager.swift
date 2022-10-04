@@ -51,6 +51,8 @@ class WatchDataManager: NSObject, ObservableObject, WKExtensionDelegate {
             store.authorize()
         }
         
+        NotificationManager.ensureAuthorization()
+        
         let session = WCSession.default
         session.delegate = self
         session.activate()
@@ -96,7 +98,7 @@ class WatchDataManager: NSObject, ObservableObject, WKExtensionDelegate {
         WCSession.default.didUpdateMenstrualEvents(info) { [unowned self] didSave in
             if didSave {
                 NSLog("Watch was told that sample was saved in HK on phone")
-                completion(didSave)
+                completion(true)
                 return
             }
             
@@ -109,6 +111,7 @@ class WatchDataManager: NSObject, ObservableObject, WKExtensionDelegate {
                     DispatchQueue.main.async { [weak self] in
                         if let savedSample = savedSample {
                             self?.addSampleToMenstrualEvents(savedSample)
+                            NotificationManager.scheduleCupChangeNotification()
                         } else {
                             self?.deleteSampleFromMenstrualEvents(with: sample!.uuid)
                         }

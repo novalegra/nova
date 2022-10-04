@@ -26,6 +26,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         store.setUpBackgroundDelivery()
         
+        NotificationManager.ensureAuthorization()
+        
         return true
     }
     
