@@ -113,7 +113,12 @@ class WatchDataManager: NSObject, ObservableObject, WKExtensionDelegate {
                             self?.addSampleToMenstrualEvents(savedSample)
                             NotificationManager.scheduleCupChangeNotification()
                         } else {
-                            self?.deleteSampleFromMenstrualEvents(with: sample!.uuid)
+                            guard let id = sample?.uuid else {
+                                completion(false)
+                                return
+                            }
+                            
+                            self?.deleteSampleFromMenstrualEvents(with: id)
                         }
                        
                         completion(true)
