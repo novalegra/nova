@@ -128,7 +128,7 @@ class MenstrualStore {
         let query = HKSampleQuery(sampleType: sampleType, predicate: predicate, limit: sampleLimit, sortDescriptors: [sortByDate]) { (query, samples, error) in
 
             if let error = error {
-                NSLog("Error fetching menstrual data: %{public}@", String(describing: error))
+                NSLog("Error fetching menstrual data: \(String(describing: error))")
                 completion(.failure(MenstrualStoreError.queryError(error.localizedDescription)))
             } else if let samples = samples as? [HKCategorySample] {
                 guard !samples.isEmpty else {

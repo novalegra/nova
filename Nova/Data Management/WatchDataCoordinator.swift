@@ -52,12 +52,12 @@ class WatchDataCoordinator: NSObject {
         }
         
         guard let session = watchSession else {
-            NSLog("Not sending events", events, "because there's no watch session")
+            NSLog("Not sending events because there's no watch session")
             return
         }
         
         guard session.isPaired, session.isWatchAppInstalled else {
-            NSLog("Not sending events", events, "because session isn't paired or app isn't installed")
+            NSLog("Not sending events because session isn't paired or app isn't installed")
             return
         }
 
