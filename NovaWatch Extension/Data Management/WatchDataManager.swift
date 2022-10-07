@@ -25,9 +25,17 @@ class WatchDataManager: NSObject, ObservableObject, WKExtensionDelegate {
         return decoder
     }()
     
-    var volumeUnit: VolumeType = UserDefaults.app?.volumeType ?? .percentOfCup
+    var volumeUnit: VolumeType = UserDefaults.app?.volumeType ?? .percentOfCup {
+        didSet {
+            UserDefaults.app?.volumeType = volumeUnit
+        }
+    }
 
-    var cupType: MenstrualCupType = UserDefaults.app?.menstrualCupType ?? .lenaSmall
+    var cupType: MenstrualCupType = UserDefaults.app?.menstrualCupType ?? .lenaSmall {
+        didSet {
+            UserDefaults.app?.menstrualCupType = cupType
+        }
+    }
     
     var flowPickerNumbers: [Int] {
         switch volumeUnit {
@@ -69,7 +77,6 @@ class WatchDataManager: NSObject, ObservableObject, WKExtensionDelegate {
             store.menstrualEvents = events
             
             if let cupTypeRawValue = context["cupType"] as? String, let receivedCupType = MenstrualCupType(rawValue: cupTypeRawValue)  {
-                UserDefaults.app?.menstrualCupType = receivedCupType
                 cupType = receivedCupType
             }
         }
