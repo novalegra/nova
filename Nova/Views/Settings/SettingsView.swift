@@ -26,6 +26,7 @@ struct SettingsView: View {
     @ObservedObject var viewModel: MenstrualDataManager
     @State private var selectedVolumeType: VolumeType = .percentOfCup
     @State private var selectedMenstrualCupType: MenstrualCupType = .lenaSmall
+    @State private var notificationsEnabled: Bool = false
 
     var body: some View {
         NavigationView {
@@ -36,6 +37,7 @@ struct SettingsView: View {
     //                cupPickerSection
     //            }
                 cupPickerSection
+                notificationsPicker
             }
             .listStyle(InsetGroupedListStyle())
             .navigationBarTitle("Settings", displayMode: .large)
@@ -43,6 +45,7 @@ struct SettingsView: View {
                 // FIXME: removed due to iOS 14 bug
                 selectedMenstrualCupType = viewModel.cupType
                 selectedVolumeType = .percentOfCup//viewModel.volumeUnit
+                notificationsEnabled = viewModel.notificationsEnabled
             }
             .onDisappear {
                 saveSettingsToDataManager()
@@ -58,7 +61,8 @@ struct SettingsView: View {
                     Text(value.rawValue)
                     .tag(value)
                 }
-            }.pickerStyle(SegmentedPickerStyle())
+            }
+            .pickerStyle(SegmentedPickerStyle())
         }
         .padding(.vertical, 5)
     }
@@ -85,8 +89,22 @@ struct SettingsView: View {
         .frame(minWidth: 0, maxWidth: .infinity, alignment: .center)
     }
     
+    private var notificationsPicker: some View {
+        Toggle(isOn: $notificationsEnabled) {
+            Text("Enable Notifications to Empty Cup", comment: "Title text for the notifications")
+        }
+            .onChange(of: notificationsEnabled) { enabled in
+                guard enabled else {
+                    return
+                }
+                
+                NotificationManager.ensureAuthorization()
+            }
+    }
+    
     private func saveSettingsToDataManager() {
         viewModel.volumeUnit = selectedVolumeType
         viewModel.cupType = selectedMenstrualCupType
+        viewModel.notificationsEnabled = notificationsEnabled
     }
 }

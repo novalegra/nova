@@ -12,6 +12,7 @@ extension UserDefaults {
     private enum Key: String {
         case volumeUnit = "com.novalegra.Nova.VolumeType"
         case menstrualCupType = "com.novalegra.Nova.MenstrualCupType"
+        case notificationsEnabled = "com.novalegra.Nova.NotificationEnabled"
     }
 
     public static let app = UserDefaults(suiteName: "Nova")
@@ -39,6 +40,15 @@ extension UserDefaults {
         }
         set {
             set(newValue?.rawValue, forKey: Key.menstrualCupType.rawValue)
+        }
+    }
+    
+    var notificationsEnabled: Bool? {
+        get {
+            bool(forKey: Key.notificationsEnabled.rawValue)
+        }
+        set {
+            set(newValue, forKey: Key.notificationsEnabled.rawValue)
         }
     }
 }

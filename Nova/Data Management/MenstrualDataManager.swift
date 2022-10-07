@@ -150,7 +150,13 @@ class MenstrualDataManager: ObservableObject {
     func save(sample: MenstrualSample?, date: Date, newVolume: Double, flowSelection: SelectionState, _ completion: @escaping (MenstrualStoreResult<MenstrualSample?>) -> Void) {
         store.saveInHealthKit(existingSample: sample, date: date, newVolume: newVolume, flowSelection: flowSelection) { result in
             // We saved and/or updated a sample, so schedule a change notification
-            if case .success(let sample) = result, sample != nil {
+            if
+                case .success(let sample) = result,
+                let startDate = sample?.startDate,
+                // Don't send notifications where the 'change interval' would have already
+                Date().timeIntervalSince(startDate) < TimeInterval(hours: 24),
+                UserDefaults.app?.notificationsEnabled ?? false
+            {
                 NotificationManager.scheduleCupChangeNotification()
             }
             
@@ -168,6 +174,12 @@ class MenstrualDataManager: ObservableObject {
     var cupType: MenstrualCupType = UserDefaults.app?.menstrualCupType ?? .lenaSmall {
         didSet {
             UserDefaults.app?.menstrualCupType = cupType
+        }
+    }
+    
+    var notificationsEnabled = UserDefaults.app?.notificationsEnabled ?? false {
+        didSet {
+            UserDefaults.app?.notificationsEnabled = notificationsEnabled
         }
     }
     
