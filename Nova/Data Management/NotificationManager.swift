@@ -14,15 +14,15 @@ struct NotificationManager {
     
     private static var defaultReminderInterval = TimeInterval(hours: 12)
     
-    static func scheduleCupChangeNotification() {
-        Self.scheduleCupChangeNotification(after: Self.defaultReminderInterval)
-    }
-    
-    static func scheduleCupChangeNotification(after interval: TimeInterval) {
+    static func scheduleCupChangeNotification(after interval: TimeInterval = Self.defaultReminderInterval) {
+        let formatter = DateComponentsFormatter()
+        formatter.unitsStyle = .full
+        formatter.allowedUnits = [.hour, .minute]
+        
         let notification = UNMutableNotificationContent()
 
         notification.title =  String(format: NSLocalizedString("Time to empty your cup!", comment: "The notification title for a reminder to empty the menstrual cup."))
-        notification.body = String(format: NSLocalizedString("It's been 12 hours since you last emptied your cup.", comment: "The notification description for a reminder to empty the menstrual cup."))
+        notification.body = String(format: NSLocalizedString("It's been at least \(formatter.string(from: interval) ?? "") since you last emptied your cup.", comment: "The notification description for a reminder to empty the menstrual cup."))
         notification.sound = .default
         
         let trigger = UNTimeIntervalNotificationTrigger(timeInterval: interval, repeats: false)
@@ -34,7 +34,7 @@ struct NotificationManager {
             trigger: trigger
         )
 
-        NSLog("Scheduled notification for \(interval) from \(Date())")
+        NSLog("Scheduled notification for \(interval) sec from \(Date())")
         UNUserNotificationCenter.current().add(request)
     }
     
