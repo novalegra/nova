@@ -68,8 +68,9 @@ class WatchDataCoordinator: NSObject {
 
         let encodedEvents = try encoder.encode(events)
         let eventsDict = [
-            "events": encodedEvents,
-            "cupType": UserDefaults.app?.menstrualCupType?.rawValue ?? MenstrualCupType.lenaSmall.rawValue
+            WatchDataCodingKeys.events.rawValue: encodedEvents,
+            WatchDataCodingKeys.cupType.rawValue: UserDefaults.app?.menstrualCupType?.rawValue ?? MenstrualCupType.lenaSmall.rawValue,
+            
         ] as [String : Any]
 
         try session.updateApplicationContext(eventsDict)

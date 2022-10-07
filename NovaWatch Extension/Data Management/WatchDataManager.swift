@@ -67,7 +67,7 @@ class WatchDataManager: NSObject, ObservableObject, WKExtensionDelegate {
     }    
     
     private func updateMenstrualData(_ context: [String: Any]) throws {
-        guard let codedEvents = context["events"] as? Data else {
+        guard let codedEvents = context[WatchDataCodingKeys.events.rawValue] as? Data else {
             NSLog("Couldn't get coded events (got \(context) instead)")
             return
         }
@@ -76,7 +76,7 @@ class WatchDataManager: NSObject, ObservableObject, WKExtensionDelegate {
             menstrualEvents = events
             store.menstrualEvents = events
             
-            if let cupTypeRawValue = context["cupType"] as? String, let receivedCupType = MenstrualCupType(rawValue: cupTypeRawValue)  {
+            if let cupTypeRawValue = context[WatchDataCodingKeys.cupType.rawValue] as? String, let receivedCupType = MenstrualCupType(rawValue: cupTypeRawValue) {
                 cupType = receivedCupType
             }
         }
