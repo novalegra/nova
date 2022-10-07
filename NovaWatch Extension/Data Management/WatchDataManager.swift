@@ -53,7 +53,9 @@ class WatchDataManager: NSObject, ObservableObject, WKExtensionDelegate {
         super.init()
 
         store.healthStoreUpdateCompletionHandler = { [weak self] updatedEvents in
-            self?.menstrualEvents = updatedEvents
+            DispatchQueue.main.async {
+                self?.menstrualEvents = updatedEvents
+            }
         }
         if store.authorizationRequired {
             store.authorize()
