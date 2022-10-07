@@ -21,7 +21,7 @@ struct MenstrualCalendarView: View {
 
     var body: some View {
         NavigationView {
-            CalendarView(interval: calendarDuration) { date in
+            CalendarView(interval: calendarDuration, initialPosition: .newest) { date in
                 NavigationLink(
                     destination: MenstrualEventEditor(viewModel: viewModel, sample: viewModel.menstrualEventIfPresent(for: date), date: date)
                 ) {

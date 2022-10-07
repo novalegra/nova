@@ -8,14 +8,23 @@
 
 import SwiftUI
 
+enum CalendarScrollPosition {
+    case oldest
+    case newest
+}
+
 struct CalendarView<DateView>: View where DateView: View {
     @Environment(\.calendar) var calendar
 
     let interval: DateInterval
+    let initialScrollPosition: CalendarScrollPosition
     let content: (Date) -> DateView
 
-    init(interval: DateInterval, @ViewBuilder content: @escaping (Date) -> DateView) {
+    init(interval: DateInterval,
+         initialPosition: CalendarScrollPosition = .oldest,
+         @ViewBuilder content: @escaping (Date) -> DateView) {
         self.interval = interval
+        self.initialScrollPosition = initialPosition
         self.content = content
     }
 
@@ -27,12 +36,25 @@ struct CalendarView<DateView>: View where DateView: View {
     }
 
     var body: some View {
-        ScrollView(.vertical, showsIndicators: false) {
-            VStack {
-                ForEach(months, id: \.self) { month in
-                    MonthView(month: month, content: content)
+        ScrollViewReader { proxy in
+            ScrollView(.vertical, showsIndicators: false) {
+                VStack {
+                    ForEach(months, id: \.self) { month in
+                        MonthView(month: month, content: content)
+                    }
                 }
             }
+                .onAppear {
+                    if
+                        initialScrollPosition == .newest,
+                        let scrollPosition = months.last
+                    {
+                        // Animate so the change is more obvious
+                        withAnimation {
+                            proxy.scrollTo(scrollPosition)
+                        }
+                    }
+                }
         }
     }
 }
