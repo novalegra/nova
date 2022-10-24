@@ -71,7 +71,7 @@ struct MenstrualStatisticsDetailView: View {
             VStack(spacing: 10) {
                 HStack {
                     Text(viewModel.monthFormattedDate(for: period.startDate) + " - " + viewModel.monthFormattedDate(for: period.endDate) + ", " + viewModel.year(from: period.startDate))
-                        .foregroundColor(Color("DarkBlue"))
+                        .foregroundColor(Color.descriptionBlue)
                     Spacer()
                 }
                 if !dataIsMissing(for: period) {

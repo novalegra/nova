@@ -43,8 +43,8 @@ struct FlowTile: View {
             return Color(UIColor.gray.withAlphaComponent(0.14))
         }
         if dataManager.hasMenstrualFlow(at: date) {
-            return Color("DarkPink")
+            return Color.novaPink
         }
-        return Color("LightBrown")
+        return Color.novaBrown
     }
 }
