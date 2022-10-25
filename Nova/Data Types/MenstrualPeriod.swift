@@ -14,18 +14,13 @@ class MenstrualPeriod {
     let endDate: Date
     
     init(events: [MenstrualSample]) {
-        guard let first = events.first else {
+        guard
+            let minDate = events.min(by: { $0.startDate < $1.startDate })?.startDate,
+            let maxDate = events.max(by: { $0.startDate < $1.startDate })?.startDate
+        else {
             fatalError("Tried to init menstrual period without any events")
         }
-        
-        var minDate = first.startDate
-        var maxDate = first.endDate
-        
-        for event in events {
-            minDate = min(minDate, event.startDate)
-            maxDate = max(maxDate, event.endDate)
-        }
-        
+
         self.events = events
         self.startDate = minDate
         self.endDate = maxDate
@@ -79,8 +74,12 @@ class MenstrualPeriod {
 extension MenstrualPeriod: Equatable {
     /// 2 menstrual periods are the same if they're the same periods in the same order
     static func == (lhs: MenstrualPeriod, rhs: MenstrualPeriod) -> Bool {
-        return zip(lhs.events, rhs.events).reduce(true) { partialResult, elementPair in
-            partialResult && elementPair.0 == elementPair.1
-        }
+        return (
+            lhs.startDate == rhs.startDate
+            && lhs.endDate == rhs.endDate
+            && zip(lhs.events, rhs.events).reduce(true) { partialResult, elementPair in
+                partialResult && elementPair.0 == elementPair.1
+            }
+        )
     }
 }
