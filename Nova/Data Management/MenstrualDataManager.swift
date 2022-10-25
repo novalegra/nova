@@ -12,7 +12,7 @@ import HealthKit
 class MenstrualDataManager: ObservableObject {
     let store: MenstrualStore
     let watchManager: WatchDataCoordinator
-    // Allowable gap (in days) between samples so it's still considered a period
+    /// Allowable gap (in days) between samples so it's still considered a period
     let allowablePeriodGap: Int = 1
     @Published var periods: [MenstrualPeriod] = []
     
@@ -25,7 +25,7 @@ class MenstrualDataManager: ObservableObject {
         self.watchManager = WatchDataCoordinator(dataStore: store)
         store.healthStoreUpdateCompletionHandler = { [weak self] updatedEvents in
             DispatchQueue.main.async {
-                if let processedPeriods = self?.processHealthKitQuerySamples(updatedEvents) {
+                if let processedPeriods = self?.processHealthKitQuery(samples: updatedEvents) {
                     self?.periods = processedPeriods
                 }
             }
@@ -39,10 +39,8 @@ class MenstrualDataManager: ObservableObject {
     }
     
     // MARK: Data Management
-    
-    /// This function assumes samples are sorted with most-recent ones first
     /// The output menstrual periods are in sorted order
-    func processHealthKitQuerySamples(_ samples: [MenstrualSample]) -> [MenstrualPeriod] {
+    func processHealthKitQuery(samples: [MenstrualSample]) -> [MenstrualPeriod] {
         guard samples.count > 0 else {
             return []
         }
@@ -52,11 +50,18 @@ class MenstrualDataManager: ObservableObject {
         var periodBuilder: [MenstrualSample] = []
 
         for sample in sortedSamples {
+            /// Only include samples that actually have flow
             if sample.flowLevel == .none {
                 continue
             }
             
-            if let last = periodBuilder.last, let dayGap = Calendar.current.dateComponents([.day], from: last.endDate, to: sample.startDate).day, dayGap - 1 > allowablePeriodGap {
+            if
+                let last = periodBuilder.last,
+                let dayGap = Calendar.current.dateComponents([.day],
+                                                             from: last.endDate,
+                                                             to: sample.startDate).day,
+                dayGap - 1 > allowablePeriodGap
+            {
                 output.append(MenstrualPeriod(events: periodBuilder))
                 periodBuilder = []
             }

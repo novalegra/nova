@@ -76,3 +76,11 @@ class MenstrualPeriod {
     }
 }
 
+extension MenstrualPeriod: Equatable {
+    /// 2 menstrual periods are the same if they're the same periods in the same order
+    static func == (lhs: MenstrualPeriod, rhs: MenstrualPeriod) -> Bool {
+        return zip(lhs.events, rhs.events).reduce(true) { partialResult, elementPair in
+            partialResult && elementPair.0 == elementPair.1
+        }
+    }
+}

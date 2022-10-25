@@ -12,4 +12,8 @@ extension TimeInterval {
     init(hours: Double) {
         self.init(hours * 60 * 60)
     }
+    
+    init(days: Double) {
+        self.init(hours: days * 24)
+    }
 }
