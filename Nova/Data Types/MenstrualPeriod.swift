@@ -12,18 +12,21 @@ class MenstrualPeriod {
     let events: [MenstrualSample]
     let startDate: Date
     let endDate: Date
+    let uuid: UUID
     
-    init(events: [MenstrualSample]) {
+    /// `uuid` will be automatically set to the UUID if the earliest event if the parameter is `nil`
+    init(events: [MenstrualSample], uuid: UUID? = nil) {
         guard
-            let minDate = events.min(by: { $0.startDate < $1.startDate })?.startDate,
-            let maxDate = events.max(by: { $0.startDate < $1.startDate })?.startDate
+            let earliest = events.min(by: { $0.startDate < $1.startDate }),
+            let latest = events.max(by: { $0.endDate < $1.endDate })
         else {
             fatalError("Tried to init menstrual period without any events")
         }
 
         self.events = events
-        self.startDate = minDate
-        self.endDate = maxDate
+        self.startDate = earliest.startDate
+        self.endDate = latest.endDate
+        self.uuid = uuid ?? earliest.uuid
     }
     
     var totalFlow: Double {
@@ -77,6 +80,7 @@ extension MenstrualPeriod: Equatable {
         return (
             lhs.startDate == rhs.startDate
             && lhs.endDate == rhs.endDate
+            && lhs.uuid == rhs.uuid
             && zip(lhs.events, rhs.events).reduce(true) { partialResult, elementPair in
                 partialResult && elementPair.0 == elementPair.1
             }
