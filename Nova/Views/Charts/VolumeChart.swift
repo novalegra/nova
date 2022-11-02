@@ -55,9 +55,10 @@ struct VolumeChart: View {
                 .foregroundStyle(Color.novaPink)
             }
             
-            if let selected, let item = viewModel.points.first(where: { $0.id == selected }) {
+            if let selected, let item = viewModel.point(id: selected) {
                 RuleMark(x: .value("Date", item.title))
                     .foregroundStyle(Color(.label))
+                
                 PointMark(
                     x: .value("Date", item.title),
                     y: .value("Volume", item.flowVolume)

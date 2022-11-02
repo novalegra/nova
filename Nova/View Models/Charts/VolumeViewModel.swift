@@ -34,6 +34,14 @@ class TotalVolumeViewModel: ObservableObject {
     init(points: [MenstrualVolumePoint]) {
         self.points = points
     }
+    
+    func point(id: MenstrualVolumePoint.ID) -> MenstrualVolumePoint? {
+        points.first(where: { $0.id == id })
+    }
+    
+    func point(titled title: String) -> MenstrualVolumePoint? {
+        points.first(where: { $0.title == title })
+    }
 }
 
 fileprivate extension MenstrualPeriod {
