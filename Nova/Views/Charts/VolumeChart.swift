@@ -21,24 +21,21 @@ struct VolumeChart: View {
                 .chartOverlay { proxy in
                     GeometryReader { g in
                         Rectangle().fill(.clear).contentShape(Rectangle())
-                            .gesture(
-                                DragGesture(minimumDistance: 5)
-                                    .onChanged { value in
-                                        let origin = g[proxy.plotAreaFrame].origin
-                                        let x = value.location.x - origin.x
-                                        if
-                                            let selectedTitle: String = proxy.value(atX: x),
-                                            let selected = viewModel.points.first(where: { $0.title == selectedTitle })
-                                        {
-                                            print("selecting \(selectedTitle) with start \(selected.start)")
-                                            self.selected = selected.start
-                                        }
-                                    }
-                                // Remove the annotation once the user isn't tapping anymore
-                                    .onEnded { value in
-                                        self.selected = nil
-                                    }
-                            )
+                            .onTapGesture { value in
+                                let origin = g[proxy.plotAreaFrame].origin
+                                let x = value.x - origin.x
+                                
+                                if
+                                    let selectedTitle: String = proxy.value(atX: x),
+                                    let selected = viewModel.point(titled: selectedTitle),
+                                    self.selected != selected.id
+                                {
+                                    self.selected = selected.start
+                                /// If it's a repeat-tap event, deselect
+                                } else {
+                                    self.selected = nil
+                                }
+                            }
                     }
                 }
         }
@@ -63,8 +60,8 @@ struct VolumeChart: View {
                     x: .value("Date", item.title),
                     y: .value("Volume", item.flowVolume)
                 )
-                .symbolSize(CGSize(width: 15, height: 15))
-                .foregroundStyle(Color(.label))
+                    .symbolSize(CGSize(width: 15, height: 15))
+                    .foregroundStyle(Color(.label))
             }
         }
         .frame(width: ChartConstants.scrollWidth)
