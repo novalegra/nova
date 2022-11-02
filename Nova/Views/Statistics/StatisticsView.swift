@@ -16,6 +16,7 @@ struct StatisticsView: View {
             List {
                 lastPeriodItem
                 Section {
+                    totalVolumeChart
                     totalVolumeItem
                     dailyVolumeItem
                     periodLengthItem
@@ -55,6 +56,20 @@ struct StatisticsView: View {
         ) {
             HStack {
                 Text("Typical Period Volume")
+                Spacer()
+                Text("\(Int(viewModel.averageTotalPeriodVolume)) mL")
+                    .bold()
+            }
+        }
+        .disabled(viewModel.periods.count < 1)
+    }
+    
+    var totalVolumeChart: some View {
+        NavigationLink(
+            destination: VolumeChart(viewModel: viewModel.makeTotalVolumeViewModel())
+        ) {
+            HStack {
+                Text("Period Volume Chart")
                 Spacer()
                 Text("\(Int(viewModel.averageTotalPeriodVolume)) mL")
                     .bold()
