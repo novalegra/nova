@@ -29,6 +29,8 @@ struct MenstrualVolumePoint: Identifiable {
 }
 
 class TotalVolumeViewModel: ObservableObject {
+    @Published var selected: MenstrualVolumePoint.ID? = nil
+    
     let points: [MenstrualVolumePoint]
     
     init(points: [MenstrualVolumePoint]) {
@@ -41,6 +43,18 @@ class TotalVolumeViewModel: ObservableObject {
     
     func point(titled title: String) -> MenstrualVolumePoint? {
         points.first(where: { $0.title == title })
+    }
+    
+    func didSelect(title: String) {
+        if
+            let point = point(titled: title),
+            selected != point.id
+        {
+            selected = point.start
+        /// If it's a repeat-tap event, deselect
+        } else {
+            selected = nil
+        }
     }
 }
 

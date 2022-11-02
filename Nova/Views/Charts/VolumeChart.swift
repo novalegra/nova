@@ -10,9 +10,7 @@ import SwiftUI
 import Charts
 
 struct VolumeChart: View {
-    let viewModel: TotalVolumeViewModel
-
-    @State private var selected: MenstrualVolumePoint.ID?
+    @ObservedObject var viewModel: TotalVolumeViewModel
     
     var body: some View {
         ScrollView(.horizontal) {
@@ -25,15 +23,8 @@ struct VolumeChart: View {
                                 let origin = g[proxy.plotAreaFrame].origin
                                 let x = value.x - origin.x
                                 
-                                if
-                                    let selectedTitle: String = proxy.value(atX: x),
-                                    let selected = viewModel.point(titled: selectedTitle),
-                                    self.selected != selected.id
-                                {
-                                    self.selected = selected.start
-                                /// If it's a repeat-tap event, deselect
-                                } else {
-                                    self.selected = nil
+                                if let selectedTitle: String = proxy.value(atX: x) {
+                                    viewModel.didSelect(title: selectedTitle)
                                 }
                             }
                     }
@@ -52,7 +43,7 @@ struct VolumeChart: View {
                 .foregroundStyle(Color.novaPink)
             }
             
-            if let selected, let item = viewModel.point(id: selected) {
+            if let selected = viewModel.selected, let item = viewModel.point(id: selected) {
                 RuleMark(x: .value("Date", item.title))
                     .foregroundStyle(Color(.label))
                 
