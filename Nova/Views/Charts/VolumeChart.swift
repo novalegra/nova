@@ -67,13 +67,13 @@ struct VolumeChart: View {
             if let selected = viewModel.selected, let item = viewModel.point(id: selected) {
                 RuleMark(x: .value("Date", item.title))
                     .foregroundStyle(Color(.label))
-                
-                PointMark(
-                    x: .value("Date", item.title),
-                    y: .value("Volume", item.flowVolume)
-                )
-                    .symbolSize(CGSize(width: 15, height: 15))
-                    .foregroundStyle(Color(.label))
+                    .annotation(position: .top) {
+                        Text("\(item.flowVolume, format: .number) mL")
+                            .font(
+                                .caption
+                                .bold()
+                            )
+                    }
             }
         }
         .frame(width: ChartConstants.scrollWidth)
