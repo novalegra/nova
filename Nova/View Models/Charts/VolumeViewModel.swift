@@ -46,15 +46,22 @@ class TotalVolumeViewModel: ObservableObject {
     }
     
     func didSelect(title: String) {
-        if
-            let point = point(titled: title),
-            selected != point.id
-        {
-            selected = point.start
+        if let point = point(titled: title), point.id != selected {
+            selected = point.id
         /// If it's a repeat-tap event, deselect
         } else {
             selected = nil
         }
+    }
+    
+    func didSlideOver(title: String) {
+        if let point = point(titled: title) {
+            selected = point.id
+        }
+    }
+    
+    func didFinishSelecting() {
+        selected = nil
     }
 }
 

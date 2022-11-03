@@ -10,4 +10,5 @@ import Foundation
 
 struct ChartConstants {
     static let scrollWidth = 450.0
+    static let dragMinimum = 5.0
 }

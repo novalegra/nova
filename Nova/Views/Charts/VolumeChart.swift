@@ -13,6 +13,14 @@ struct VolumeChart: View {
     @ObservedObject var viewModel: TotalVolumeViewModel
     
     var body: some View {
+        VStack(alignment: .center) {
+            interactiveChart
+            Text("Period Dates")
+        }
+        .navigationBarTitle("Typical Period Volume")
+    }
+    
+    var interactiveChart: some View {
         ScrollView(.horizontal) {
             chart
                 .padding()
@@ -27,10 +35,23 @@ struct VolumeChart: View {
                                     viewModel.didSelect(title: selectedTitle)
                                 }
                             }
+                            .simultaneousGesture(
+                                DragGesture(minimumDistance: ChartConstants.dragMinimum)
+                                    .onChanged { value in
+                                        let origin = g[proxy.plotAreaFrame].origin
+                                        let x = value.location.x - origin.x
+                                        
+                                        if let selectedTitle: String = proxy.value(atX: x) {
+                                            viewModel.didSlideOver(title: selectedTitle)
+                                        }
+                                    }
+                                    .onEnded { _ in
+                                        viewModel.didFinishSelecting()
+                                    }
+                            )
                     }
                 }
         }
-        .navigationBarTitle("Typical Period Volume")
     }
     
     var chart: some View {
