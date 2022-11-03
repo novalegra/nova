@@ -9,6 +9,7 @@
 import Foundation
 
 class MenstrualPeriod {
+    /// Sorted by `startDate`
     let events: [MenstrualSample]
     let startDate: Date
     let endDate: Date
@@ -23,7 +24,7 @@ class MenstrualPeriod {
             fatalError("Tried to init menstrual period without any events")
         }
 
-        self.events = events
+        self.events = events.sorted(by: {$0.startDate < $1.startDate})
         self.startDate = earliest.startDate
         self.endDate = latest.endDate
         self.uuid = uuid ?? earliest.uuid

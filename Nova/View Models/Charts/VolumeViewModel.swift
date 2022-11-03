@@ -9,32 +9,42 @@
 import Foundation
 
 struct MenstrualVolumePoint: Identifiable {
-    let start: Date
-    let end: Date
+    let title: String
     let flowVolume: Double
     
-    var title: String {
-        start.formatted(
+    init(start: Date, end: Date, flowVolume: Double) {
+        let title = start.formatted(
             .dateTime
             .month(.twoDigits).day()
         ) + "-" + end.formatted(
             .dateTime
             .month(.twoDigits).day()
         )
+        
+        self.init(uniqueTitle: title, flowVolume: flowVolume)
     }
     
-    var id: Date {
-        start
+    init(uniqueTitle: String, flowVolume: Double) {
+        self.title = uniqueTitle
+        self.flowVolume = flowVolume
+    }
+    
+    var id: String {
+        title
     }
 }
 
-class TotalVolumeViewModel: ObservableObject {
+class VolumeViewModel: ObservableObject {
     @Published var selected: MenstrualVolumePoint.ID? = nil
     
     let points: [MenstrualVolumePoint]
+    let title: String
+    let xAxisLabel: String
     
-    init(points: [MenstrualVolumePoint]) {
+    init(points: [MenstrualVolumePoint], type: ChartType) {
         self.points = points
+        self.title = type.title
+        self.xAxisLabel = type.xAxisLabel
     }
     
     func point(id: MenstrualVolumePoint.ID) -> MenstrualVolumePoint? {
@@ -72,7 +82,33 @@ fileprivate extension MenstrualPeriod {
 }
 
 extension MenstrualDataManager {
-    func makeTotalVolumeViewModel() -> TotalVolumeViewModel {
-        TotalVolumeViewModel(points: periods.map { $0.totalVolumePoint })
+    func makeTotalVolumeViewModel() -> VolumeViewModel {
+        VolumeViewModel(points: periods.map { $0.totalVolumePoint },
+                        type: .totalVolume)
+    }
+    
+    func makeDailyVolumeViewModel() -> VolumeViewModel {
+        guard
+            let maxPeriodLength = periods.map({ $0.duration }).max(),
+            maxPeriodLength > 0
+        else {
+            return VolumeViewModel(points: [], type: .dailyVolume)
+        }
+        
+        let volumesByDay = (0...maxPeriodLength-1).map({ dayNumber in
+            periods
+                .filter { $0.events.count >  dayNumber }
+                .compactMap { $0.events[dayNumber].volume }
+                .average()
+        })
+        
+        let points = volumesByDay.enumerated().map { (idx, volume) in
+            MenstrualVolumePoint(
+                uniqueTitle: "Day \(idx + 1)", // ANNA TODO: localize
+                flowVolume: volume
+            )
+        }
+        
+        return VolumeViewModel(points: points, type: .dailyVolume)
     }
 }

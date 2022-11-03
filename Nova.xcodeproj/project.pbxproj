@@ -75,6 +75,7 @@
 		E995A52D250750C8009D52CF /* HKCategorySample+MenstrualSample.swift in Sources */ = {isa = PBXBuildFile; fileRef = E995A52C250750C7009D52CF /* HKCategorySample+MenstrualSample.swift */; };
 		E9CECC84291316F0004B8BE8 /* UUID.swift in Sources */ = {isa = PBXBuildFile; fileRef = E98D3EAE2907F53200B70420 /* UUID.swift */; };
 		E9CECC8629132839004B8BE8 /* ChartConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9CECC8529132839004B8BE8 /* ChartConstants.swift */; };
+		E9CECC88291427FB004B8BE8 /* Array.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9CECC87291427FB004B8BE8 /* Array.swift */; };
 		E9D7132225199F4000F56BB1 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = E9D7132025199F4000F56BB1 /* Localizable.strings */; };
 		E9DDBAAE2664158400594E0E /* MenstrualPredicates.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9DDBAAD2664158400594E0E /* MenstrualPredicates.swift */; };
 		E9DDBAAF266415D100594E0E /* MenstrualPredicates.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9DDBAAD2664158400594E0E /* MenstrualPredicates.swift */; };
@@ -190,6 +191,7 @@
 		E995A52A250732CB009D52CF /* FlowPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlowPicker.swift; sourceTree = "<group>"; };
 		E995A52C250750C7009D52CF /* HKCategorySample+MenstrualSample.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HKCategorySample+MenstrualSample.swift"; sourceTree = "<group>"; };
 		E9CECC8529132839004B8BE8 /* ChartConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartConstants.swift; sourceTree = "<group>"; };
+		E9CECC87291427FB004B8BE8 /* Array.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Array.swift; sourceTree = "<group>"; };
 		E9D7132125199F4000F56BB1 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = "Nova/Localizable/en.xcloc/Source Contents/Nova/en.lproj/Localizable.strings"; sourceTree = SOURCE_ROOT; };
 		E9D7132325199F7D00F56BB1 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
 		E9D7132425199F7D00F56BB1 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = "Localizable/en.xcloc/Source Contents/Nova/es.lproj/Localizable.strings"; sourceTree = "<group>"; };
@@ -408,6 +410,7 @@
 				E95F5BC428EBDDAA005F74A8 /* TimeInterval.swift */,
 				E950CAA529060DAE00B5B692 /* Color.swift */,
 				E98D3EAE2907F53200B70420 /* UUID.swift */,
+				E9CECC87291427FB004B8BE8 /* Array.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -675,6 +678,7 @@
 				E995A51F25071DC2009D52CF /* MenstrualStore.swift in Sources */,
 				E995A5022507145E009D52CF /* MenstrualCalendarView.swift in Sources */,
 				E957BBFD251267CF00171FDC /* UserDefaults+Settings.swift in Sources */,
+				E9CECC88291427FB004B8BE8 /* Array.swift in Sources */,
 				E95F5BC228EBC472005F74A8 /* NotificationManager.swift in Sources */,
 				E995A51D25071BD0009D52CF /* WeekView.swift in Sources */,
 				E9DDBAAE2664158400594E0E /* MenstrualPredicates.swift in Sources */,

@@ -10,14 +10,16 @@ import SwiftUI
 import Charts
 
 struct VolumeChart: View {
-    @ObservedObject var viewModel: TotalVolumeViewModel
+    @ObservedObject var viewModel: VolumeViewModel
     
     var body: some View {
         VStack(alignment: .center) {
             interactiveChart
-            Text("Period Dates")
+            if !viewModel.xAxisLabel.isEmpty {
+                Text(viewModel.xAxisLabel)
+            }
         }
-        .navigationBarTitle("Typical Period Volume")
+        .navigationBarTitle(viewModel.title)
     }
     
     var interactiveChart: some View {
