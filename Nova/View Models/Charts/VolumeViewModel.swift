@@ -102,8 +102,13 @@ extension MenstrualDataManager {
                 .average()
         })
         
-        let points = volumesByDay.enumerated().map { (idx, volume) in
-            MenstrualVolumePoint(
+        let points = volumesByDay.enumerated().compactMap { (idx, volume) in
+            guard volume > 0 else {
+                let nilReturn: MenstrualVolumePoint? = nil // FIXME: this explicit type is needed to avoid compiler error
+                return nilReturn
+            }
+            
+            return MenstrualVolumePoint(
                 uniqueTitle: "Day \(idx + 1)", // ANNA TODO: localize
                 flowVolume: volume
             )
