@@ -26,7 +26,7 @@ enum ChartType {
         case .totalVolume:
             return "Period Dates"
         case .dailyVolume:
-            return ""
+            return "Day of Period"
         }
     }
 }
