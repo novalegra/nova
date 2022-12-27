@@ -25,7 +25,7 @@ struct MenstrualVolumePoint: Identifiable {
         )
         
         // FIXME: hack since SwiftCharts cuts off strings
-        let startEndSpacer = "\n" + String(repeating: " ", count: max(0, startString.count - 1)) + "-\n"
+        let startEndSpacer = "\n" + String(repeating: " ", count: max(0, startString.count - 2)) + "→\n"
         
         self.init(uniqueTitle: startString + startEndSpacer + endString,
                   description: startString + "-" + endString,
