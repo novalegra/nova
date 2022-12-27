@@ -69,8 +69,8 @@ struct VolumeChart: View {
             if let selected = viewModel.selected, let item = viewModel.point(id: selected) {
                 RuleMark(x: .value("Date", item.title))
                     .foregroundStyle(Color(.label))
-                    .annotation(position: .leading, alignment: .top) {
                         Text("\(item.flowVolume, format: .number) mL")
+                    .annotation(position: .trailing, alignment: .top) {
                             .font(
                                 .caption
                                 .bold()
