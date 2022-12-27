@@ -10,27 +10,41 @@ import Foundation
 
 struct MenstrualVolumePoint: Identifiable {
     let title: String
+    private let description: String?
     let flowVolume: Double
     
     init(start: Date, end: Date, flowVolume: Double) {
-        let title = start.formatted(
-            .dateTime
-            .month(.twoDigits).day()
-        ) + "-" + end.formatted(
+        let startString = start.formatted(
             .dateTime
             .month(.twoDigits).day()
         )
         
-        self.init(uniqueTitle: title, flowVolume: flowVolume)
+        let endString = end.formatted(
+            .dateTime
+            .month(.twoDigits).day()
+        )
+        
+        // FIXME: hack since SwiftCharts cuts off strings
+        let startEndSpacer = "\n" + String(repeating: " ", count: max(0, startString.count - 1)) + "-\n"
+        
+        self.init(uniqueTitle: startString + startEndSpacer + endString,
+                  description: startString + "-" + endString,
+                  flowVolume: flowVolume)
     }
     
-    init(uniqueTitle: String, flowVolume: Double) {
+    /// `uniqueTitle` will be displayed on the axis and `description` will be displayed when a user scrubs over
+    init(uniqueTitle: String, description: String? = nil, flowVolume: Double) {
         self.title = uniqueTitle
+        self.description = description
         self.flowVolume = flowVolume
     }
     
     var id: String {
         title
+    }
+    
+    var detailDescription: String {
+        "\(flowVolume) mL \n\(description ?? title)"
     }
 }
 
@@ -108,8 +122,11 @@ extension MenstrualDataManager {
                 return nilReturn
             }
             
+            let dateNum = idx + 1
+            
             return MenstrualVolumePoint(
-                uniqueTitle: "Day \(idx + 1)", // ANNA TODO: localize
+                uniqueTitle: String(dateNum),
+                description: "Day \(dateNum)", // ANNA TODO: localize
                 flowVolume: volume
             )
         }

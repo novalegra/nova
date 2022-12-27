@@ -23,6 +23,7 @@ struct VolumeChart: View {
     }
     
     var interactiveChart: some View {
+        // ScrollView so the chart can scroll
         ScrollView(.horizontal) {
             chart
                 .padding()
@@ -69,8 +70,8 @@ struct VolumeChart: View {
             if let selected = viewModel.selected, let item = viewModel.point(id: selected) {
                 RuleMark(x: .value("Date", item.title))
                     .foregroundStyle(Color(.label))
-                        Text("\(item.flowVolume, format: .number) mL")
                     .annotation(position: .trailing, alignment: .top) {
+                        Text(item.detailDescription)
                             .font(
                                 .caption
                                 .bold()
