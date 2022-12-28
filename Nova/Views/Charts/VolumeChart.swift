@@ -23,10 +23,11 @@ struct VolumeChart: View {
     }
     
     var interactiveChart: some View {
-        // ScrollView so the chart can scroll
+        /// ScrollView so the chart can scroll
         ScrollView(.horizontal) {
             chart
                 .padding()
+                /// Logic to detect tap & scroll events so an item description can be overlaid
                 .chartOverlay { proxy in
                     GeometryReader { g in
                         Rectangle().fill(.clear).contentShape(Rectangle())
@@ -54,6 +55,10 @@ struct VolumeChart: View {
                             )
                     }
                 }
+                /// Display the axis on the leading edge instead of trailing edge
+                .chartYAxis {
+                    AxisMarks(position: .leading)
+                }
         }
     }
     
@@ -70,7 +75,7 @@ struct VolumeChart: View {
             if let selected = viewModel.selected, let item = viewModel.point(id: selected) {
                 RuleMark(x: .value("Date", item.title))
                     .foregroundStyle(Color(.label))
-                    .annotation(position: .trailing, alignment: .top) {
+                    .annotation(position: .leading, alignment: .top) {
                         Text(item.detailDescription)
                             .font(
                                 .caption
