@@ -20,7 +20,7 @@ struct StatisticsView: View {
                     totalVolumeItem
                     dailyVolumeChart
                     dailyVolumeItem
-                    periodLengthItem
+                    periodLengthChart
                 }
             }
                 .listStyle(InsetGroupedListStyle())
@@ -73,6 +73,20 @@ struct StatisticsView: View {
                 Text("Period Volume Chart")
                 Spacer()
                 Text("\(Int(viewModel.averageTotalPeriodVolume)) mL")
+                    .bold()
+            }
+        }
+        .disabled(viewModel.periods.count < 1)
+    }
+    
+    var periodLengthChart: some View {
+        NavigationLink(
+            destination: VolumeChart(viewModel: viewModel.makePeriodLengthViewModel())
+        ) {
+            HStack {
+                Text("Typical Period Length")
+                Spacer()
+                Text(viewModel.averagePeriodLength != 1 ? "\(viewModel.averagePeriodLength) days" :  "\(viewModel.averagePeriodLength) day")
                     .bold()
             }
         }

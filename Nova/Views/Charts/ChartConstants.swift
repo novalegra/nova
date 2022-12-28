@@ -11,6 +11,7 @@ import Foundation
 enum ChartType {
     case totalVolume
     case dailyVolume
+    case periodLength
     
     var title: String {
         switch self {
@@ -18,12 +19,14 @@ enum ChartType {
             return "Typical Period Volume"
         case .dailyVolume:
             return "Typical Daily Volume"
+        case .periodLength:
+            return "Typical Period Length"
         }
     }
     
     var xAxisLabel: String {
         switch self {
-        case .totalVolume:
+        case .totalVolume, .periodLength:
             return "Period Dates"
         case .dailyVolume:
             return "Day of Period"

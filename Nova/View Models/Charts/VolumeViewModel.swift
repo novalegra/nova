@@ -53,6 +53,9 @@ fileprivate extension MenstrualPeriod {
     var totalVolumePoint: MenstrualPoint {
         MenstrualPoint(start: startDate, end: endDate, flowVolume: totalFlow)
     }
+    
+    var lengthPoint: MenstrualPoint {
+        MenstrualPoint(start: startDate, end: endDate, days: duration)
     }
 }
 
@@ -60,6 +63,11 @@ extension MenstrualDataManager {
     func makeTotalVolumeViewModel() -> VolumeViewModel {
         VolumeViewModel(points: periods.map { $0.totalVolumePoint },
                         type: .totalVolume)
+    }
+    
+    func makePeriodLengthViewModel() -> VolumeViewModel {
+        VolumeViewModel(points: periods.map { $0.lengthPoint },
+                        type: .periodLength)
     }
     
     func makeDailyVolumeViewModel() -> VolumeViewModel {
