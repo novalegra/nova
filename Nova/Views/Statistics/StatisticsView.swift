@@ -70,7 +70,7 @@ struct StatisticsView: View {
             destination: VolumeChart(viewModel: viewModel.makeTotalVolumeViewModel())
         ) {
             HStack {
-                Text("Period Volume Chart")
+                Text("Typical Period Volume")
                 Spacer()
                 Text("\(Int(viewModel.averageTotalPeriodVolume)) mL")
                     .bold()
@@ -98,7 +98,7 @@ struct StatisticsView: View {
             destination: VolumeChart(viewModel: viewModel.makeDailyVolumeViewModel())
         ) {
             HStack {
-                Text("Daily Volume Chart")
+                Text("Typical Daily Volume")
                 Spacer()
             }
         }
