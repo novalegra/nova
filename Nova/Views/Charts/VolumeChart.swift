@@ -66,14 +66,14 @@ struct VolumeChart: View {
         Chart {
             ForEach(viewModel.points) {
                 BarMark(
-                    x: .value("Date", $0.title),
-                    y: .value("Volume", $0.flowVolume)
+                    x: .value("Date", $0.description),
+                    y: .value($0.valueDescription, $0.value)
                 )
                 .foregroundStyle(Color.novaPink)
             }
             
             if let selected = viewModel.selected, let item = viewModel.point(id: selected) {
-                RuleMark(x: .value("Date", item.title))
+                RuleMark(x: .value("Date", item.description))
                     .foregroundStyle(Color(.label))
                     .annotation(position: .leading, alignment: .top) {
                         Text(item.detailDescription)

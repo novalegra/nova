@@ -8,65 +8,25 @@
 
 import Foundation
 
-struct MenstrualVolumePoint: Identifiable {
-    let title: String
-    private let description: String?
-    let flowVolume: Double
-    
-    init(start: Date, end: Date, flowVolume: Double) {
-        let startString = start.formatted(
-            .dateTime
-            .month(.twoDigits).day()
-        )
-        
-        let endString = end.formatted(
-            .dateTime
-            .month(.twoDigits).day()
-        )
-        
-        // FIXME: hack since SwiftCharts cuts off strings
-        let startEndSpacer = "\n" + String(repeating: " ", count: max(0, startString.count - 2)) + "→\n"
-        
-        self.init(uniqueTitle: startString + startEndSpacer + endString,
-                  description: startString + "-" + endString,
-                  flowVolume: flowVolume)
-    }
-    
-    /// `uniqueTitle` will be displayed on the axis and `description` will be displayed when a user scrubs over
-    init(uniqueTitle: String, description: String? = nil, flowVolume: Double) {
-        self.title = uniqueTitle
-        self.description = description
-        self.flowVolume = flowVolume
-    }
-    
-    var id: String {
-        title
-    }
-    
-    var detailDescription: String {
-        "\(flowVolume) mL \n\(description ?? title)"
-    }
-}
-
 class VolumeViewModel: ObservableObject {
-    @Published var selected: MenstrualVolumePoint.ID? = nil
+    @Published var selected: MenstrualPoint.ID? = nil
     
-    let points: [MenstrualVolumePoint]
+    let points: [MenstrualPoint]
     let title: String
     let xAxisLabel: String
     
-    init(points: [MenstrualVolumePoint], type: ChartType) {
+    init(points: [MenstrualPoint], type: ChartType) {
         self.points = points
         self.title = type.title
         self.xAxisLabel = type.xAxisLabel
     }
     
-    func point(id: MenstrualVolumePoint.ID) -> MenstrualVolumePoint? {
+    func point(id: MenstrualPoint.ID) -> MenstrualPoint? {
         points.first(where: { $0.id == id })
     }
     
-    func point(titled title: String) -> MenstrualVolumePoint? {
-        points.first(where: { $0.title == title })
+    func point(titled title: String) -> MenstrualPoint? {
+        points.first(where: { $0.description == title })
     }
     
     func didSelect(title: String) {
@@ -90,8 +50,9 @@ class VolumeViewModel: ObservableObject {
 }
 
 fileprivate extension MenstrualPeriod {
-    var totalVolumePoint: MenstrualVolumePoint {
-        MenstrualVolumePoint(start: startDate, end: endDate, flowVolume: totalFlow)
+    var totalVolumePoint: MenstrualPoint {
+        MenstrualPoint(start: startDate, end: endDate, flowVolume: totalFlow)
+    }
     }
 }
 
@@ -118,15 +79,15 @@ extension MenstrualDataManager {
         
         let points = volumesByDay.enumerated().compactMap { (idx, volume) in
             guard volume > 0 else {
-                let nilReturn: MenstrualVolumePoint? = nil // FIXME: this explicit type is needed to avoid compiler error
+                let nilReturn: MenstrualPoint? = nil // FIXME: this explicit type is needed to avoid compiler error
                 return nilReturn
             }
             
             let dateNum = idx + 1
             
-            return MenstrualVolumePoint(
+            return MenstrualPoint(
                 uniqueTitle: String(dateNum),
-                description: "Day \(dateNum)", // ANNA TODO: localize
+                detailedTitle: "Day \(dateNum)", // ANNA TODO: localize
                 flowVolume: volume
             )
         }
