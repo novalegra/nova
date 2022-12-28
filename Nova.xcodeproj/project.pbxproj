@@ -7,8 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		E90ED4C2250D73D100F56679 /* SegmentedGaugeBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = E90ED4C1250D73D100F56679 /* SegmentedGaugeBar.swift */; };
-		E90ED4C4250D750D00F56679 /* MenstrualStatisticsDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E90ED4C3250D750D00F56679 /* MenstrualStatisticsDetailView.swift */; };
 		E914695C250C1BD000D64A5A /* CoordinatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E914695B250C1BD000D64A5A /* CoordinatorView.swift */; };
 		E9146975250C7C7E00D64A5A /* StatisticsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9146974250C7C7E00D64A5A /* StatisticsView.swift */; };
 		E9146977250D5F0D00D64A5A /* MenstrualPeriod.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9146976250D5F0D00D64A5A /* MenstrualPeriod.swift */; };
@@ -133,8 +131,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		E90ED4C1250D73D100F56679 /* SegmentedGaugeBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SegmentedGaugeBar.swift; sourceTree = "<group>"; };
-		E90ED4C3250D750D00F56679 /* MenstrualStatisticsDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenstrualStatisticsDetailView.swift; sourceTree = "<group>"; };
 		E914695B250C1BD000D64A5A /* CoordinatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoordinatorView.swift; sourceTree = "<group>"; };
 		E9146974250C7C7E00D64A5A /* StatisticsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsView.swift; sourceTree = "<group>"; };
 		E9146976250D5F0D00D64A5A /* MenstrualPeriod.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenstrualPeriod.swift; sourceTree = "<group>"; };
@@ -246,8 +242,6 @@
 			isa = PBXGroup;
 			children = (
 				E9146974250C7C7E00D64A5A /* StatisticsView.swift */,
-				E90ED4C1250D73D100F56679 /* SegmentedGaugeBar.swift */,
-				E90ED4C3250D750D00F56679 /* MenstrualStatisticsDetailView.swift */,
 			);
 			path = Statistics;
 			sourceTree = "<group>";
@@ -685,7 +679,6 @@
 				E95F5BC228EBC472005F74A8 /* NotificationManager.swift in Sources */,
 				E995A51D25071BD0009D52CF /* WeekView.swift in Sources */,
 				E9DDBAAE2664158400594E0E /* MenstrualPredicates.swift in Sources */,
-				E90ED4C2250D73D100F56679 /* SegmentedGaugeBar.swift in Sources */,
 				E995A52D250750C8009D52CF /* HKCategorySample+MenstrualSample.swift in Sources */,
 				E995A5272507289B009D52CF /* MenstrualSample.swift in Sources */,
 				E95656DF2537B307006CD2BA /* SelectionState.swift in Sources */,
@@ -698,7 +691,6 @@
 				E950CAA22906084D00B5B692 /* VolumeViewModel.swift in Sources */,
 				E95F5BC828F0781C005F74A8 /* WatchDataCodingKeys.swift in Sources */,
 				E9B469DD295BC21C0031056B /* MenstrualPoint.swift in Sources */,
-				E90ED4C4250D750D00F56679 /* MenstrualStatisticsDetailView.swift in Sources */,
 				E914695C250C1BD000D64A5A /* CoordinatorView.swift in Sources */,
 				E95656F92537B57C006CD2BA /* SettingsView.swift in Sources */,
 			);

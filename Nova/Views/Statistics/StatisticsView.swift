@@ -17,9 +17,7 @@ struct StatisticsView: View {
                 lastPeriodItem
                 Section {
                     totalVolumeChart
-                    totalVolumeItem
                     dailyVolumeChart
-                    dailyVolumeItem
                     periodLengthChart
                 }
             }
@@ -35,34 +33,6 @@ struct StatisticsView: View {
             Text(viewModel.lastPeriodDate)
                 .bold()
         }
-    }
-    
-    var dailyVolumeItem: some View {
-        NavigationLink(
-            destination: MenstrualStatisticsDetailView(viewModel: viewModel, title: "Daily Volume", mode: .dailyVolume)
-        ) {
-            HStack {
-                Text("Typical Daily Volume")
-                Spacer()
-                Text("\(Int(viewModel.averageDailyPeriodVolume)) mL")
-                    .bold()
-            }
-        }
-        .disabled(viewModel.periods.count < 1)
-    }
-    
-    var totalVolumeItem: some View {
-        NavigationLink(
-            destination: MenstrualStatisticsDetailView(viewModel: viewModel, title: "Period Volume", mode: .overallVolume)
-        ) {
-            HStack {
-                Text("Typical Period Volume")
-                Spacer()
-                Text("\(Int(viewModel.averageTotalPeriodVolume)) mL")
-                    .bold()
-            }
-        }
-        .disabled(viewModel.periods.count < 1)
     }
     
     var totalVolumeChart: some View {
@@ -86,6 +56,7 @@ struct StatisticsView: View {
             HStack {
                 Text("Typical Period Length")
                 Spacer()
+                // FIXME: use date formatter
                 Text(viewModel.averagePeriodLength != 1 ? "\(viewModel.averagePeriodLength) days" :  "\(viewModel.averagePeriodLength) day")
                     .bold()
             }
@@ -100,20 +71,6 @@ struct StatisticsView: View {
             HStack {
                 Text("Typical Daily Volume")
                 Spacer()
-            }
-        }
-        .disabled(viewModel.periods.count < 1)
-    }
-    
-    var periodLengthItem: some View {
-        NavigationLink(
-            destination: MenstrualStatisticsDetailView(viewModel: viewModel, title: "Period Length", mode: .length)
-        ) {
-            HStack {
-                Text("Typical Period Length")
-                Spacer()
-                Text(viewModel.averagePeriodLength != 1 ? "\(viewModel.averagePeriodLength) days" :  "\(viewModel.averagePeriodLength) day")
-                    .bold()
             }
         }
         .disabled(viewModel.periods.count < 1)
