@@ -25,32 +25,32 @@ struct MenstrualPoint: Identifiable {
     let valueDescription: String
     
     init(start: Date, end: Date, flowVolume: Double) {
-        let (uniqueTitle, detailedTitle) = Self.titles(start: start, end: end)
+        let (uniqueDescription, detailedDescription) = Self.descriptions(start: start, end: end)
         
-        self.init(uniqueTitle: uniqueTitle,
-                  detailedTitle: detailedTitle,
+        self.init(uniqueDescription: uniqueDescription,
+                  detailedDescription: detailedDescription,
                   flowVolume: flowVolume)
     }
     
-    /// `uniqueTitle` will be displayed on the axis and `description` will be displayed when a user scrubs over
-    init(uniqueTitle: String, detailedTitle: String, flowVolume: Double) {
-        self.description = uniqueTitle
+    /// `uniqueDescription` will be displayed on the axis and `detailedDescription` will be displayed when a user scrubs over
+    init(uniqueDescription: String, detailedDescription: String, flowVolume: Double) {
+        self.description = uniqueDescription
         self.value = flowVolume
-        self.detailDescription = "\(String(format: "%.2f", value)) mL \n\(detailedTitle)"
+        self.detailDescription = "\(String(format: "%.2f", value)) mL \n\(detailedDescription)"
         self.valueDescription = "Volume"
     }
     
     init(start: Date, end: Date, days: Int) {
-        let (uniqueTitle, detailedTitle) = Self.titles(start: start, end: end)
+        let (uniqueDescription, detailedDescription) = Self.descriptions(start: start, end: end)
         
         let formatter = DateComponentsFormatter()
         formatter.unitsStyle = .full
         formatter.allowedUnits = [.day]
         let components = DateComponents(day: days)
         
-        self.description = uniqueTitle
+        self.description = uniqueDescription
         self.value = Double(days)
-        self.detailDescription = "\(formatter.string(from: components) ?? "") \n\(detailedTitle)"
+        self.detailDescription = "\(formatter.string(from: components) ?? "") \n\(detailedDescription)"
         self.valueDescription = "Days"
     }
     
@@ -61,7 +61,7 @@ struct MenstrualPoint: Identifiable {
 
 // MARK: - Initialization Helpers
 extension MenstrualPoint {
-    static func titles(start: Date, end: Date) -> (uniqueTitle: String, detailedTitle: String) {
+    static func descriptions(start: Date, end: Date) -> (uniqueDescription: String, detailedDescription: String) {
         let startString = start.formatted(
             .dateTime
             .month(.twoDigits).day()
@@ -75,7 +75,7 @@ extension MenstrualPoint {
         // FIXME: newline hack to prevent SwiftCharts from cutting off the strings
         let startEndSpacer = "\n" + String(repeating: " ", count: max(0, startString.count - 2)) + "→\n"
         
-        return (uniqueTitle: startString + startEndSpacer + endString,
-                detailedTitle: startString + "-" + endString)
+        return (uniqueDescription: startString + startEndSpacer + endString,
+                detailedDescription: startString + "-" + endString)
     }
 }

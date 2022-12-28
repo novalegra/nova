@@ -94,8 +94,8 @@ extension MenstrualDataManager {
             let dateNum = idx + 1
             
             return MenstrualPoint(
-                uniqueTitle: String(dateNum),
-                detailedTitle: "Day \(dateNum)", // ANNA TODO: localize
+                uniqueDescription: String(dateNum),
+                detailedDescription: "Day \(dateNum)", // ANNA TODO: localize
                 flowVolume: volume
             )
         }
