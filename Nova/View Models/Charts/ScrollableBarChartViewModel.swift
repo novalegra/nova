@@ -9,10 +9,11 @@
 import Foundation
 import Charts
 
-class VolumeViewModel: ObservableObject {
-    @Published var selected: MenstrualPoint.ID? = nil
+// ANNA TODO: unit tests for this
+class ScrollableBarChartViewModel: ObservableObject {
+    @Published var selected: ScrollableChartPoint.ID? = nil
     
-    let points: [MenstrualPoint]
+    let points: [ScrollableChartPoint]
     let title: String
     let xAxisLabel: String
     
@@ -25,17 +26,17 @@ class VolumeViewModel: ObservableObject {
         return selected == points.first?.id ? .trailing : .leading
     }
     
-    init(points: [MenstrualPoint], type: ChartType) {
+    init(points: [ScrollableChartPoint], type: ChartType) {
         self.points = points
         self.title = type.title
         self.xAxisLabel = type.xAxisLabel
     }
     
-    func point(id: MenstrualPoint.ID) -> MenstrualPoint? {
+    func point(id: ScrollableChartPoint.ID) -> ScrollableChartPoint? {
         points.first(where: { $0.id == id })
     }
     
-    func point(titled title: String) -> MenstrualPoint? {
+    func point(titled title: String) -> ScrollableChartPoint? {
         points.first(where: { $0.description == title })
     }
     
@@ -60,32 +61,32 @@ class VolumeViewModel: ObservableObject {
 }
 
 fileprivate extension MenstrualPeriod {
-    var totalVolumePoint: MenstrualPoint {
-        MenstrualPoint(start: startDate, end: endDate, flowVolume: totalFlow)
+    var totalVolumePoint: ScrollableChartPoint {
+        ScrollableChartPoint(start: startDate, end: endDate, flowVolume: totalFlow)
     }
     
-    var lengthPoint: MenstrualPoint {
-        MenstrualPoint(start: startDate, end: endDate, days: duration)
+    var lengthPoint: ScrollableChartPoint {
+        ScrollableChartPoint(start: startDate, end: endDate, days: duration)
     }
 }
 
 extension MenstrualDataManager {
-    func makeTotalVolumeViewModel() -> VolumeViewModel {
-        VolumeViewModel(points: periods.map { $0.totalVolumePoint },
+    func makeTotalVolumeViewModel() -> ScrollableBarChartViewModel {
+        ScrollableBarChartViewModel(points: periods.map { $0.totalVolumePoint },
                         type: .totalVolume)
     }
     
-    func makePeriodLengthViewModel() -> VolumeViewModel {
-        VolumeViewModel(points: periods.map { $0.lengthPoint },
+    func makePeriodLengthViewModel() -> ScrollableBarChartViewModel {
+        ScrollableBarChartViewModel(points: periods.map { $0.lengthPoint },
                         type: .periodLength)
     }
     
-    func makeDailyVolumeViewModel() -> VolumeViewModel {
+    func makeDailyVolumeViewModel() -> ScrollableBarChartViewModel {
         guard
             let maxPeriodLength = periods.map({ $0.duration }).max(),
             maxPeriodLength > 0
         else {
-            return VolumeViewModel(points: [], type: .dailyVolume)
+            return ScrollableBarChartViewModel(points: [], type: .dailyVolume)
         }
         
         let volumesByDay = (0...maxPeriodLength-1).map({ dayNumber in
@@ -97,19 +98,19 @@ extension MenstrualDataManager {
         
         let points = volumesByDay.enumerated().compactMap { (idx, volume) in
             guard volume > 0 else {
-                let nilReturn: MenstrualPoint? = nil // FIXME: this explicit type is needed to avoid compiler error
+                let nilReturn: ScrollableChartPoint? = nil // FIXME: this explicit type is needed to avoid compiler error
                 return nilReturn
             }
             
             let dateNum = idx + 1
             
-            return MenstrualPoint(
+            return ScrollableChartPoint(
                 uniqueDescription: String(dateNum),
                 detailedDescription: "Day \(dateNum)", // ANNA TODO: localize
                 flowVolume: volume
             )
         }
         
-        return VolumeViewModel(points: points, type: .dailyVolume)
+        return ScrollableBarChartViewModel(points: points, type: .dailyVolume)
     }
 }

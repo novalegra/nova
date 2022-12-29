@@ -37,7 +37,7 @@ struct StatisticsView: View {
     
     var totalVolumeChart: some View {
         NavigationLink(
-            destination: VolumeChart(viewModel: viewModel.makeTotalVolumeViewModel())
+            destination: ScrollableBarChart(viewModel: viewModel.makeTotalVolumeViewModel())
         ) {
             HStack {
                 Text("Typical Period Volume")
@@ -51,7 +51,7 @@ struct StatisticsView: View {
     
     var periodLengthChart: some View {
         NavigationLink(
-            destination: VolumeChart(viewModel: viewModel.makePeriodLengthViewModel())
+            destination: ScrollableBarChart(viewModel: viewModel.makePeriodLengthViewModel())
         ) {
             HStack {
                 Text("Typical Period Length")
@@ -66,7 +66,7 @@ struct StatisticsView: View {
     
     var dailyVolumeChart: some View {
         NavigationLink(
-            destination: VolumeChart(viewModel: viewModel.makeDailyVolumeViewModel())
+            destination: ScrollableBarChart(viewModel: viewModel.makeDailyVolumeViewModel())
         ) {
             HStack {
                 Text("Typical Daily Volume")

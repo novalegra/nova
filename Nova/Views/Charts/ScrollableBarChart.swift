@@ -1,5 +1,5 @@
 //
-//  VolumeChart.swift
+//  ScrollableBarChart.swift
 //  Nova
 //
 //  Created by Anna Quinlan on 10/23/22.
@@ -9,8 +9,8 @@
 import SwiftUI
 import Charts
 
-struct VolumeChart: View {
-    @ObservedObject var viewModel: VolumeViewModel
+struct ScrollableBarChart: View {
+    @ObservedObject var viewModel: ScrollableBarChartViewModel
     
     var body: some View {
         VStack(alignment: .center) {

@@ -1,5 +1,5 @@
 //
-//  MenstrualPoint.swift
+//  ScrollableChartPoint.swift
 //  Nova
 //
 //  Created by Anna Quinlan on 12/27/22.
@@ -9,7 +9,7 @@
 import Foundation
 import HealthKit
 
-struct MenstrualPoint: Identifiable {
+struct ScrollableChartPoint: Identifiable {
     /// Description of the point instance (ex: "1")
     /// _Must_ be unique
     let description: String
@@ -60,7 +60,7 @@ struct MenstrualPoint: Identifiable {
 }
 
 // MARK: - Initialization Helpers
-extension MenstrualPoint {
+extension ScrollableChartPoint {
     static func descriptions(start: Date, end: Date) -> (uniqueDescription: String, detailedDescription: String) {
         let startString = start.formatted(
             .dateTime
