@@ -72,10 +72,10 @@ struct VolumeChart: View {
                 .foregroundStyle(Color.novaPink)
             }
             
-            if let selected = viewModel.selected, let item = viewModel.point(id: selected) {
+            if let selected = viewModel.selected, let item = viewModel.point(id: selected), let annotationPosition = viewModel.selectionDetailPosition {
                 RuleMark(x: .value("Date", item.description))
                     .foregroundStyle(Color(.label))
-                    .annotation(position: .leading, alignment: .top) {
+                    .annotation(position: annotationPosition, alignment: .top) {
                         Text(item.detailDescription)
                             .font(
                                 .caption

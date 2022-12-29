@@ -15,6 +15,15 @@ class VolumeViewModel: ObservableObject {
     let title: String
     let xAxisLabel: String
     
+    var selectionDetailPosition: AnnotationPosition? {
+        guard let selected else {
+            return nil
+        }
+        
+        /// Avoid the first description being cut off
+        return selected == points.first?.id ? .trailing : .leading
+    }
+    
     init(points: [MenstrualPoint], type: ChartType) {
         self.points = points
         self.title = type.title
