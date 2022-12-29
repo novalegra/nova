@@ -72,10 +72,15 @@ extension MenstrualPoint {
             .month(.twoDigits).day()
         )
         
+        let detailedEndString = end.formatted(
+            .dateTime
+            .month(.twoDigits).day().year()
+        )
+        
         // FIXME: newline hack to prevent SwiftCharts from cutting off the strings
         let startEndSpacer = "\n" + String(repeating: " ", count: max(0, startString.count - 2)) + "→\n"
         
         return (uniqueDescription: startString + startEndSpacer + endString,
-                detailedDescription: startString + "-" + endString)
+                detailedDescription: startString + "-" + detailedEndString)
     }
 }
