@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Charts
 
 class VolumeViewModel: ObservableObject {
     @Published var selected: MenstrualPoint.ID? = nil

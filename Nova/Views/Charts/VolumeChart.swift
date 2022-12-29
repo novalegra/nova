@@ -81,6 +81,10 @@ struct VolumeChart: View {
                                 .caption
                                 .bold()
                             )
+                            .foregroundColor(.white)
+                            .padding(ViewConstants.smallPadding)
+                            .background(Color.novaPink)
+                            .clipShape(RoundedRectangle(cornerRadius: ViewConstants.cornerRadius))
                             .roundedBorder()
                     }
             }
