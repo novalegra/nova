@@ -21,7 +21,7 @@ struct WatchMainView: View {
                 ) {
                     FlowTile(date: date, dataManager: dataManager)
                 }
-                .padding(5)
+                .padding(ViewConstants.smallPadding)
                 .frame(height: 50)
                 .listRowBackground(Color.white.cornerRadius(15))
                 .disabled(date > Date())

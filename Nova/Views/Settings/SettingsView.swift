@@ -68,7 +68,7 @@ struct SettingsView: View {
             }
             .pickerStyle(SegmentedPickerStyle())
         }
-        .padding(.vertical, 5)
+        .padding(.vertical, ViewConstants.smallPadding)
     }
     
     private var cupPickerSection: some View {
@@ -77,7 +77,7 @@ struct SettingsView: View {
                 Text("Menstrual Cup Type", comment: "Label for menstrual cup type setting")
                 menstrualCupPicker
             }
-            .padding(.vertical, 5)
+            .padding(.vertical, ViewConstants.smallPadding)
         }
     }
     

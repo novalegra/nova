@@ -81,6 +81,7 @@ struct VolumeChart: View {
                                 .caption
                                 .bold()
                             )
+                            .roundedBorder()
                     }
             }
         }
