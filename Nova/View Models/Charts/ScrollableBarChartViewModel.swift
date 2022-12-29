@@ -1,5 +1,5 @@
 //
-//  File.swift
+//  ScrollableBarChartViewModel.swift
 //  Nova
 //
 //  Created by Anna Quinlan on 10/23/22.

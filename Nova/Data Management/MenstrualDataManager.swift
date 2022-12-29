@@ -16,8 +16,72 @@ class MenstrualDataManager: ObservableObject {
     let allowablePeriodGap: Int = 1
     @Published var periods: [MenstrualPeriod] = []
     
+    // MARK: Computed Properties
+    var lastPeriodDate: String {
+        return yearFormattedDate(for: periods.last?.startDate)
+    }
+    
+    var averageTotalPeriodVolume: Double {
+        let totalVolume = periods.reduce(0.0) {sum, curr in sum + curr.totalFlow}
+        let totalPeriods = periods.reduce(0.0) {sum, curr in curr.averageDailyFlow > 0 ? sum + 1: sum}
+        
+        guard totalPeriods > 0 else {
+            return 0
+        }
+        return totalVolume / totalPeriods
+    }
+    
+    var averageDailyPeriodVolume: Double {
+        let totalVolume = periods.reduce(0.0) {sum, curr in sum + curr.averageDailyFlow}
+        let totalPeriods = periods.reduce(0.0) {sum, curr in curr.averageDailyFlow > 0 ? sum + 1: sum}
+        
+        guard totalPeriods > 0 else {
+            return 0
+        }
+        return totalVolume / totalPeriods
+    }
+    
+    var averagePeriodLength: Int {
+        guard periods.count > 0 else {
+            return 0
+        }
+        return periods.reduce(0) {sum, curr in sum + curr.duration} / periods.count
+    }
+    
     var reverseOrderedPeriods: [MenstrualPeriod] {
         return periods.reversed()
+    }
+    
+    // MARK: Settings
+    var volumeUnit: VolumeType = UserDefaults.app?.volumeType ?? .percentOfCup {
+        didSet {
+            UserDefaults.app?.volumeType = volumeUnit
+        }
+    }
+    
+    var cupType: MenstrualCupType = UserDefaults.app?.menstrualCupType ?? .lenaSmall {
+        didSet {
+            UserDefaults.app?.menstrualCupType = cupType
+        }
+    }
+    
+    var notificationsEnabled = UserDefaults.app?.notificationsEnabled ?? false {
+        didSet {
+            UserDefaults.app?.notificationsEnabled = notificationsEnabled
+        }
+    }
+    
+    var flowPickerOptions: [String] {
+        flowPickerNumbers.map { String(Int($0)) }
+    }
+    
+    var flowPickerNumbers: [Double] {
+        switch volumeUnit {
+        case .mL:
+            return Array(0...240).map { Double($0) }
+        case .percentOfCup:
+            return Array(0...120).map { Double($0 * 5) }
+        }
     }
     
     init(store: MenstrualStore) {
@@ -77,38 +141,6 @@ class MenstrualDataManager: ObservableObject {
         return output
     }
     
-    // MARK: Computed Properties
-    var lastPeriodDate: String {
-        return yearFormattedDate(for: periods.last?.startDate)
-    }
-    
-    var averageTotalPeriodVolume: Double {
-        let totalVolume = periods.reduce(0.0) {sum, curr in sum + curr.totalFlow}
-        let totalPeriods = periods.reduce(0.0) {sum, curr in curr.averageDailyFlow > 0 ? sum + 1: sum}
-        
-        guard totalPeriods > 0 else {
-            return 0
-        }
-        return totalVolume / totalPeriods
-    }
-    
-    var averageDailyPeriodVolume: Double {
-        let totalVolume = periods.reduce(0.0) {sum, curr in sum + curr.averageDailyFlow}
-        let totalPeriods = periods.reduce(0.0) {sum, curr in curr.averageDailyFlow > 0 ? sum + 1: sum}
-        
-        guard totalPeriods > 0 else {
-            return 0
-        }
-        return totalVolume / totalPeriods
-    }
-    
-    var averagePeriodLength: Int {
-        guard periods.count > 0 else {
-            return 0
-        }
-        return periods.reduce(0) {sum, curr in sum + curr.duration} / periods.count
-    }
-    
     // MARK: Data Helper Functions
     func hasMenstrualFlow(at date: Date) -> Bool {
         return store.hasMenstrualFlow(at: date)
@@ -166,38 +198,6 @@ class MenstrualDataManager: ObservableObject {
             }
             
             completion(result)
-        }
-    }
-    
-    // MARK: Settings
-    var volumeUnit: VolumeType = UserDefaults.app?.volumeType ?? .percentOfCup {
-        didSet {
-            UserDefaults.app?.volumeType = volumeUnit
-        }
-    }
-    
-    var cupType: MenstrualCupType = UserDefaults.app?.menstrualCupType ?? .lenaSmall {
-        didSet {
-            UserDefaults.app?.menstrualCupType = cupType
-        }
-    }
-    
-    var notificationsEnabled = UserDefaults.app?.notificationsEnabled ?? false {
-        didSet {
-            UserDefaults.app?.notificationsEnabled = notificationsEnabled
-        }
-    }
-    
-    var flowPickerOptions: [String] {
-        flowPickerNumbers.map { String(Int($0)) }
-    }
-    
-    var flowPickerNumbers: [Double] {
-        switch volumeUnit {
-        case .mL:
-            return Array(0...240).map { Double($0) }
-        case .percentOfCup:
-            return Array(0...120).map { Double($0 * 5) }
         }
     }
     
