@@ -71,6 +71,23 @@ class MenstrualDataManager: ObservableObject {
         }
     }
     
+    var customCupVolume: Double {
+        get {
+            guard let customVolume = UserDefaults.app?.customCupVolume, customVolume > 0 else {
+                return Constants.defaultCustomCupVolume
+            }
+
+            return customVolume
+        }
+        set {
+            guard newValue > 0 else {
+                return
+            }
+            
+            UserDefaults.app?.customCupVolume = newValue
+        }
+    }
+    
     var flowPickerOptions: [String] {
         flowPickerNumbers.map { String(Int($0)) }
     }

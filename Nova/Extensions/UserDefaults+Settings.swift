@@ -12,6 +12,7 @@ extension UserDefaults {
     private enum Key: String {
         case volumeUnit = "com.novalegra.Nova.VolumeType"
         case menstrualCupType = "com.novalegra.Nova.MenstrualCupType"
+        case menstrualCupCustomVolume = "com.novalegra.Nova.MenstrualCupCustomVolume"
         case notificationsEnabled = "com.novalegra.Nova.NotificationEnabled"
     }
 
@@ -49,6 +50,15 @@ extension UserDefaults {
         }
         set {
             set(newValue, forKey: Key.notificationsEnabled.rawValue)
+        }
+    }
+    
+    var customCupVolume: Double? {
+        get {
+            double(forKey: Key.menstrualCupCustomVolume.rawValue)
+        }
+        set {
+            set(newValue, forKey: Key.menstrualCupCustomVolume.rawValue)
         }
     }
 }

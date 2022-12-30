@@ -6,6 +6,8 @@
 //  Copyright © 2020 Anna Quinlan. All rights reserved.
 //
 
+import Foundation
+
 // Values from https://putacupinit.com/chart/
 enum MenstrualCupType: String, Equatable, CaseIterable {
     case blossomSmall = "Blossom (S)"
@@ -68,6 +70,8 @@ enum MenstrualCupType: String, Equatable, CaseIterable {
     case tampaxSmall = "Tampax (S)"
     case tampaxLarge = "Tampax (L)"
     
+    case other = "Other"
+    
     // Unit: mL
     var maxVolume: Double {
         switch self {
@@ -111,6 +115,8 @@ enum MenstrualCupType: String, Equatable, CaseIterable {
             return 41
         case .merulaXL:
             return 50
+        case .other:
+            return UserDefaults.app?.customCupVolume ?? Constants.defaultCustomCupVolume
         }
     }
 }

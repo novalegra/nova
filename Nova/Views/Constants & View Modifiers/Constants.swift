@@ -11,4 +11,5 @@ import Foundation
 struct Constants {
     static let smallPadding = 5.0
     static let cornerRadius = 10.0
+    static let defaultCustomCupVolume = 25.0
 }

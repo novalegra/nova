@@ -26,17 +26,17 @@ struct SettingsView: View {
     @ObservedObject var viewModel: MenstrualDataManager
     @State private var selectedVolumeType: VolumeType = .percentOfCup
     @State private var selectedMenstrualCupType: MenstrualCupType = .lenaSmall
-    @State private var notificationsEnabled: Bool = false
+    @State private var notificationsEnabled = false
+    @State private var customCupVolume = Constants.defaultCustomCupVolume
 
     var body: some View {
         NavigationView {
             List {
-                // FIXME: removed due to iOS 14 bug
-    //            volumeTypeSection
-    //            if selectedVolumeType == .percentOfCup {
-    //                cupPickerSection
-    //            }
-                cupPickerSection
+                Section("Menstrual Cup Type") {
+                    cupPickerSection
+                }
+                .headerProminence(.increased)
+                
                 Section("Notifications") {
                     notificationsPicker
                 }
@@ -50,10 +50,12 @@ struct SettingsView: View {
                 selectedMenstrualCupType = viewModel.cupType
                 selectedVolumeType = .percentOfCup//viewModel.volumeUnit
                 notificationsEnabled = viewModel.notificationsEnabled
+                customCupVolume = viewModel.customCupVolume
             }
             .onDisappear {
                 saveSettingsToDataManager()
             }
+            .scrollDismissesKeyboard(.immediately) // TODO: file radar for this having buggy animations
         }
     }
     
@@ -68,16 +70,18 @@ struct SettingsView: View {
             }
             .pickerStyle(SegmentedPickerStyle())
         }
-        .padding(.vertical, ViewConstants.smallPadding)
+        .padding(.vertical, Constants.smallPadding)
     }
     
     private var cupPickerSection: some View {
         Section {
             VStack(alignment: .leading) {
-                Text("Menstrual Cup Type", comment: "Label for menstrual cup type setting")
                 menstrualCupPicker
+                if selectedMenstrualCupType == .other {
+                    otherCupTypeVolumeField
+                }
             }
-            .padding(.vertical, ViewConstants.smallPadding)
+            .padding(.vertical, Constants.smallPadding)
         }
     }
     
@@ -91,6 +95,21 @@ struct SettingsView: View {
         .pickerStyle(WheelPickerStyle())
         // Hack to center the picker in the screen
         .frame(minWidth: 0, maxWidth: .infinity, alignment: .center)
+    }
+    
+    private var otherCupTypeVolumeField: some View {
+        HStack {
+            Text("Cup Volume:")
+            Spacer()
+            HStack(alignment: .firstTextBaseline) {
+                TextField("Volume Entry", value: $customCupVolume, format: .number, prompt: Text("25"))
+                    .multilineTextAlignment(.trailing)
+                    .keyboardType(.decimalPad)
+                    .textFieldStyle(.roundedBorder)
+                    .submitLabel(.done)
+                Text("mL")
+            }
+        }
     }
     
     private var notificationsPicker: some View {
@@ -110,5 +129,6 @@ struct SettingsView: View {
         viewModel.volumeUnit = selectedVolumeType
         viewModel.cupType = selectedMenstrualCupType
         viewModel.notificationsEnabled = notificationsEnabled
+        viewModel.customCupVolume = customCupVolume
     }
 }
