@@ -72,9 +72,9 @@
 		E995A52B250732CB009D52CF /* FlowPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = E995A52A250732CB009D52CF /* FlowPicker.swift */; };
 		E995A52D250750C8009D52CF /* HKCategorySample+MenstrualSample.swift in Sources */ = {isa = PBXBuildFile; fileRef = E995A52C250750C7009D52CF /* HKCategorySample+MenstrualSample.swift */; };
 		E9B469DD295BC21C0031056B /* ScrollableChartPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9B469DC295BC21C0031056B /* ScrollableChartPoint.swift */; };
-		E9B469E0295D18D80031056B /* ViewConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9B469DF295D18D80031056B /* ViewConstants.swift */; };
+		E9B469E0295D18D80031056B /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9B469DF295D18D80031056B /* Constants.swift */; };
 		E9B469E2295D18F40031056B /* RoundedBorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9B469E1295D18F40031056B /* RoundedBorder.swift */; };
-		E9B469E3295D1A580031056B /* ViewConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9B469DF295D18D80031056B /* ViewConstants.swift */; };
+		E9B469E3295D1A580031056B /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9B469DF295D18D80031056B /* Constants.swift */; };
 		E9CECC84291316F0004B8BE8 /* UUID.swift in Sources */ = {isa = PBXBuildFile; fileRef = E98D3EAE2907F53200B70420 /* UUID.swift */; };
 		E9CECC8629132839004B8BE8 /* ChartConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9CECC8529132839004B8BE8 /* ChartConstants.swift */; };
 		E9CECC88291427FB004B8BE8 /* Array.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9CECC87291427FB004B8BE8 /* Array.swift */; };
@@ -191,7 +191,7 @@
 		E995A52A250732CB009D52CF /* FlowPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlowPicker.swift; sourceTree = "<group>"; };
 		E995A52C250750C7009D52CF /* HKCategorySample+MenstrualSample.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HKCategorySample+MenstrualSample.swift"; sourceTree = "<group>"; };
 		E9B469DC295BC21C0031056B /* ScrollableChartPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollableChartPoint.swift; sourceTree = "<group>"; };
-		E9B469DF295D18D80031056B /* ViewConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewConstants.swift; sourceTree = "<group>"; };
+		E9B469DF295D18D80031056B /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		E9B469E1295D18F40031056B /* RoundedBorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedBorder.swift; sourceTree = "<group>"; };
 		E9CECC8529132839004B8BE8 /* ChartConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartConstants.swift; sourceTree = "<group>"; };
 		E9CECC87291427FB004B8BE8 /* Array.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Array.swift; sourceTree = "<group>"; };
@@ -454,7 +454,7 @@
 		E9B469DE295D18A50031056B /* Constants & View Modifiers */ = {
 			isa = PBXGroup;
 			children = (
-				E9B469DF295D18D80031056B /* ViewConstants.swift */,
+				E9B469DF295D18D80031056B /* Constants.swift */,
 				E9B469E1295D18F40031056B /* RoundedBorder.swift */,
 			);
 			path = "Constants & View Modifiers";
@@ -650,7 +650,7 @@
 				E9DDBAAF266415D100594E0E /* MenstrualPredicates.swift in Sources */,
 				E95657072537C866006CD2BA /* CircleButtonStyle.swift in Sources */,
 				E98D3EB02907F54300B70420 /* UUID.swift in Sources */,
-				E9B469E3295D1A580031056B /* ViewConstants.swift in Sources */,
+				E9B469E3295D1A580031056B /* Constants.swift in Sources */,
 				E95656EE2537B53C006CD2BA /* MenstrualCupType.swift in Sources */,
 				E976177A252EA7710011B715 /* WatchDataManager.swift in Sources */,
 				E976175D252EA6340011B715 /* WatchMainView.swift in Sources */,
@@ -705,7 +705,7 @@
 				E957BBFF2512EA9000171FDC /* MenstrualCupType.swift in Sources */,
 				E995A51225071ACB009D52CF /* Calendar.swift in Sources */,
 				E950CAA22906084D00B5B692 /* ScrollableBarChartViewModel.swift in Sources */,
-				E9B469E0295D18D80031056B /* ViewConstants.swift in Sources */,
+				E9B469E0295D18D80031056B /* Constants.swift in Sources */,
 				E95F5BC828F0781C005F74A8 /* WatchDataCodingKeys.swift in Sources */,
 				E9B469DD295BC21C0031056B /* ScrollableChartPoint.swift in Sources */,
 				E9B469E2295D18F40031056B /* RoundedBorder.swift in Sources */,

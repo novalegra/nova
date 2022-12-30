@@ -82,9 +82,9 @@ struct ScrollableBarChart: View {
                                 .bold()
                             )
                             .foregroundColor(.white)
-                            .padding(ViewConstants.smallPadding)
+                            .padding(Constants.smallPadding)
                             .background(Color.novaPink)
-                            .clipShape(RoundedRectangle(cornerRadius: ViewConstants.cornerRadius))
+                            .clipShape(RoundedRectangle(cornerRadius: Constants.cornerRadius))
                             .roundedBorder()
                     }
             }
