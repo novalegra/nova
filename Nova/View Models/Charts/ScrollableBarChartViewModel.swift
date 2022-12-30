@@ -9,7 +9,7 @@
 import Foundation
 import Charts
 
-// ANNA TODO: unit tests for this
+// TODO: unit test chart interactivity
 class ScrollableBarChartViewModel: ObservableObject {
     @Published var selected: ScrollableChartPoint.ID? = nil
     
@@ -106,7 +106,7 @@ extension MenstrualDataManager {
             
             return ScrollableChartPoint(
                 uniqueDescription: String(dateNum),
-                detailedDescription: "Day \(dateNum)", // ANNA TODO: localize
+                detailedDescription: "Day \(dateNum)",
                 flowVolume: volume
             )
         }
