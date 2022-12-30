@@ -36,29 +36,44 @@ class MenstrualDataManagerTests: XCTestCase {
         try super.tearDownWithError()
     }
 
-    // MARK: volumeUnit
-    func testDefaultVolumeUnit() {
-        XCTAssertEqual(menstrualDataManager.volumeUnit, .percentOfCup)
-    }
-    
+    // MARK: UserDefaults settings
     func testSavingVolumeUnit() {
         menstrualDataManager.volumeUnit = .mL
-        XCTAssertEqual(menstrualDataManager.volumeUnit, .mL)
+        XCTAssertEqual(UserDefaults.app?.volumeType, .mL)
         
         menstrualDataManager.volumeUnit = .percentOfCup
-        XCTAssertEqual(menstrualDataManager.volumeUnit, .percentOfCup)
+        XCTAssertEqual(UserDefaults.app?.volumeType, .percentOfCup)
     }
-    
-    // MARK: cupType
+
     func testSavingCupType() {
         menstrualDataManager.cupType = .melunaShortLarge
-        XCTAssertEqual(menstrualDataManager.cupType, .melunaShortLarge)
+        XCTAssertEqual(UserDefaults.app?.menstrualCupType, .melunaShortLarge)
         
         menstrualDataManager.cupType = .juneSmall
-        XCTAssertEqual(menstrualDataManager.cupType, .juneSmall)
+        XCTAssertEqual(UserDefaults.app?.menstrualCupType, .juneSmall)
         
         menstrualDataManager.cupType = .divaLarge
-        XCTAssertEqual(menstrualDataManager.cupType, .divaLarge)
+        XCTAssertEqual(UserDefaults.app?.menstrualCupType, .divaLarge)
+    }
+    
+    func testSavingNotificationPref() {
+        menstrualDataManager.notificationsEnabled = true
+        XCTAssertEqual(UserDefaults.app?.notificationsEnabled, true)
+        
+        menstrualDataManager.notificationsEnabled = false
+        XCTAssertEqual(UserDefaults.app?.notificationsEnabled, false)
+    }
+
+    func testSavingCustomCupVolume() {
+        menstrualDataManager.customCupVolume = 30
+        XCTAssertEqual(UserDefaults.app?.customCupVolume, 30)
+        
+        // Zero or negative volume shouldn't be saved
+        menstrualDataManager.customCupVolume = 0
+        XCTAssertEqual(UserDefaults.app?.customCupVolume, 30)
+        
+        menstrualDataManager.customCupVolume = -1
+        XCTAssertEqual(UserDefaults.app?.customCupVolume, 30)
     }
     
     // MARK: flowPickerNumbers
