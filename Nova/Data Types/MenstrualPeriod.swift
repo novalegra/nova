@@ -9,26 +9,25 @@
 import Foundation
 
 class MenstrualPeriod {
+    /// Sorted by `startDate`
     let events: [MenstrualSample]
     let startDate: Date
     let endDate: Date
+    let uuid: UUID
     
-    init(events: [MenstrualSample]) {
-        guard let first = events.first else {
+    /// `uuid` will be automatically set to the UUID if the earliest event if the parameter is `nil`
+    init(events: [MenstrualSample], uuid: UUID? = nil) {
+        guard
+            let earliest = events.min(by: { $0.startDate < $1.startDate }),
+            let latest = events.max(by: { $0.endDate < $1.endDate })
+        else {
             fatalError("Tried to init menstrual period without any events")
         }
-        
-        var minDate = first.startDate
-        var maxDate = first.endDate
-        
-        for event in events {
-            minDate = min(minDate, event.startDate)
-            maxDate = max(maxDate, event.endDate)
-        }
-        
-        self.events = events
-        self.startDate = minDate
-        self.endDate = maxDate
+
+        self.events = events.sorted(by: {$0.startDate < $1.startDate})
+        self.startDate = earliest.startDate
+        self.endDate = latest.endDate
+        self.uuid = uuid ?? earliest.uuid
     }
     
     var totalFlow: Double {
@@ -76,3 +75,16 @@ class MenstrualPeriod {
     }
 }
 
+extension MenstrualPeriod: Equatable {
+    /// 2 menstrual periods are the same if they're the same periods in the same order
+    static func == (lhs: MenstrualPeriod, rhs: MenstrualPeriod) -> Bool {
+        return (
+            lhs.startDate == rhs.startDate
+            && lhs.endDate == rhs.endDate
+            && lhs.uuid == rhs.uuid
+            && zip(lhs.events, rhs.events).reduce(true) { partialResult, elementPair in
+                partialResult && elementPair.0 == elementPair.1
+            }
+        )
+    }
+}

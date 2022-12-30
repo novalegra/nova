@@ -16,9 +16,9 @@ struct StatisticsView: View {
             List {
                 lastPeriodItem
                 Section {
-                    totalVolumeItem
-                    dailyVolumeItem
-                    periodLengthItem
+                    totalVolumeChart
+                    dailyVolumeChart
+                    periodLengthChart
                 }
             }
                 .listStyle(InsetGroupedListStyle())
@@ -35,23 +35,9 @@ struct StatisticsView: View {
         }
     }
     
-    var dailyVolumeItem: some View {
+    var totalVolumeChart: some View {
         NavigationLink(
-            destination: MenstrualStatisticsDetailView(viewModel: viewModel, title: "Daily Volume", mode: .dailyVolume)
-        ) {
-            HStack {
-                Text("Typical Daily Volume")
-                Spacer()
-                Text("\(Int(viewModel.averageDailyPeriodVolume)) mL")
-                    .bold()
-            }
-        }
-        .disabled(viewModel.periods.count < 1)
-    }
-    
-    var totalVolumeItem: some View {
-        NavigationLink(
-            destination: MenstrualStatisticsDetailView(viewModel: viewModel, title: "Period Volume", mode: .overallVolume)
+            destination: ScrollableBarChart(viewModel: viewModel.makeTotalVolumeViewModel())
         ) {
             HStack {
                 Text("Typical Period Volume")
@@ -63,15 +49,28 @@ struct StatisticsView: View {
         .disabled(viewModel.periods.count < 1)
     }
     
-    var periodLengthItem: some View {
+    var periodLengthChart: some View {
         NavigationLink(
-            destination: MenstrualStatisticsDetailView(viewModel: viewModel, title: "Period Length", mode: .length)
+            destination: ScrollableBarChart(viewModel: viewModel.makePeriodLengthViewModel())
         ) {
             HStack {
                 Text("Typical Period Length")
                 Spacer()
+                // FIXME: use date formatter
                 Text(viewModel.averagePeriodLength != 1 ? "\(viewModel.averagePeriodLength) days" :  "\(viewModel.averagePeriodLength) day")
                     .bold()
+            }
+        }
+        .disabled(viewModel.periods.count < 1)
+    }
+    
+    var dailyVolumeChart: some View {
+        NavigationLink(
+            destination: ScrollableBarChart(viewModel: viewModel.makeDailyVolumeViewModel())
+        ) {
+            HStack {
+                Text("Typical Daily Volume")
+                Spacer()
             }
         }
         .disabled(viewModel.periods.count < 1)

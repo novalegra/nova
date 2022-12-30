@@ -105,4 +105,36 @@ class MenstrualDataManagerTests: XCTestCase {
         menstrualDataManager.volumeUnit = .percentOfCup
         XCTAssertEqual(menstrualDataManager.closestNumberOnPicker(num: maxPercentOfCup + 5), maxPercentOfCup)
     }
+    
+    func testProcessingSamplesToPeriods() {
+        let p1 = [
+            testDate,
+            testDate.addingTimeInterval(TimeInterval(days: 1)),
+            testDate.addingTimeInterval(TimeInterval(days: 3))
+        ]
+            .map { MenstrualSample(startDate: $0, endDate: $0, flowLevel: .medium) }
+        
+        let nonPeriod = [testDate.addingTimeInterval(TimeInterval(days: 5))]
+            .map { MenstrualSample(startDate: $0, endDate: $0, flowLevel: .none) }
+        
+        let p2 = [testDate.addingTimeInterval(TimeInterval(days: 6))]
+            .map { MenstrualSample(startDate: $0, endDate: $0, flowLevel: .heavy) }
+        
+        let p3 = [
+            testDate.addingTimeInterval(TimeInterval(days: 10)),
+            testDate.addingTimeInterval(TimeInterval(days: 11))
+        ]
+            .map { MenstrualSample(startDate: $0, endDate: $0, flowLevel: .heavy) }
+        
+        let samples = Array([p1, nonPeriod, p2, p3].joined())
+        
+        let output = menstrualDataManager.processHealthKitQuery(samples: samples)
+        let expected = [
+            MenstrualPeriod(events: p1),
+            MenstrualPeriod(events: p2),
+            MenstrualPeriod(events: p3)
+        ]
+        
+        XCTAssertEqual(output, expected)
+    }
 }

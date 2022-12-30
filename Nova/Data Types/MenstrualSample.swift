@@ -14,8 +14,8 @@ class MenstrualSample: Codable, RawRepresentable {
     let startDate: Date
     let endDate: Date
     var flowLevel: HKCategoryValueMenstrualFlow
-    var volume: Double? // in mL
-    let uuid: UUID
+    var volume: Double? /// in mL
+    let uuid: UUID /// unique identifier that is preserved across HealthKit saves
     var syncVersion: Int
     
     init(startDate: Date, endDate: Date, flowLevel: HKCategoryValueMenstrualFlow, volume: Double? = nil, uuid: UUID = UUID(), version: Int = 1) {
@@ -109,18 +109,3 @@ extension MenstrualSample: Equatable {
 }
 
 extension HKCategoryValueMenstrualFlow: Codable { }
-
-extension UUID: RawRepresentable {
-    public typealias RawValue = String
-
-    public init?(rawValue: String) {
-        guard let id = UUID(uuidString: rawValue) else {
-            return nil
-        }
-        self = id
-    }
-
-    public var rawValue: String {
-        return self.uuidString
-    }
-}

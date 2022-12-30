@@ -12,65 +12,9 @@ import HealthKit
 class MenstrualDataManager: ObservableObject {
     let store: MenstrualStore
     let watchManager: WatchDataCoordinator
-    // Allowable gap (in days) between samples so it's still considered a period
+    /// Allowable gap (in days) between samples so it's still considered a period
     let allowablePeriodGap: Int = 1
     @Published var periods: [MenstrualPeriod] = []
-    
-    var reverseOrderedPeriods: [MenstrualPeriod] {
-        return periods.reversed()
-    }
-    
-    init(store: MenstrualStore) {
-        self.store = store
-        self.watchManager = WatchDataCoordinator(dataStore: store)
-        store.healthStoreUpdateCompletionHandler = { [weak self] updatedEvents in
-            DispatchQueue.main.async {
-                if let processedPeriods = self?.processHealthKitQuerySamples(updatedEvents) {
-                    self?.periods = processedPeriods
-                }
-            }
-
-            do {
-                try self?.watchManager.updateWatch(with: updatedEvents)
-            } catch let error {
-                NSLog("Error while passing data to watch: \(error)")
-            }
-        }
-    }
-    
-    // MARK: Data Management
-    
-    /// This function assumes samples are sorted with most-recent ones first
-    /// The output menstrual periods are in sorted order
-    func processHealthKitQuerySamples(_ samples: [MenstrualSample]) -> [MenstrualPeriod] {
-        guard samples.count > 0 else {
-            return []
-        }
-
-        let sortedSamples = samples.sorted(by: { $0.startDate < $1.startDate })
-        var output: [MenstrualPeriod] = []
-        var periodBuilder: [MenstrualSample] = []
-
-        for sample in sortedSamples {
-            if sample.flowLevel == .none {
-                continue
-            }
-            
-            if let last = periodBuilder.last, let dayGap = Calendar.current.dateComponents([.day], from: last.endDate, to: sample.startDate).day, dayGap - 1 > allowablePeriodGap {
-                output.append(MenstrualPeriod(events: periodBuilder))
-                periodBuilder = []
-            }
-            
-            periodBuilder.append(sample)
-        }
-        
-        // Make sure all periods are accounted for
-        if periodBuilder.count > 0 {
-            output.append(MenstrualPeriod(events: periodBuilder))
-        }
-        
-        return output
-    }
     
     // MARK: Computed Properties
     var lastPeriodDate: String {
@@ -102,6 +46,99 @@ class MenstrualDataManager: ObservableObject {
             return 0
         }
         return periods.reduce(0) {sum, curr in sum + curr.duration} / periods.count
+    }
+    
+    var reverseOrderedPeriods: [MenstrualPeriod] {
+        return periods.reversed()
+    }
+    
+    // MARK: Settings
+    var volumeUnit: VolumeType = UserDefaults.app?.volumeType ?? .percentOfCup {
+        didSet {
+            UserDefaults.app?.volumeType = volumeUnit
+        }
+    }
+    
+    var cupType: MenstrualCupType = UserDefaults.app?.menstrualCupType ?? .lenaSmall {
+        didSet {
+            UserDefaults.app?.menstrualCupType = cupType
+        }
+    }
+    
+    var notificationsEnabled = UserDefaults.app?.notificationsEnabled ?? false {
+        didSet {
+            UserDefaults.app?.notificationsEnabled = notificationsEnabled
+        }
+    }
+    
+    var flowPickerOptions: [String] {
+        flowPickerNumbers.map { String(Int($0)) }
+    }
+    
+    var flowPickerNumbers: [Double] {
+        switch volumeUnit {
+        case .mL:
+            return Array(0...240).map { Double($0) }
+        case .percentOfCup:
+            return Array(0...120).map { Double($0 * 5) }
+        }
+    }
+    
+    init(store: MenstrualStore) {
+        self.store = store
+        self.watchManager = WatchDataCoordinator(dataStore: store)
+        store.healthStoreUpdateCompletionHandler = { [weak self] updatedEvents in
+            DispatchQueue.main.async {
+                if let processedPeriods = self?.processHealthKitQuery(samples: updatedEvents) {
+                    self?.periods = processedPeriods
+                }
+            }
+
+            do {
+                try self?.watchManager.updateWatch(with: updatedEvents)
+            } catch let error {
+                NSLog("Error while passing data to watch: \(error)")
+            }
+        }
+    }
+    
+    // MARK: Data Management
+    /// The output menstrual periods are in sorted order
+    func processHealthKitQuery(samples: [MenstrualSample]) -> [MenstrualPeriod] {
+        guard samples.count > 0 else {
+            return []
+        }
+
+        let sortedSamples = samples.sorted(by: { $0.startDate < $1.startDate })
+        var output: [MenstrualPeriod] = []
+        var periodBuilder: [MenstrualSample] = []
+
+        for sample in sortedSamples {
+            /// Only include samples that actually have flow
+            if sample.flowLevel == .none {
+                continue
+            }
+            
+            if
+                let last = periodBuilder.last,
+                let dayGap = Calendar.current.dateComponents([.day],
+                                                             from: last.endDate,
+                                                             to: sample.startDate).day,
+                dayGap - 1 > allowablePeriodGap
+            {
+                output.append(MenstrualPeriod(events: periodBuilder))
+                periodBuilder = []
+            }
+            
+            periodBuilder.append(sample)
+        }
+        
+        // Make sure all periods are accounted for
+        if periodBuilder.count > 0 {
+            output.append(MenstrualPeriod(events: periodBuilder))
+        }
+        
+        return output
     }
     
     // MARK: Data Helper Functions
@@ -161,38 +198,6 @@ class MenstrualDataManager: ObservableObject {
             }
             
             completion(result)
-        }
-    }
-    
-    // MARK: Settings
-    var volumeUnit: VolumeType = UserDefaults.app?.volumeType ?? .percentOfCup {
-        didSet {
-            UserDefaults.app?.volumeType = volumeUnit
-        }
-    }
-    
-    var cupType: MenstrualCupType = UserDefaults.app?.menstrualCupType ?? .lenaSmall {
-        didSet {
-            UserDefaults.app?.menstrualCupType = cupType
-        }
-    }
-    
-    var notificationsEnabled = UserDefaults.app?.notificationsEnabled ?? false {
-        didSet {
-            UserDefaults.app?.notificationsEnabled = notificationsEnabled
-        }
-    }
-    
-    var flowPickerOptions: [String] {
-        flowPickerNumbers.map { String(Int($0)) }
-    }
-    
-    var flowPickerNumbers: [Double] {
-        switch volumeUnit {
-        case .mL:
-            return Array(0...240).map { Double($0) }
-        case .percentOfCup:
-            return Array(0...120).map { Double($0 * 5) }
         }
     }
     

@@ -37,7 +37,11 @@ struct SettingsView: View {
     //                cupPickerSection
     //            }
                 cupPickerSection
-                notificationsPicker
+                Section("Notifications") {
+                    notificationsPicker
+                }
+                .headerProminence(.increased)
+                
             }
             .listStyle(InsetGroupedListStyle())
             .navigationBarTitle("Settings", displayMode: .large)
@@ -64,7 +68,7 @@ struct SettingsView: View {
             }
             .pickerStyle(SegmentedPickerStyle())
         }
-        .padding(.vertical, 5)
+        .padding(.vertical, ViewConstants.smallPadding)
     }
     
     private var cupPickerSection: some View {
@@ -73,7 +77,7 @@ struct SettingsView: View {
                 Text("Menstrual Cup Type", comment: "Label for menstrual cup type setting")
                 menstrualCupPicker
             }
-            .padding(.vertical, 5)
+            .padding(.vertical, ViewConstants.smallPadding)
         }
     }
     
@@ -91,7 +95,7 @@ struct SettingsView: View {
     
     private var notificationsPicker: some View {
         Toggle(isOn: $notificationsEnabled) {
-            Text("Enable Notifications to Empty Cup", comment: "Title text for the notifications")
+            Text("Cup Empty Reminders", comment: "Title text for cup empty notifications")
         }
             .onChange(of: notificationsEnabled) { enabled in
                 guard enabled else {
