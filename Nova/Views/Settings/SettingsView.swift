@@ -125,6 +125,7 @@ struct SettingsView: View {
             }
     }
     
+    // TODO: settings should be saved incrementally as the user changes them
     private func saveSettingsToDataManager() {
         viewModel.volumeUnit = selectedVolumeType
         viewModel.cupType = selectedMenstrualCupType

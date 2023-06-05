@@ -28,7 +28,6 @@ class MenstrualDataManagerTests: XCTestCase {
         let menstrualStore = MenstrualStore(healthStore: healthStore)
         
         menstrualDataManager = MenstrualDataManager(store: menstrualStore)
-        
     }
 
     override func tearDownWithError() throws {

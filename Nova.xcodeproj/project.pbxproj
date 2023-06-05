@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -75,6 +75,8 @@
 		E9B469E0295D18D80031056B /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9B469DF295D18D80031056B /* Constants.swift */; };
 		E9B469E2295D18F40031056B /* RoundedBorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9B469E1295D18F40031056B /* RoundedBorder.swift */; };
 		E9B469E3295D1A580031056B /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9B469DF295D18D80031056B /* Constants.swift */; };
+		E9B469E5295FF7C80031056B /* ScrollableBarChartViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9B469E4295FF7C80031056B /* ScrollableBarChartViewModelTests.swift */; };
+		E9B469E8295FF98E0031056B /* Algorithms in Frameworks */ = {isa = PBXBuildFile; productRef = E9B469E7295FF98E0031056B /* Algorithms */; };
 		E9CECC84291316F0004B8BE8 /* UUID.swift in Sources */ = {isa = PBXBuildFile; fileRef = E98D3EAE2907F53200B70420 /* UUID.swift */; };
 		E9CECC8629132839004B8BE8 /* ChartConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9CECC8529132839004B8BE8 /* ChartConstants.swift */; };
 		E9CECC88291427FB004B8BE8 /* Array.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9CECC87291427FB004B8BE8 /* Array.swift */; };
@@ -193,6 +195,7 @@
 		E9B469DC295BC21C0031056B /* ScrollableChartPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollableChartPoint.swift; sourceTree = "<group>"; };
 		E9B469DF295D18D80031056B /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		E9B469E1295D18F40031056B /* RoundedBorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedBorder.swift; sourceTree = "<group>"; };
+		E9B469E4295FF7C80031056B /* ScrollableBarChartViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollableBarChartViewModelTests.swift; sourceTree = "<group>"; };
 		E9CECC8529132839004B8BE8 /* ChartConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartConstants.swift; sourceTree = "<group>"; };
 		E9CECC87291427FB004B8BE8 /* Array.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Array.swift; sourceTree = "<group>"; };
 		E9D7132125199F4000F56BB1 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = "Nova/Localizable/en.xcloc/Source Contents/Nova/en.lproj/Localizable.strings"; sourceTree = SOURCE_ROOT; };
@@ -223,6 +226,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E9B469E8295FF98E0031056B /* Algorithms in Frameworks */,
 				E995A52325071FE5009D52CF /* HealthKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -256,6 +260,7 @@
 			children = (
 				E922154C276E9B030060FDB1 /* MenstrualDataManagerTests.swift */,
 				E9221548276E89370060FDB1 /* MenstrualStoreTests.swift */,
+				E9B469E4295FF7C80031056B /* ScrollableBarChartViewModelTests.swift */,
 				E922154A276E8ADF0060FDB1 /* HKHealthStoreMock.swift */,
 			);
 			path = NovaTests;
@@ -539,6 +544,9 @@
 				E976176C252EA6360011B715 /* PBXTargetDependency */,
 			);
 			name = Nova;
+			packageProductDependencies = (
+				E9B469E7295FF98E0031056B /* Algorithms */,
+			);
 			productName = Nova;
 			productReference = E995A4F72507145E009D52CF /* Nova.app */;
 			productType = "com.apple.product-type.application";
@@ -578,6 +586,9 @@
 				es,
 			);
 			mainGroup = E995A4EE2507145E009D52CF;
+			packageReferences = (
+				E9B469E6295FF98E0031056B /* XCRemoteSwiftPackageReference "swift-algorithms" */,
+			);
 			productRefGroup = E995A4F82507145E009D52CF /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -636,6 +647,7 @@
 			files = (
 				E922154B276E8ADF0060FDB1 /* HKHealthStoreMock.swift in Sources */,
 				E922154D276E9B030060FDB1 /* MenstrualDataManagerTests.swift in Sources */,
+				E9B469E5295FF7C80031056B /* ScrollableBarChartViewModelTests.swift in Sources */,
 				E9221549276E89370060FDB1 /* MenstrualStoreTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1123,6 +1135,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		E9B469E6295FF98E0031056B /* XCRemoteSwiftPackageReference "swift-algorithms" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/apple/swift-algorithms.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		E9B469E7295FF98E0031056B /* Algorithms */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E9B469E6295FF98E0031056B /* XCRemoteSwiftPackageReference "swift-algorithms" */;
+			productName = Algorithms;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = E995A4EF2507145E009D52CF /* Project object */;
 }
